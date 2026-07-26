@@ -73,6 +73,8 @@
 	//CC Edit End
 
 /obj/item/reagent_containers/food/snacks/rogue/pesto
+	cuisine = CUISINE_SOUTH_IMPERIAL
+	dish_type = DISH_VEGETABLE
 	name = "pesto"
 	icon = 'modular/Neu_Food/icons/raw/raw_veggies.dmi'
 	icon_state = "pesto"
