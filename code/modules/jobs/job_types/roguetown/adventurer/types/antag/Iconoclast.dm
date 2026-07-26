@@ -10,7 +10,7 @@
 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_RITUALIST)
 	subclass_stats = list(
 		//Caustic edit
-		STATKEY_STR = 2,
+		STATKEY_STR = 3,
 		STATKEY_WIL = 3,
 		STATKEY_LCK = 1,
 		STATKEY_CON = 2
