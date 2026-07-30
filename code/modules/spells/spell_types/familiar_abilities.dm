@@ -187,6 +187,7 @@
 	name = "Fey Shroud"
 	desc = "Cloak yourself, blending into the surroundings. Attacking, being attacked, or casting another ability will break your stealth."
 	click_to_activate = FALSE
+	spell_requirements = SPELL_REQUIRES_SAME_Z
 
 /datum/action/cooldown/spell/fae_brew
 	name = "Alchemical Stomach"
@@ -332,6 +333,11 @@
 /datum/action/cooldown/spell/magicians_stone/elemental
 	name = "Create Stone"
 	fluff_desc = ""
+
+/datum/action/cooldown/spell/aetherknife/elemental
+	name = "Shape Knife"
+	fluff_desc = ""
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_SAME_Z
 
 /obj/item/rogueweapon/woodstaff/implement/greater/elemental
 	name = "\improper Staff of the Binder"
