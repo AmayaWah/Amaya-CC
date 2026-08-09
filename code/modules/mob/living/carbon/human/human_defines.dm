@@ -216,4 +216,8 @@
 
 	//Caustic Edit
 	var/time_of_last_move = 0
+	
+/mob/living/carbon/human
+	var/allow_taur_clothing = TRUE
+
 	//Caustic Edit End
