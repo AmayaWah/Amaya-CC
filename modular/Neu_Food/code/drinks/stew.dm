@@ -21,8 +21,7 @@
 	taste_mult = 3
 	hydration = 2
 	//CC Edit Begin
-	diet_types = list("Grains")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_BAD
+	foodtype = GRAIN
 	//CC Edit End
 
 /datum/reagent/consumable/soup/porridge/oatmeal
@@ -48,6 +47,9 @@
 	metabolization_rate = 0.8
 	alpha = 222
 	quality = DRINK_GOOD
+	//CC Edit Begin
+	foodtype = GRAIN | FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/porridge/thickpudding
 	name = "thick berried porridge-pudding"
@@ -58,6 +60,9 @@
 	metabolization_rate = 0.6
 	alpha = 222
 	quality = DRINK_VERYGOOD
+	//CC Edit Begin
+	foodtype = GRAIN | FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/porridge/frostedpudding
 	name = "frosted porridge-pudding"
@@ -68,6 +73,9 @@
 	metabolization_rate = 0.8
 	alpha = 222
 	quality = DRINK_GOOD
+	//CC Edit Begin
+	foodtype = GRAIN | FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/porridge/thickfrostedpudding
 	name = "thick frosted porridge-pudding"
@@ -78,6 +86,9 @@
 	metabolization_rate = 0.6
 	alpha = 222
 	quality = DRINK_VERYGOOD
+	//CC Edit Begin
+	foodtype = GRAIN | FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/porridge/poisonfrostedpudding //Evil variant for poisoned jackberry treats.
 	name = "frosted porridge-pudding"
@@ -88,6 +99,9 @@
 	metabolization_rate = 0.8
 	alpha = 222
 	quality = DRINK_GOOD
+	//CC Edit Begin
+	foodtype = GRAIN | FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/porridge/thickpoisonfrostedpudding //Ditto.
 	name = "thick frosted porridge-pudding"
@@ -98,6 +112,9 @@
 	metabolization_rate = 0.6
 	alpha = 222
 	quality = DRINK_VERYGOOD
+	//CC Edit Begin
+	foodtype = GRAIN | FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/porridge/fudgepudding
 	name = "chocolate porridge-pudding"
@@ -108,6 +125,9 @@
 	metabolization_rate = 0.8
 	alpha = 222
 	quality = DRINK_GOOD
+	//CC Edit Begin
+	foodtype = GRAIN | DAIRY
+	//CC Edit End
 
 /datum/reagent/consumable/soup/porridge/thickfudgepudding
 	name = "thick chocolate porridge-pudding"
@@ -118,15 +138,14 @@
 	metabolization_rate = 0.6
 	alpha = 222
 	quality = DRINK_VERYGOOD
+	//CC Edit Begin
+	foodtype = GRAIN | DAIRY
+	//CC Edit End
 
 /datum/reagent/consumable/soup/porridge/congee
 	name = "congee"
 	description = "Rice boiled in water until it is softened. Eaten by the poor and sick in the east. Here, it is considered a medicinal food."
 	color = "#F8F0E3"
-	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
-	//CC Edit End
 
 /datum/reagent/consumable/soup/veggie
 	name = "vegetable soup"
@@ -136,8 +155,7 @@
 	taste_mult = 4
 	hydration = 8
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR //Note that you can combine multiple veggies together to multiply this effect for each one.
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/veggie/potato
@@ -227,6 +245,9 @@
 	nutriment_factor = 40
 	metabolization_rate = 4
 	alpha = 222
+	//CC Edit Begin
+	foodtype = DAIRY
+	//CC Edit End
 
 /datum/reagent/consumable/soup/lemon
 	name = "juice of lemon"
@@ -236,6 +257,9 @@
 	nutriment_factor = 8
 	metabolization_rate = 1.2
 	quality = DRINK_NICE
+	//CC Edit Begin
+	foodtype = FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/lime
 	name = "juice of lime"
@@ -245,6 +269,9 @@
 	nutriment_factor = 8
 	metabolization_rate = 1.2
 	quality = DRINK_NICE
+	//CC Edit Begin
+	foodtype = FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/pear
 	name = "juice of pear"
@@ -254,6 +281,9 @@
 	nutriment_factor = 8
 	metabolization_rate = 1.2
 	quality = DRINK_NICE
+	//CC Edit Begin
+	foodtype = FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/apple
 	name = "juice of apple"
@@ -263,6 +293,9 @@
 	nutriment_factor = 8
 	metabolization_rate = 1.2
 	quality = DRINK_NICE
+	//CC Edit Begin
+	foodtype = FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/tangerine_marmalade
 	name = "juice of tangerine"
@@ -272,6 +305,9 @@
 	nutriment_factor = 8
 	metabolization_rate = 1.2
 	quality = DRINK_NICE
+	//CC Edit Begin
+	foodtype = FRUIT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/bone_broth
 	name = "bone broth"
@@ -280,7 +316,9 @@
 	nutriment_factor = 10
 	hydration = 10
 	metabolization_rate = 0.6
-
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 //
 
 /datum/reagent/consumable/soup/stew
@@ -297,6 +335,9 @@
 	color = "#9E6B43"
 	nutriment_factor = 15
 	alpha = 200
+	//CC Edit Begin
+	foodtype = GRAIN
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/hardtacksalo
 	name = "balefire stew"
@@ -306,6 +347,9 @@
 	nutriment_factor = 15
 	metabolization_rate = 0.4 //Lowest nutriment factor for stew, but sticks to your guts like proper comfort food.
 	alpha = 220
+	//CC Edit Begin
+	foodtype = GRAIN | MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thickhardtacksalo
 	name = "thick balefire stew"
@@ -315,11 +359,17 @@
 	nutriment_factor = 20
 	metabolization_rate = 0.4 //Lowest nutriment factor for stew, but sticks to your guts like proper comfort food.
 	alpha = 220
+	//CC Edit Begin
+	foodtype = GRAIN | MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/egg
 	name = "egg drop soup"
 	color = "#dedbaf"
 	taste_description = "egg soup"
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/fryegg
 	name = "custardy egg drop soup"
@@ -327,6 +377,9 @@
 	taste_description = "creamy egg soup"
 	nutriment_factor = 30
 	metabolization_rate = 1.2 //A little quicker, for breakfast!
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thickfryegg
 	name = "scrambled cacklehash stew"
@@ -336,6 +389,9 @@
 	metabolization_rate = 1.2 //A little quicker, for breakfast!
 	quality = DRINK_GOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/lavishfryegg
 	name = "lavish cacklehash stew"
@@ -345,6 +401,9 @@
 	metabolization_rate = 1.2 //A little quicker, for breakfast!
 	quality = DRINK_VERYGOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT | DAIRY
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/cheese
 	name = "cheese soup"
@@ -352,8 +411,7 @@
 	color = "#c4be70"
 	taste_description = "creamy cheese"
 	//CC Edit Begin
-	diet_types = list("Dairy")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = DAIRY
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thickcheese
@@ -365,6 +423,9 @@
 	metabolization_rate = 0.6
 	quality = DRINK_GOOD
 	alpha = 222
+	//CC Edit Begin
+	foodtype = DAIRY
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/parmesan
 	name = "aged cheese soup"
@@ -372,6 +433,9 @@
 	color = "#A8AA70"
 	taste_description = "creamy aged cheese"
 	metabolization_rate = 0.8
+	//CC Edit Begin
+	foodtype = DAIRY
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thickparmesan
 	name = "aged fondue"
@@ -382,14 +446,16 @@
 	nutriment_factor = 40
 	quality = DRINK_VERYGOOD
 	alpha = 222
+	//CC Edit Begin
+	foodtype = DAIRY
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/chicken
 	name = "chicken stew"
 	color = "#baa21c"
 	taste_description = "chicken"
 	//CC Edit Begin
-	diet_types = list("Meats")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = MEAT
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thickchicken
@@ -397,6 +463,9 @@
 	color = "#BA841C"
 	taste_description = "savory chicken"
 	nutriment_factor = 30
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/bakedchicken
 	name = "frybird stew"
@@ -404,6 +473,9 @@
 	taste_description = "savory chicken with flakes of crispy skin"
 	metabolization_rate = 0.8
 	quality = DRINK_NICE
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/bakedthickchicken
 	name = "thick frybird stew"
@@ -413,6 +485,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/veggiethickchicken
 	name = "frybird stew with vegetables"
@@ -422,6 +497,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT | VEGETABLES
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/pepperchicken
 	name = "pepper-spiced frybird stew"
@@ -431,6 +509,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_VERYGOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/lavishchicken
 	name = "lavish frybird stew"
@@ -440,14 +521,16 @@
 	metabolization_rate = 0.6
 	quality = DRINK_VERYGOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/meat
 	name = "meat stew"
 	color = "#80432a"
 	taste_description = "meat"
 	//CC Edit Begin
-	diet_types = list("Meats")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = MEAT
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/frymeat
@@ -457,6 +540,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_NICE
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/veggiefrymeat
 	name = "brisket stew with vegetables"
@@ -466,6 +552,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT | VEGETABLES
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/pepperfrymeat
 	name = "pepper-spiced brisket stew"
@@ -475,6 +564,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_VERYGOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/lavishfrymeat
 	name = "lavish brisket stew"
@@ -484,17 +576,26 @@
 	metabolization_rate = 0.6
 	quality = DRINK_VERYGOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/pork
 	name = "fatty meat stew"
 	color = "#80432a"
 	taste_description = "soft and savory pork"
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thickpork
 	name = "fatty brisket stew"
 	color = "#7F3518"
 	taste_description = "slow-roasted pork"
 	metabolization_rate = 0.8
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/frypork
 	name = "crispy and fatty meaty stew"
@@ -504,6 +605,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_NICE
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thickfrypork
 	name = "crispy and fatty brisket stew"
@@ -513,12 +617,18 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/viscera_broth
 	name = "offal stew"
 	color = "#B65571"
 	taste_description = "deeply savory offal with a lingering iron tang"
 	nutriment_factor = 15
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/slop
 	name = "slop"
@@ -531,8 +641,7 @@
 	color = "#c7816e"
 	taste_description = "fish"
 	//CC Edit Begin
-	diet_types = list("Meats")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = MEAT
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/fryfish
@@ -542,6 +651,9 @@
 	nutriment_factor = 25
 	quality = DRINK_NICE
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/veggiefryfish
 	name = "roasted fish stew with vegetables"
@@ -550,6 +662,9 @@
 	nutriment_factor = 30
 	quality = DRINK_GOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT | VEGETABLES
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/pepperfryfish
 	name = "pepper-spiced fish stew"
@@ -558,6 +673,9 @@
 	nutriment_factor = 35
 	quality = DRINK_VERYGOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/lavishfryfish
 	name = "lavish fish stew"
@@ -567,6 +685,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_VERYGOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/evilfryfish
 	name = "evil fish stew"
@@ -574,14 +695,16 @@
 	taste_description = "an overwhelming sense of dread, whispers of progress, and a surprisingly rich aftertaste"
 	nutriment_factor = 66
 	metabolization_rate = 6
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/rabbit
 	name = "cabbit stew"
 	color = "#c59182"
 	taste_description = "cabbit"
 	//CC Edit Begin
-	diet_types = list("Meats")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = MEAT
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/fryrabbit
@@ -591,6 +714,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_NICE
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/veggiefryrabbit
 	name = "roasted cabbit stew with vegetables"
@@ -600,11 +726,17 @@
 	nutriment_factor = 30
 	quality = DRINK_GOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/volf
 	name = "volf stew"
 	color = "#80432a"
 	taste_description = "gamey meat"
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/fryvolf
 	name = "vriskette stew"
@@ -613,6 +745,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_NICE
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/veggiefryvolf
 	name = "vriskette stew with vegetables"
@@ -622,6 +757,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT | VEGETABLES
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/kingvolf
 	name = "king's stew"
@@ -631,14 +769,16 @@
 	metabolization_rate = 0.8
 	quality = DRINK_VERYGOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT | VEGETABLES
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/bisque
 	name = "bisque"
-	color = "#FFA74F" // Bisque like color I know bisque's more complicated than that 
+	color = "#FFA74F" // Bisque like color I know bisque's more complicated than that
 	taste_description = "shellfish"
 	//CC Edit Begin
-	diet_types = list("Meats")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = MEAT
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/frybisque
@@ -649,6 +789,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/lavishfrybisque
 	name = "lavish bisque"
@@ -658,6 +801,9 @@
 	metabolization_rate = 0.6
 	quality = DRINK_VERYGOOD
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/seafoodbroil
 	name = "seabroil chowder"
@@ -665,6 +811,9 @@
 	taste_description = "creamy shellfish with the occassional crunch"
 	nutriment_factor = 25
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/fryseafoodbroil
 	name = "roasted seabroil chowder"
@@ -674,6 +823,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 222
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/lavishfryseafoodbroil
 	name = "lavish seabroil chowder"
@@ -683,6 +835,9 @@
 	metabolization_rate = 0.6
 	quality = DRINK_VERYGOOD
 	alpha = 222
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/meatrice
 	name = "congee with roasted meat"
@@ -692,6 +847,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 250
+	//CC Edit Begin
+	foodtype = GRAIN | MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/eggrice
 	name = "congee with cackleberries"
@@ -701,6 +859,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 250
+	//CC Edit Begin
+	foodtype = GRAIN | MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/shrimprice
 	name = "congee with roasted shrimp"
@@ -710,6 +871,9 @@
 	metabolization_rate = 0.8
 	quality = DRINK_GOOD
 	alpha = 250
+	//CC Edit Begin
+	foodtype = GRAIN | MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/cheeserice
 	name = "congee with melted cheese"
@@ -719,6 +883,9 @@
 	metabolization_rate = 0.6
 	quality = DRINK_NICE
 	alpha = 250
+	//CC Edit Begin
+	foodtype = GRAIN | DAIRY
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/lavishfryrice
 	name = "luxury congee"
@@ -728,11 +895,17 @@
 	metabolization_rate = 0.6
 	quality = DRINK_VERYGOOD
 	alpha = 250
+	//CC Edit Begin
+	foodtype = GRAIN | MEAT | DAIRY
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/yucky
 	name = "strange stew"
 	color = "#9e559c"
 	taste_description = "overpoweringly strange-tasting, with a mildly tangy aftertaste"
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/fryyucky
 	name = "strange brisket stew"
@@ -741,14 +914,16 @@
 	nutriment_factor = 30
 	quality = DRINK_NICE
 	alpha = 200
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/berry
 	name = "berry stew"
 	color = "#863333"
 	taste_description = "sweet berries"
 	//CC Edit Begin
-	diet_types = list("Fruits")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = FRUIT
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/berry_poisoned
@@ -756,8 +931,7 @@
 	color = "#863333"
 	taste_description = "suspiciously bitter berries"
 	//CC Edit Begin
-	diet_types = list("Fruits")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR - 0.2 //0.05 ... Poison...
+	foodtype = FRUIT
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/garlick_soup
@@ -765,19 +939,16 @@
 	color = "#FAF9F6"
 	taste_description = "clear sinuses"
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/cucumber_soup
 	name = "cucumber soup"
 	color = "#98fb98"
-	taste_description = "rich cucumber"
-	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
-	//CC Edit End
 	taste_description = "rich cucumbers"
+	//CC Edit Begin
+	foodtype = VEGETABLES
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thickcucumber_soup
 	name = "thick cucumber soup"
@@ -785,8 +956,7 @@
 	taste_description = "rich and chunky cucumbers"
 	nutriment_factor = 25
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/eggplant_soup
@@ -794,8 +964,7 @@
 	color = "#fff8e3"
 	taste_description = "tasty eggplant"
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/aubergine_soup
@@ -806,8 +975,7 @@
 	metabolization_rate = 0.8
 	quality = DRINK_NICE
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/lavishaubergine_soup
@@ -819,8 +987,7 @@
 	quality = DRINK_GOOD
 	alpha = 200
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/carrot_stew
@@ -828,8 +995,7 @@
 	color = "#f26818"
 	taste_description = "savory carrots"
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thickcarrot_stew
@@ -839,8 +1005,7 @@
 	quality = DRINK_NICE
 	alpha = 200
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/nutty_stew
@@ -848,8 +1013,7 @@
 	color = "#807b78"
 	taste_description = "nutty"
 	//CC Edit Begin
-	diet_types = list("Grains")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = GRAIN
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/tomato_soup
@@ -858,8 +1022,7 @@
 	taste_description = "home"
 	metabolization_rate = 0.5 // half as fast as normal, last twice as long - it is the best soup after all
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/plum_soup
@@ -867,8 +1030,7 @@
 	color = "#9c305b"
 	taste_description = "sweet plums"
 	//CC Edit Begin
-	diet_types = list("Fruits")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = FRUIT
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/squash_soup
@@ -878,8 +1040,7 @@
 	metabolization_rate = 0.8
 	nutriment_factor = 15
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/frysquash_soup
@@ -890,8 +1051,7 @@
 	nutriment_factor = 20
 	quality = DRINK_NICE
 	//CC Edit Begin
-	diet_types = list("Vegetables")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = VEGETABLES
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/survival_broth
@@ -901,8 +1061,7 @@
 	nutriment_factor = 30
 	alpha = 222
 	//CC Edit Begin
-	diet_types = list("Meats")
-	diet_change_amount = FOOD_DIETARY_REAGENT_VALUE_POOR
+	foodtype = MEAT
 	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/thicksurvival_broth
@@ -911,6 +1070,9 @@
 	taste_description = "heartwarmingly thick and savory, with bursts of sweetness and pepperiness"
 	nutriment_factor = 45
 	alpha = 250
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/saltmeat_stew
 	name = "salted meat stew"
@@ -918,6 +1080,9 @@
 	taste_description = "overwhelmingly salty, with hints of savoriness and meatiness"
 	nutriment_factor = 20
 	alpha = 250
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/mushroom
 	name = "mushroom stew"
@@ -925,6 +1090,9 @@
 	taste_description = "earth and savory with a meaty, nutty depth"
 	nutriment_factor = 20
 	alpha = 250
+	//CC Edit Begin
+	foodtype = VEGETABLES
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/humanoid
 	name = "long pig stew"
@@ -932,6 +1100,9 @@
 	taste_description = "sweet delicious, sweet delicious, sweet delicious pork"
 	nutriment_factor = 20
 	alpha = 250
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 /datum/reagent/consumable/soup/stew/humanoid/on_mob_life(mob/living/carbon/M)
 	..()
@@ -946,6 +1117,9 @@
 	taste_description = "overwhelmingly salty, with hints of savoriness and meatiness"
 	nutriment_factor = 30
 	alpha = 250
+	//CC Edit Begin
+	foodtype = MEAT
+	//CC Edit End
 
 // Copy pasted from berry poison, but stew metabolizes much faster so it is less deadly. You CAN use it as a source of hydration / nutrition if you are desperate enough???
 /datum/reagent/consumable/soup/stew/berry_poisoned/on_mob_life(mob/living/carbon/M)

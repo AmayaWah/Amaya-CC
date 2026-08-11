@@ -455,8 +455,8 @@ All foods are distributed among various categories. Use common sense.
 	//CC Edit Begin
 	if(iscarbon(eater))
 		var/mob/living/carbon/human/H = eater
-		if(diet_types)
-			H.dna.species.adjust_diet_value(H, diet_types, diet_change_amount)
+		if(foodtype && list_reagents)
+			H.dna.species.adjust_diet_value(H, foodtype, list_reagents[/datum/reagent/consumable/nutriment] / bitesize)
 	//CC Edit End
 
 	if(!reagents.total_volume)
