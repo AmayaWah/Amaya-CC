@@ -33,6 +33,20 @@ GLOBAL_LIST_INIT(coastal_forest, list(
 	/area/rogue/outdoors/beach/forest/south
 ))
 
+//Caustic Edit - Desert Area Additions
+GLOBAL_LIST_INIT(desert_inner, list(
+	/area/rogue/outdoors/desert,
+	/area/rogue/outdoors/desert/dunepassage
+))
+
+GLOBAL_LIST_INIT(desert_river, list(
+	/area/rogue/outdoors/desert/river
+))
+
+GLOBAL_LIST_INIT(desert_deep, list(
+	/area/rogue/outdoors/desertdeep
+))
+
 SUBSYSTEM_DEF(hunting)
 	name = "Hunting"
 	wait = 5 MINUTES
@@ -96,3 +110,13 @@ SUBSYSTEM_DEF(hunting)
 
 /datum/hunting_area_group/main_forest/get_areas()
 	return GLOB.main_forest
+
+//Caustic Edit - Desert hunting area datums
+/datum/hunting_area_group/desert_inner/get_areas()
+	return GLOB.desert_inner
+
+/datum/hunting_area_group/desert_river/get_areas()
+	return GLOB.desert_river
+
+/datum/hunting_area_group/desert_deep/get_areas()
+	return GLOB.desert_deep

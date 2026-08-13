@@ -193,11 +193,13 @@
 		revert_cast()
 		return
 
-	// Find destination area
+	// Find destination area. CC Edit - Adds Desert Town areas to the list (River and coast)
 	var/static/list/possible_areas = list(
 		/area/rogue/outdoors/beach,
 		/area/rogue/outdoors/beach/north,
-		/area/rogue/outdoors/beach/south
+		/area/rogue/outdoors/beach/south,
+		/area/rogue/outdoors/desertdeep/coastal,
+		/area/rogue/outdoors/desert/river
 	)
 	var/area/destination_area = GLOB.areas_by_type[pick(possible_areas)]
 	if(!destination_area)
