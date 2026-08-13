@@ -62,6 +62,7 @@
 #define CLOAK_LAYER				17		//only when looking north or west/east
 #define HOOD_LAYER				16
 #define HAIR_LAYER				15		//TODO: make part of head layer?
+#define CUSTOM_HAIR_COVERED_LAYER 14.9
 #define MASK_LAYER				14
 #define HAIREXTRA_LAYER			13
 #define MOUTH_LAYER				12
