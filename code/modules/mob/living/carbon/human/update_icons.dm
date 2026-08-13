@@ -74,6 +74,37 @@ There are several things that need to be remembered:
 	dna.species.handle_body(src)
 	..()
 
+#define VHESLYNFIRE_FILTER "vheslynfire_filter"
+
+/mob/living/carbon/human/update_fire()
+	var/datum/status_effect/fire_handler/fire_stacks/vheslyn_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/vheslyn)
+	if(vheslyn_status?.on_fire)
+		var/filter = get_filter(VHESLYNFIRE_FILTER)
+		if(!filter)
+			add_filter(VHESLYNFIRE_FILTER, 2, list("type" = "outline", "color" = "#ff8c5f", "alpha" = 60, "size" = 2)) //lore-accurate w/ orchre-violet flames, this is the outline
+		if(!sunder_light_obj)
+			sunder_light_obj = mob_light("#e88dff", 5, 5) //on the violet flames
+		remove_overlay(SUNDER_LAYER)
+		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', "sunder_burning", -SUNDER_LAYER)
+		new_fire_overlay.appearance_flags = RESET_COLOR
+		overlays_standing[SUNDER_LAYER] = new_fire_overlay
+		apply_overlay(SUNDER_LAYER)
+		return
+	else
+		remove_filter(VHESLYNFIRE_FILTER)
+		remove_overlay(SUNDER_LAYER)
+		QDEL_NULL(sunder_light_obj)
+
+	if(fire_stacks < 10)
+		return ..("Generic_mob_burning")
+	else
+		var/burning = dna.species.enflamed_icon
+		if(!burning)
+			return ..("widefire")
+		return ..(burning)
+
+#undef VHESLYNFIRE_FILTER
+
 #define SUNDER_FILTER "sunder_filter"
 
 /mob/living/carbon/human/update_fire()
@@ -1167,7 +1198,7 @@ There are several things that need to be remembered:
 			if(cloak.alternate_worn_layer == TABARD_LAYER)
 				overlays_standing[TABARD_LAYER] = cloak_overlay
 			if(cloak.alternate_worn_layer == UNDER_ARMOR_LAYER)
-				overlays_standing[UNDER_ARMOR_LAYER] = cloak_overlay	
+				overlays_standing[UNDER_ARMOR_LAYER] = cloak_overlay
 			if(cloak.alternate_worn_layer == CLOAK_BEHIND_LAYER)
 				overlays_standing[CLOAK_BEHIND_LAYER] = cloak_overlay
 			if(!cloak.alternate_worn_layer)
@@ -1499,7 +1530,7 @@ There are several things that need to be remembered:
 				mouth_overlay.pixel_y += dna.species.offset_features[OFFSET_MOUTH_F][2]
 		overlays_standing[MOUTH_LAYER] = mouth_overlay
 		apply_overlay(MOUTH_LAYER)
-	
+
 	rebuild_obscured_flags()
 
 /mob/living/carbon/human/proc/update_inv_armor_special()
@@ -1514,7 +1545,7 @@ There are several things that need to be remembered:
 	var/armor_icon_state = skin_armor.icon_state
 	if(!(src.mobility_flags & MOBILITY_STAND))
 		armor_icon_state = "[skin_armor.icon_state]_down"
-	
+
 	var/mutable_appearance/armor_overlay = mutable_appearance(skin_armor.icon, armor_icon_state, layer = ARMOR_LAYER)
 
 	overlays_standing[ARMOR_LAYER] = armor_overlay
@@ -1999,7 +2030,7 @@ generate/load female uniform sprites matching all previously decided variables
 			new_limbs += BP.get_limb_icon(hideaux = hidearms)
 		else
 			new_limbs += BP.get_limb_icon()
-	
+
 	if(isooze(src))
 		for(var/image/limb_alpha in new_limbs)
 			limb_alpha.alpha = 180
