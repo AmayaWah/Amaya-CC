@@ -6,12 +6,15 @@
 // 1.5/2/2.5/3/3.5/4
 #define INK_HEAL_BASE                1
 #define INK_HEAL_PER_STACK           0.5
+#define INK_SPIKE_MINDLESS_DAMAGE 60
+#define INK_SPIKE_CONSCIOUS_DAMAGE 20
+#define INK_SPIKE_AFFINITY_DAMAGE 8
 
 /obj/effect/ink_trail
 	name = "paint trail"
 	desc = "A strange, shimmering paint staining the ground."
 	icon = 'icons/mob/actions/abyssormiracles.dmi'
-	icon_state = "paint"
+	icon_state = "paint_color"
 	alpha = 255
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -29,6 +32,8 @@
 	var/consume_buff = FALSE
 	/// Whether trails are consumed when someone unattuned walks over them.
 	var/deny_buff = FALSE
+	/// Whether the trail effects also apply to any living mob being pulled by the user stepping on it.
+	var/apply_to_pulled = FALSE
 
 /obj/effect/ink_trail/ex_act()
 	return
@@ -86,9 +91,17 @@
 
 /obj/effect/ink_trail/Crossed(atom/movable/AM)
 	. = ..()
-	if(!AM.throwing)
-		if(isliving(AM))
-			trigger_ink_effect(AM)
+	if(AM.throwing || !isliving(AM))
+		return
+	var/mob/living/L = AM
+	// If configured, attempt to hit the pulled mob first
+	if(apply_to_pulled && isliving(L.pulling))
+		var/mob/living/pulled_mob = L.pulling
+		if(pulled_mob.stat == CONSCIOUS)
+			trigger_ink_effect(pulled_mob)
+			return
+	// Otherwise, apply to the person stepping on it
+	trigger_ink_effect(L)
 
 /obj/effect/ink_trail/proc/trigger_ink_effect(mob/living/L)
 	if(!L || L.stat != CONSCIOUS)
@@ -113,6 +126,41 @@
 // ==========================================
 // STATUS EFFECT DEFINITIONS
 // ==========================================
+
+/datum/status_effect/buff/ink_presence
+	id = "ink_presence"
+	duration = 7 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/buff/ink_presence
+
+/atom/movable/screen/alert/status_effect/buff/ink_presence
+	name = "Ink Presence"
+	desc = "I'm leaking ink!"
+	icon_state = "buff"
+
+/datum/status_effect/buff/ink_presence/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/generate_ink_trail)
+
+/datum/status_effect/buff/ink_presence/on_remove()
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	return ..()
+
+/datum/status_effect/buff/ink_presence/proc/generate_ink_trail(turf/old_turf, dir)
+	SIGNAL_HANDLER
+	if(!owner || owner.stat != CONSCIOUS)
+		return
+
+	var/turf/current_turf = get_turf(owner)
+	if(!current_turf || !isopenturf(current_turf))
+		return
+
+	var/obj/effect/ink_trail/existing_trail = locate(/obj/effect/ink_trail) in current_turf
+
+	if(existing_trail)
+		existing_trail.refresh_lifetime()
+	else
+		new /obj/effect/ink_trail(current_turf, owner)
+		owner.apply_status_effect(/datum/status_effect/buff/ink_surge)
 
 /datum/status_effect/buff/ink_surge
 	id = "ink_surge"
@@ -159,6 +207,12 @@
 	id = "ink_leak"
 	duration = 8 SECONDS
 	var/datum/weakref/caster_ref
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/ink_leak
+
+/atom/movable/screen/alert/status_effect/debuff/ink_leak
+	name = "Ink Leaking"
+	desc = "My skin is bleeding paint."
+	icon_state = "debuff"
 
 /datum/status_effect/debuff/ink_leak/on_creation(mob/living/new_owner, mob/living/caster)
 	// We always want the caster on the offchance someone is given miracles like this one, but doesn't have paint affinity.
@@ -196,7 +250,7 @@
 	duration = -1
 	tick_interval = 1 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/buff/umbral_recovery
-	
+
 	var/stacks = 1
 	var/next_decay_time = 0
 	var/image/ink_overlay_mesh
@@ -205,16 +259,19 @@
 	. = ..()
 	if(ishuman(owner))
 		update_ink_visuals()
-	
+
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMGE, .proc/on_wearer_damaged)
 	next_decay_time = world.time + INK_STACK_LIFETIME
+	notify_stack_gain(0)
 
 /datum/status_effect/buff/umbral_recovery/refresh()
 	. = ..()
+	var/old_stacks = stacks
 	if(stacks < INK_MAX_HEAL_STACKS)
 		stacks++
 		update_ink_visuals()
 	next_decay_time = world.time + INK_STACK_LIFETIME
+	notify_stack_gain(old_stacks)
 
 /datum/status_effect/buff/umbral_recovery/proc/on_wearer_damaged(datum/source, damage, damagetype, def_zone)
 	SIGNAL_HANDLER
@@ -274,6 +331,17 @@
 		//ink_overlay_mesh.appearance_flags = RESET_COLOR
 		H.add_overlay(ink_overlay_mesh)
 
+/datum/status_effect/buff/umbral_recovery/proc/notify_stack_gain(old_stacks)
+	if(stacks <= old_stacks || !owner)
+		return
+
+	if(stacks >= INK_MAX_HEAL_STACKS)
+		owner.balloon_alert(owner, "<font color='#9e3fd9'>maxed healing ink!</font>")
+		if(prob(25))
+			to_chat(owner, span_nicegreen("Your body can't fit more healing paint!"))
+	else
+		owner.balloon_alert(owner, "[stacks]/[INK_MAX_HEAL_STACKS] ink stacks")
+
 /datum/status_effect/buff/umbral_recovery/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
@@ -285,6 +353,85 @@
 	name = "Umbral Knitting"
 	desc = "Pure abyssal ink is surging through my wounds. Taking damage will break down the concentration faster."
 	icon_state = "buff"
+
+/datum/status_effect/debuff/ink_spike
+	id = "ink_spike"
+	// As long as you have the status, you can't be hit by the puddles again.
+	duration = 10 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/ink_spike
+	var/ink_damage = INK_SPIKE_CONSCIOUS_DAMAGE
+
+/datum/status_effect/debuff/ink_spike/weak
+	ink_damage = INK_SPIKE_AFFINITY_DAMAGE
+
+/atom/movable/screen/alert/status_effect/debuff/ink_spike
+	name = "Umbral Spikes"
+	desc = "Sharp ink needles pierce through my flesh."
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/ink_spike/refresh()
+	// Deliberately do not refresh
+	return FALSE
+
+/datum/status_effect/debuff/ink_spike/on_apply()
+	. = ..()
+	if(!isliving(owner))
+		return
+
+	var/mob/living/target = owner
+
+	if(isanimal(target))
+		target.visible_message(span_purple("Erupting paint spikes tear violently through the [target]!"))
+		target.adjustBruteLoss(INK_SPIKE_MINDLESS_DAMAGE)
+		return
+
+	var/damage_to_deal = ink_damage
+	if(ishuman(target))
+		var/mob/living/carbon/human/C = target
+		var/chosen_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+		chosen_zone = check_zone(chosen_zone)
+		var/obj/item/bodypart/hit_part = C.get_bodypart(chosen_zone)
+		if(!target.mind || !target.ckey)
+			damage_to_deal = INK_SPIKE_MINDLESS_DAMAGE
+
+		if(!hit_part)
+			hit_part = C.get_bodypart(BODY_ZONE_CHEST)
+
+		if(hit_part)
+			C.visible_message(
+				span_purple("Sharp tendrils of paint burst upward and stab into [C]'s [hit_part.name]!"),
+				span_danger("Sharp tendrils of paint burst upward and stab into your [hit_part.name]!")
+			)
+
+			// We kind of just check if there's any armor or not.
+			// I do not know why, but only BCLASS_PICK works, instead of BCLASS_STAB.
+			var/armor_tier = C.getarmor(chosen_zone, BCLASS_PICK)
+			var/bclass_to_use = (armor_tier > 0) ? BCLASS_BLUNT : BCLASS_PICK
+
+			// If armored, simply deal a blunt hit to the armor piece that blocked us.
+			if(armor_tier > 0)
+				var/obj/item/clothing/armor_piece = C.get_best_worn_armor(chosen_zone, BCLASS_PICK)
+				if(armor_piece)
+					armor_piece.take_damage(damage_to_deal, BRUTE, bclass_to_use, 0)
+
+			// If unarmored, stab whoever walked on us.
+			if(!armor_tier)
+				hit_part.bodypart_attacked_by(
+					bclass = bclass_to_use,
+					dam = damage_to_deal,
+					user = null,
+					zone_precise = chosen_zone,
+					silent = FALSE,
+					crit_message = TRUE
+				)
+		else
+			C.take_bodypart_damage(brute = damage_to_deal)
+	else
+		target.adjustBruteLoss(damage_to_deal)
+
+#undef INK_SPIKE_MINDLESS_DAMAGE
+#undef INK_SPIKE_CONSCIOUS_DAMAGE
+#undef INK_SPIKE_AFFINITY_DAMAGE
 
 #undef COLOR_LUMINOUS_ABYSSAL_INK
 
