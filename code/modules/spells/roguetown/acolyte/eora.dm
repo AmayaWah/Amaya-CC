@@ -110,11 +110,13 @@
 	quality = F.faretype
 	bitesize_mod = 1 / F.bitesize
 	patron = patron_init
-	F.faretype = clamp(skill, 1, 5)
-	if(skill < 5 || patron.type != /datum/patron/divine/eora)
+	F.faretype = max(clamp(skill, 1, 5), quality)
+	if(skill < 5)
 		F.add_filter(BLESSED_FOOD_FILTER, 1, list("type" = "outline", "color" = "#ff00ff", "size" = 1))
+		F.visible_message("<span class='rose'>[F] is basked in a pink light!</span>")
 	else
 		F.add_filter(BLESSED_FOOD_FILTER, 1, list("type" = "outline", "color" = "#f0b000", "size" = 1))
+		F.visible_message("<span class='yellow'>[F] is basked in a golden light!</span>")
 		F.rotprocess = null
 	RegisterSignal(F, COMSIG_FOOD_EATEN, .proc/on_food_eaten)
 
@@ -130,8 +132,8 @@
 
 /obj/effect/proc_holder/spell/invoked/bless_food
 	name = "Bless Food"
-	invocation_type = "emote"
-	invocations = list("waves a hand over nearby food, basking it in a vibrant light.")
+	invocation_type = "none"
+	invocations = list()
 	desc = "Bless a food item. Items that take longer to eat heal slower. Skilled clergy can bless food more often. Finer food heals more. Eoran masters can make food a golden hue."
 	sound = 'sound/magic/magnet.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)

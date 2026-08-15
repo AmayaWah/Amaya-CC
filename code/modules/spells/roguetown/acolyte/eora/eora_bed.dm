@@ -114,7 +114,7 @@
 	primary_resource_type = SPELL_COST_STAMINA
 	primary_resource_cost = SPELLCOST_STAT_BUFF
 
-	invocations = list("clouds the ground in a shower of flower petals, causing a bed of flowers to sprout.")
+	invocations = list("%CASTER clouds the ground in a shower of flower petals, causing a bed of flowers to sprout.")
 	invocation_type = INVOCATION_EMOTE
 	charge_required = TRUE
 	charge_time = 1 SECONDS
