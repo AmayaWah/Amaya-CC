@@ -13,10 +13,9 @@
 					/obj/effect/proc_holder/spell/self/skulduggery						= CLERIC_T1, // CC EDIT
 					/datum/action/cooldown/spell/matthios/transact						= CLERIC_T2,
 					/datum/action/cooldown/spell/matthios/barter						= CLERIC_T2,
-					/datum/action/cooldown/spell/matthios/raze							= CLERIC_T2, // CC EDIT
+					/datum/action/cooldown/spell/projectile/matthios/gilded_flames 		= CLERIC_T2,
 					/datum/action/cooldown/spell/matthios/equalize						= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/matthios			= CLERIC_T3,
-					/datum/action/cooldown/spell/projectile/matthios/gilded_flames 		= CLERIC_T3,
 					/datum/action/cooldown/spell/matthios/churn							= CLERIC_T3  // CC EDIT - Back to t3
 	)
 	confess_lines = list(
