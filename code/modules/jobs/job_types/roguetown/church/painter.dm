@@ -95,7 +95,7 @@
 	category_tags = list(CTAG_PAINTER)
 	// Not sold on them having civ barb, but parrying without is hell.
 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_STEELHEARTED)
-	maximum_possible_slots = 1
+	maximum_possible_slots = 2
 	subclass_stats = list(
 		STATKEY_STR = -1,
 		STATKEY_CON = 2,
