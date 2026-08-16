@@ -1230,6 +1230,12 @@
 /obj/item/kitchen/spoon/iron,
 /obj/item/flint,
 /obj/item/cooking/pan,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/kitchen/fork,
+/obj/item/cooking/platter,
+/obj/item/cooking/platter,
+/obj/item/cooking/platter,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/bath/desert)
 "atF" = (
@@ -4571,6 +4577,10 @@
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/deserthotsprings)
+"brf" = (
+/obj/structure/roguewindow/harem3,
+/turf/closed/wall/mineral/rogue/wooddark/window,
+/area/rogue/indoors/town/bath/desert)
 "brh" = (
 /obj/structure/fluff/railing/border,
 /turf/open/water/river/flow/north,
@@ -21422,8 +21432,14 @@
 /area/rogue/under/cave/rhgoblinencampment)
 "grY" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/huntingknife/cleaver,
-/obj/item/kitchen/rollingpin,
+/obj/item/rogueweapon/huntingknife/cleaver{
+	pixel_x = -7;
+	pixel_y = 35
+	},
+/obj/item/kitchen/rollingpin{
+	pixel_x = 4;
+	pixel_y = 28
+	},
 /obj/item/storage/roguebag,
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/reagent_containers/glass/cup/wooden{
@@ -40005,6 +40021,10 @@
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/indoors/town/manor/desert)
+"mlM" = (
+/obj/structure/roguewindow/harem1,
+/turf/open/floor/rogue/blocks/stonered,
+/area/rogue/indoors/town/bath/desert)
 "mlS" = (
 /obj/structure/chair/wood/zybantine{
 	dir = 4
@@ -57955,7 +57975,15 @@
 /area/rogue/indoors/town/church)
 "rNC" = (
 /obj/structure/closet/crate/chest/old_crate,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+/obj/item/reagent_containers/food/snacks/butter,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/berries/rogue,
+/obj/item/reagent_containers/food/snacks/grown/berries/rogue,
+/obj/item/reagent_containers/food/snacks/grown/berries/rogue,
+/obj/item/reagent_containers/food/snacks/grown/berries/rogue,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/bath/desert)
 "rNE" = (
@@ -304617,9 +304645,9 @@ sbD
 dKv
 dKv
 dKv
+dKv
 ruZ
 coK
-uKv
 uKv
 dKv
 gYd
@@ -304930,8 +304958,8 @@ sbD
 mNb
 sbD
 dKv
+dKv
 coK
-uKv
 uKv
 dKv
 sbD
@@ -305239,8 +305267,8 @@ iVN
 rVV
 sbD
 nsI
-kgI
-sbD
+brf
+eqS
 dKv
 gBk
 gBk
@@ -305551,8 +305579,8 @@ iVN
 nzv
 sbD
 nsI
-kgI
-sbD
+brf
+lCR
 dKv
 gBk
 gBk
@@ -305866,8 +305894,8 @@ sbD
 nRl
 sbD
 dKv
+dKv
 coK
-uKv
 uKv
 dKv
 sbD
@@ -306177,9 +306205,9 @@ sbD
 dKv
 dKv
 dKv
+dKv
 ruZ
 coK
-uKv
 uKv
 dKv
 sbD
@@ -307424,10 +307452,10 @@ qrf
 qrf
 iVN
 iVN
-rYZ
+mlM
 iVN
 iVN
-rYZ
+mlM
 iVN
 jgB
 dBF
