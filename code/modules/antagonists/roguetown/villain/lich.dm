@@ -159,6 +159,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/lich_announce)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/zizo/bestowcant/lich)
 		// Other role required spells.
+		H.mind.AddSpell(new /datum/action/cooldown/spell/conjure_summon/raise_undead_guard) //Caustic Edit - Add in the Undead Guard here as well!
 		H.mind.AddSpell(new /datum/action/cooldown/spell/raise_undead_formation)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/bonechill)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/bonemend)

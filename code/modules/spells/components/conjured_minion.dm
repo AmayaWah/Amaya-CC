@@ -13,7 +13,7 @@
 	var/untether_max = 10
 	var/tether_timer
 
-/datum/component/conjured_minion/Initialize(mob/living/summoner, energy_floor = 200, severity = CONJURE_RECOIL_FULL, stamina_only = FALSE)
+/datum/component/conjured_minion/Initialize(mob/living/summoner, energy_floor = 200, severity = CONJURE_RECOIL_FULL, stamina_only = FALSE, leash = 12, is_phantasmal = TRUE) //Caustic Edit - Allow for changing the leash distance! Default remains the same at 12.
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/minion = parent
@@ -22,13 +22,15 @@
 	recoil_energy_floor = energy_floor
 	recoil_severity = severity
 	recoil_stamina_only = stamina_only
+	leash_range = leash //Caustic Edit - Allow for setting the Leash Range dynamically!
 	if(isliving(summoner))
 		summoner.add_summoned_minion(parent)
 	ADD_TRAIT(parent, TRAIT_CONJURED_SUMMON, REF(src))
 	RegisterSignal(parent, COMSIG_MOB_DEATH, PROC_REF(on_summon_death))
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_leash))
 	if(ishuman(parent))
-		apply_phantasmal()
+		if(is_phantasmal) //Caustic Edit - Add in a check here to let spells toggle if they have that phantasmal look or not!
+			apply_phantasmal()
 		seal_organs()
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	var/mob/living/M = parent
@@ -147,7 +149,7 @@
 			summon_turf = get_turf(M)
 			if(summoner_turf.z != summon_turf.z)
 				return
-		
+
 		var/atom/comp_summoner = summoner_turf ? summoner_turf : summoner
 		//var/atom/comp_summon = summon_turf ? summon_turf : M
 		if(get_dist(current, comp_summoner) <= leash_range + 1)

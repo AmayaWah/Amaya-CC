@@ -62,6 +62,8 @@
 	var/recoil_stamina_only = FALSE
 	var/reclaim_recoil = TRUE
 	var/reclaim_recoil_threshold = 0.25
+	var/leash_dist = 12 //Caustic Edit - Allow for changing the leash range dynamically!
+	var/is_phantasmal = TRUE //Caustic Edit - Also add in the option to turn off that color-glow!
 
 /datum/action/cooldown/spell/conjure_summon/Grant(mob/grant_to)
 	. = ..()
@@ -178,7 +180,7 @@
 	for(var/mob/living/summoned in all_summoned)
 		conjured_mobs += summoned
 		RegisterSignal(summoned, COMSIG_QDELETING, PROC_REF(remove_conjure))
-		summoned.AddComponent(/datum/component/conjured_minion, user, recoil_energy_floor, recoil_severity, recoil_stamina_only)
+		summoned.AddComponent(/datum/component/conjured_minion, user, recoil_energy_floor, recoil_severity, recoil_stamina_only, leash_dist, is_phantasmal)
 		var/turf/landing = get_turf(summoned)
 		landing?.zFall(summoned)
 	return TRUE

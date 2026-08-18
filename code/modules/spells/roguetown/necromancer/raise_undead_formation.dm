@@ -7,13 +7,13 @@
 	spell_color = GLOW_COLOR_ZIZO
 	cast_range = 7
 	sound = 'sound/magic/magnet.ogg'
-	primary_resource_cost = 40
+	primary_resource_cost = SPELLCOST_CONJURE //Caustic Edit - Lets actually use the defines?
 	primary_resource_type = SPELL_COST_STAMINA
 	charge_required = TRUE
-	charge_time = 3 SECONDS //Quick for combat, useless outside of it mostly.
+	charge_time = 2 SECONDS //Quick for combat, useless outside of it mostly. //Caustic Edit - From 3 to 2
 	charge_slowdown = 1
 	associated_skill = /datum/skill/magic/arcane
-	cooldown_time = 25 SECONDS
+	cooldown_time = 20 SECONDS //Caustic Edit - From 25 to 20
 	zizo_spell = TRUE
 	invocation_type = INVOCATION_SHOUT
 	invocations = list("Evoca skeletos!")
@@ -100,16 +100,17 @@
 			M.ai_controller.set_blackboard_key(BB_HIGHEST_THREAT_MOB, S)
 
 			var/datum/component/ai_aggro_system/aggro = M.GetComponent(/datum/component/ai_aggro_system)
-			
+
 			if(aggro)
 				aggro.add_threat_to_mob(S, 100)
 
-		apply_mob_lifespan(S, owner, spawn_lifespan)
+		if(spawn_lifespan)
+			apply_mob_lifespan(S, owner, spawn_lifespan)
 
 	return TRUE
 
 /datum/action/cooldown/spell/raise_undead_formation/necromancer
 	cabal_affine = TRUE
 	is_summoned = TRUE
-	cooldown_time = 40 SECONDS
+	cooldown_time = 25 SECONDS //Caustic Edit - From 40 to 25
 	to_spawn = 3

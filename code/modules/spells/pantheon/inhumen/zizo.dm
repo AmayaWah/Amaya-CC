@@ -657,7 +657,7 @@
 // RAISE LESSER SKELETON SWARM (T2)
 /datum/action/cooldown/spell/conjure_summon/zizo/skeleton_swarm
 	name = "Raise Lesser Skeletons"
-	desc = "Invoke raw Enochian magicka to bind loose bones into two simple skeletal thralls. Their crude physiology is held together purely by magic; unable to be incapacitated, they shall stand until they crumble into spare bones. Toggle their armaments with Shift+G: Sword and Shield, Spear, or Two Daggers. Each one killed gives a partial recoil."
+	desc = "Invoke raw Enochian magicka to bind loose bones into one skeletal thrall. Their crude physiology is held together purely by magic; unable to be incapacitated, they shall stand until they crumble into spare bones. Toggle their armaments with Shift+G: Sword and Shield, Spear, or Two Daggers."
 	fluff_desc = "The faithful of Zizo do not raise the dead, they mock life by proving how little of it is truly required. Flesh decays, thought falters, and souls flee screaming into the arms of Necra, yet bone remains obedient. Through the language of ancient Enochian words of power, scattered remains are lashed together into a parody of mortal form, animated not by purpose or memory, but by the simple joy of defying the natural order."
 
 	button_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -667,7 +667,7 @@
 
 	primary_resource_type = SPELL_COST_DEVOTION
 	primary_resource_cost = 60
-	secondary_resource_type = SPELL_COST_ENERGY
+	secondary_resource_type = SPELL_COST_STAMINA //Caustic Edit - Good god this drained blue directly before...
 	secondary_resource_cost = 40
 
 	charge_required = TRUE
@@ -683,13 +683,14 @@
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN
 
 	summon_noun = "skeleton"
-	max_summons = 4
+	max_summons = 5 //Caustic Edit - Bump it from 4 to 5
 	summons_per_cast = 1
 	summon_replace_mode = CONJURE_SUMMON_SINGLES
 
 	recoil_energy_floor = 500
-	recoil_severity = CONJURE_RECOIL_PARTIAL
-	reclaim_recoil = TRUE
+	recoil_severity = CONJURE_RECOIL_LIGHT //Caustic Edit - Lets not do this.
+	reclaim_recoil = FALSE //Caustic Edit - Lets not do this.
+	is_phantasmal = FALSE //Caustic Edit - Disable the Phantasmal Glow!
 
 	invocation_type = null
 	invocations = null
@@ -843,7 +844,7 @@
 	primary_resource_cost = 100
 	secondary_resource_cost = 100
 	sound = 'sound/magic/swap.ogg'
-
+	var/exploit_this
 
 /datum/action/cooldown/spell/zizo/rituos/cast(atom/cast_on)
 	. = ..()
