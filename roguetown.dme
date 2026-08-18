@@ -2794,6 +2794,7 @@
 #include "code\modules\roguetown\roguecrafting\hunting.dm"
 #include "code\modules\roguetown\roguecrafting\items.dm"
 #include "code\modules\roguetown\roguecrafting\medicine.dm"
+#include "code\modules\roguetown\roguecrafting\runes.dm"
 #include "code\modules\roguetown\roguecrafting\sewing.dm"
 #include "code\modules\roguetown\roguecrafting\structure.dm"
 #include "code\modules\roguetown\roguecrafting\tallow.dm"
