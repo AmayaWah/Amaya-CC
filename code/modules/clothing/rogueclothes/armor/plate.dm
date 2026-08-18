@@ -153,7 +153,7 @@
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/clothing/suit/roguetown/armor/plate/paalloy/get_examine_highlight_status()
-	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_ZIZO_ARTIFICE)
+	return list(EXAMINEHIGHLIGHT_TOOLTIP_HERESYSEVERITY_ODD, HERESYDESC_ZIZO_ARTIFICE_RECLAIMED)
 
 /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer
 	name = "artificed half-plate"

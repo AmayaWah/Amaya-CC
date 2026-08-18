@@ -247,6 +247,7 @@
 			owner.add_stress(/datum/stressevent/high)
 
 /datum/status_effect/buff/baothablessing/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_MIRACLE)
 	if(owner?.client)
 		if(owner.client.screen && owner.client.screen.len)
 			var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in owner.client.screen
@@ -1986,47 +1987,6 @@
 /datum/status_effect/buff/clash/limbguard/guard_on_kick()
 	return
 
-#define BLOODRAGE_FILTER "bloodrage"
-
-/atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
-	name = "BLOODRAGE"
-	desc = "GRAGGAR! GRAGGAR! GRAGGAR!"
-	icon_state = "bloodrage"
-
-/datum/status_effect/buff/bloodrage
-	id = "bloodrage"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
-	var/outline_color = "#ad0202"
-	duration = 15 SECONDS
-
-/datum/status_effect/buff/bloodrage/on_apply()
-	ADD_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
-	var/holyskill = owner.get_skill_level(/datum/skill/magic/holy)
-	duration = ((15 SECONDS) * holyskill)
-	var/filter = owner.get_filter(BLOODRAGE_FILTER)
-	if(!filter)
-		owner.add_filter(BLOODRAGE_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 60, "size" = 2))
-	if(!HAS_TRAIT(owner, TRAIT_DODGEEXPERT))
-		if(owner.STASTR < STRENGTH_SOFTCAP)
-			effectedstats = list(STATKEY_STR = (STRENGTH_SOFTCAP - owner.STASTR))
-			. = ..()
-			return TRUE
-	if(holyskill >= SKILL_LEVEL_APPRENTICE)
-		effectedstats = list(STATKEY_STR = 2)
-	else
-		effectedstats = list(STATKEY_STR = 1)
-	. = ..()
-	return TRUE
-
-/datum/status_effect/buff/bloodrage/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
-	owner.visible_message(span_warning("[owner] wavers, their rage simmering down."))
-	owner.OffBalance(3 SECONDS)
-	owner.remove_filter(BLOODRAGE_FILTER)
-	owner.emote("breathgasp", forced = TRUE)
-	owner.Slowdown(3)
-
 /datum/status_effect/buff/psydonic_endurance
 	id = "psydonic_endurance"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
@@ -2045,8 +2005,6 @@
 	name = "Psydonic Vitality"
 	desc = "I feel blessed, underneath this holy armor!"
 	icon_state = "stressvg"
-
-#undef BLOODRAGE_FILTER
 
 /datum/status_effect/buff/sermon
 	id = "sermon"
@@ -2133,6 +2091,9 @@
 
 /datum/status_effect/buff/adrenaline_rush/melee
 	effectedstats = list(STATKEY_WIL = 1, STATKEY_CON = 1)
+
+/datum/status_effect/buff/adrenaline_rush/graggar
+	effectedstats = list(STATKEY_CON = 3)
 
 /datum/status_effect/buff/nocblessing
 	id = "nocblessing"
@@ -2801,16 +2762,25 @@
 	var/energy_per_tick = 0
 	var/total_to_restore = 0
 	var/currently_restored = 0
+	/// Missing energy percentage to restore
+	var/restore_percent_missing = 34
+	/// Minimum safety floor percentage to restore
+	var/min_restore_percent = 20
 
-/datum/status_effect/buff/invigoration/on_creation(mob/living/new_owner, set_duration = 10 SECONDS, restore_percent_missing = 34, min_restore_percent = 20)
+/datum/status_effect/buff/invigoration/on_creation(mob/living/new_owner, set_duration, set_restore_missing, set_min_restore)
+	// Respect custom overrides passed in, otherwise fall back to path variables
 	if(set_duration)
 		duration = set_duration
+	if(set_restore_missing)
+		restore_percent_missing = set_restore_missing
+	if(set_min_restore)
+		min_restore_percent = set_min_restore
 
 	var/missing_energy = new_owner.max_energy - new_owner.energy
 	var/percent_missing = (missing_energy / new_owner.max_energy) * 100
 	var/percent_missing_percent = percent_missing * (restore_percent_missing / 100)
 
-	// either the provided restore missing % or the minimum safety floor
+	// Either the calculated missing % or the minimum safety floor
 	var/restore_target_percent = max(percent_missing_percent, min_restore_percent)
 
 	// Total amount we want to restore over the whole duration
@@ -2818,8 +2788,9 @@
 
 	// Divide that total by the number of ticks
 	var/tick_interval = 1 SECONDS
-	var/num_ticks = max(round(set_duration / tick_interval), 1)
+	var/num_ticks = max(round(duration / tick_interval), 1)
 	energy_per_tick = total_to_restore / num_ticks
+
 	return ..()
 
 /datum/status_effect/buff/invigoration/on_apply()

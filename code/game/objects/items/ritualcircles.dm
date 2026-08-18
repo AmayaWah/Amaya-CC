@@ -618,7 +618,7 @@
 			new_weapon = new /obj/item/rogueweapon/greataxe/dreamscape(user.loc)
 			skill_to_teach = /datum/skill/combat/axes
 		if("Thunderous Trident")
-			new_weapon = new /obj/item/rogueweapon/spear/dreamscape_trident(user.loc)
+			new_weapon = new /obj/item/rogueweapon/spear/trident/dreamscape_trident(user.loc)
 			skill_to_teach = /datum/skill/combat/polearms
 
 	if(new_weapon)
@@ -1661,8 +1661,10 @@ More uniquely, her rites always cut out the light in the room, then proc. 10 sec
 	neck = /obj/item/clothing/neck/roguetown/bevor/zizo
 	r_hand = /obj/item/rogueweapon/sword/long/zizo
 
-	H.mind.RemoveSpell(/datum/action/cooldown/spell/touch/conjure_repairkit) // brute forcing this one, hope this works ryon!
+	H.mind.RemoveSpell(/datum/action/cooldown/spell/mending) // brute forcing this one, hope this works ryon!
 	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
+	if(!H.mind.has_spell(/datum/action/cooldown/spell/miracle/intervention) && H.devotion.max_devotion == CLERIC_REQ_4)	// Devotion check to make sure we give it to the HWretch not some Guy
+		H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/intervention)
 
 /datum/outfit/job/roguetown/darksteelrite/medium/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

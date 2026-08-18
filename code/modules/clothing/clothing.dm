@@ -96,6 +96,9 @@
 	if(heat_protection)
 		. += span_info("It looks like it will protect me from the <b>heat</b>.")
 
+/obj/item/proc/get_detail_state(base_state)
+	return base_state
+
 /obj/item/proc/get_detail_tag() //this is for extra layers on clothes
 	return detail_tag
 
