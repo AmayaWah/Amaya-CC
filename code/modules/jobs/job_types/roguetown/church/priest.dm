@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 	wrists = /obj/item/clothing/wrists/roguetown/wrappings
 	shoes = /obj/item/clothing/shoes/roguetown/sandals
 	beltl = /obj/item/storage/keyring/church
-	belt = /obj/item/storage/belt/rogue/leather/plaquegold
+	belt = /obj/item/storage/belt/rogue/leather/rope/upgraded
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	id = /obj/item/clothing/ring/active/nomag
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -403,7 +403,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		return TRUE
 
 	if (inputty in GLOB.excommunicated_players)
-		return //No stacking	
+		return //No stacking
 
 	if (H.real_name == inputty)
 		if (!COOLDOWN_FINISHED(src, priest_apostasy))
@@ -610,6 +610,23 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 		to_chat(user, span_warning("[target] wasn't marked by the enemy as a heretic!"))
 		revert_cast()
 		return FALSE
+
+	if(istype(target.patron, /datum/patron/vheslyn)) //UNFORGIVABLE SIN, UNFORGIVABLE, DIE. DIE. DIE.
+		to_chat(user, span_userdanger("[target] is UNFORGIVABLE, my attempt to convert them to the TEN, violently sunders my lux!"))
+		if(!HAS_TRAIT(user, TRAIT_NOPAIN))
+			user.emote("agony")
+		if(!HAS_TRAIT(user, TRAIT_NOMOOD))
+			user.freak_out()
+		playsound(user, 'sound/misc/lava_death.ogg', 100, TRUE)
+		user.adjust_fire_stacks(40, /datum/status_effect/fire_handler/fire_stacks/vheslyn) //YOU FUCKING DESERVE THIS
+		user.adjustFireLoss(120)//This will kill you, always.
+		user.Knockdown(30)
+		user.Jitter(30)
+		user.Stun(25)
+		user.ignite_mob()
+		explosion(get_turf(user), light_impact_range = 1, flame_range = 1, smoke = FALSE)
+		user.visible_message(span_danger("[user] is violently smited as profane flames engulf their entire body!"))
+		return TRUE
 
 	if(alert(target, "[user.real_name] is trying to convert you back to the church. Do you accept?", "Conversion Request", "Yes", "No") != "Yes")
 		to_chat(user, span_warning("[target] refused your offer of conversion."))

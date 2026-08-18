@@ -25,17 +25,17 @@
 		if(!ispath(private, /datum/patron) && private)	//Trait-exclusivity. At the moment it's only TRAIT_EMPATH for stress indicators.
 			var/list/can_see = list(src)
 			for(var/mob/M in viewers(world.view, src))
-				if(HAS_TRAIT(M, private))
+				if(HAS_TRAIT(M, private) || (private == TRAIT_EMPATH && M.has_empath_for(src)))
 					if(M != src)
 						can_see += M
-			
+
 			for(var/mob/M in can_see)
 				vis_contents += new /obj/effect/temp_visual/stress_event/invisible(null, M, icon_path, overlay_name, offset_list)
 				if(soundin)
 					var/turf/T = get_turf(src)
 					M.playsound_local(T, soundin, 100, FALSE)
 
-		if(ispath(private, /datum/patron))	//Patron signs. 
+		if(ispath(private, /datum/patron))	//Patron signs.
 			var/icon_plane = WEATHER_EFFECT_PLANE	//Will show up through the cone.
 			if(!ispath(private, /datum/patron/old_god))
 				for(var/mob/living/carbon/human/H in viewers(world.view, src))
@@ -51,17 +51,17 @@
 						pass = TRUE
 					if(soundin && pass)
 						var/turf/T = get_turf(src)
-						H.playsound_local(T, soundin, 100, FALSE) 
+						H.playsound_local(T, soundin, 100, FALSE)
 			else
 				for(var/mob/living/carbon/human/H in viewers(world.view, src))
 					if(H.patron?.type == private)
 						if(HAS_TRAIT(H, TRAIT_INQUISITION) && HAS_TRAIT(src, TRAIT_INQUISITION))	//Inquisition members will show a fancier symbol to one another.
 							vis_contents += new /obj/effect/temp_visual/stress_event/invisible(null, H, icon_path, "sign_[H.patron.name]inq", offset_list, y_offset, icon_plane)
-						else 
+						else
 							vis_contents += new /obj/effect/temp_visual/stress_event/invisible(null, H, icon_path, "sign_[H.patron.name]", offset_list, y_offset, icon_plane)
 						if(soundin)
 							var/turf/T = get_turf(src)
-							H.playsound_local(T, soundin, 100, FALSE) 
+							H.playsound_local(T, soundin, 100, FALSE)
 
 ///A simplified version of the proc that adds an overlay to the src and returns a reference to the appearance.
 ///Has no offset adjustment for bodies / sprite size. Make sure to account for that if using it on carbons!

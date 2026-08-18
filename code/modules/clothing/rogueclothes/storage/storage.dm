@@ -156,13 +156,23 @@
 	color = "#b9a286"
 	component_type = /datum/component/storage/concrete/roguetown/belt/cloth
 
+/obj/item/storage/belt/rogue/leather/rope/upgraded
+	name = "pouch-fitted rope belt"
+	desc = "A length of strong rope repurposed into a belt, fitted with a pouch for the same space as a leather belt."
+	component_type = /datum/component/storage/concrete/roguetown/belt
+
 /obj/item/storage/belt/rogue/leather/cloth
 	name = "cloth sash"
 	desc = "A strip of cloth tied together at the ends into a makeshift belt. It's better than nothing."
 	icon_state = "cloth"
 	component_type = /datum/component/storage/concrete/roguetown/belt/cloth
 
-/obj/item/storage/belt/rogue/leather/cloth/lady
+/obj/item/storage/belt/rogue/leather/cloth/upgraded
+	name = "pouch-fitted cloth sash"
+	desc = "A strip of cloth tied together at the ends into a makeshift belt, fitted with a pouch for the same space as a leather belt."
+	component_type = /datum/component/storage/concrete/roguetown/belt
+
+/obj/item/storage/belt/rogue/leather/cloth/upgraded/lady
 	color = "#575160"
 
 /obj/item/storage/belt/rogue/leather/cloth/bandit
@@ -577,7 +587,7 @@
 	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
 	icon_state = "rucksack"
 	item_state = "rucksack"
-	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK 
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 400
 	equip_sound = 'sound/blank.ogg'

@@ -59,7 +59,7 @@
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1, 
+		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 2,
 		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
@@ -101,7 +101,7 @@
 /datum/outfit/job/roguetown/ranesheni/amirah/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(should_wear_femme_clothes(H))
-		belt = /obj/item/storage/belt/rogue/leather/cloth/lady
+		belt = /obj/item/storage/belt/rogue/leather/cloth/upgraded/lady
 		head = /obj/item/clothing/head/roguetown/nyle
 		shirt = /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch
 		id = /obj/item/scomstone
@@ -118,7 +118,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel/short
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1, 
+		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 2,
 		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 1,

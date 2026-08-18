@@ -67,7 +67,7 @@
 	color = null
 	chunkcolor = null
 	allowed_sex = list(MALE, FEMALE)
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //50 more integ than a gamberson, at the cost of leg protection
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //More integ than a gamberson, at the cost of leg protection
 	shiftable = FALSE
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/lord/light
@@ -75,7 +75,7 @@
 	desc = "A lightweight collared jacket, purpose-woven for skirmishes and battle. The modest weight and streamlined form make it ideal for wearing under a cuirass or elegant halfplate."
 	icon_state = "dgamb"
 	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //50 more integrity and superior protection vs a light gamberson, and cheaper than a proper gamberson with the same integrity.
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //More integrity and superior protection vs a light gamberson, and cheaper than a proper gamberson with the same integrity.
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
 	name = "thin stalker robe"
@@ -103,7 +103,7 @@
 	icon_state = "dgamb"
 	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_ELITE //More integ than a padded gamberson, at the cost of leg protection
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy/silkjacket
 	name = "besilked jacket"
@@ -206,7 +206,7 @@
 	color = "#FFFFFF"
 	var/shiftable = FALSE
 	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + ARMOR_INT_LIGHT_FENCER_MODIFIER
 	blocksound = SOFTUNDERHIT
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
@@ -222,7 +222,7 @@
 /obj/item/clothing/suit/roguetown/shirt/freifechter/shepherd
 	name = "shepherd's shirt"
 	desc = "A strong loosely worn quilted shirt that places little weight on the arms."
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER - 35
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER - ARMOR_INT_LIGHT_FENCER_MODIFIER //adventurer variant, thus the lower integ.
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
 	name = "padded caftan"
@@ -309,7 +309,7 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	icon_state = "shadowrobe"
 	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM + 30 //280
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM + ARMOR_INT_LIGHT_BETWEENTIER_MODIFIER //225
 
 //Hand's gambeson, looks fancy
 
@@ -339,7 +339,7 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	armor = ARMOR_PADDED
 	color = null
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
+	max_integrity = ARMOR_INT_CHEST_LIGHT_ANTAG
 	armor_class = ARMOR_CLASS_LIGHT
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = CHEST | GROIN | ARMS
@@ -358,3 +358,6 @@
 	if(QDELETED(src))
 		return
 	qdel(src)
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/baotha/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_BAOTHA_ARMOR)

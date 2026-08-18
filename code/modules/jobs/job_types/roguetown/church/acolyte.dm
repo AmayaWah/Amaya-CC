@@ -23,7 +23,8 @@
 	job_traits = list(TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_HOMESTEAD_EXPERT, TRAIT_CLERGY, TRAIT_MARRIAGE_CAPABLE)
 	advclass_cat_rolls = list(CTAG_ACOLYTE = 2)
 	job_subclasses = list(
-		/datum/advclass/acolyte
+		/datum/advclass/acolyte,
+		/datum/advclass/herald,
 	)
 
 /datum/advclass/acolyte
@@ -65,7 +66,7 @@
 /datum/outfit/job/roguetown/monk/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	belt = /obj/item/storage/belt/rogue/leather/rope
+	belt = /obj/item/storage/belt/rogue/leather/rope/upgraded
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	beltl = /obj/item/storage/keyring/acolyte
 	backl = /obj/item/storage/backpack/rogue/satchel

@@ -373,8 +373,8 @@
 	head = /obj/item/clothing/head/roguetown/menacing/executioner
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	mask = /obj/item/clothing/head/roguetown/roguehood/black
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue // CC Edit Start
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson //CC edit end
+	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
@@ -413,7 +413,7 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT, // SWING THAT THING.
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, 
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN, // On par with Footman, but journeyman.
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,

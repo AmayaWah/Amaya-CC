@@ -85,7 +85,7 @@
 	item_state = "psydonboots"
 	sewrepair = TRUE
 	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_SIDE_HARDLEATHER //170 extra hp. stop footfragging my orthos. 
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER //170 extra hp. stop footfragging my orthos.
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
@@ -279,7 +279,7 @@
 	desc = "A pair of lightweight snugly fitting boots. They're reinforced along the toes and ankles and offer a measure of protection against missteps and glancing blows during close exchanges, often favoured by duelists and other itinerant swordsmen."
 	icon_state = "freiboots"
 	item_state = "freiboots"
-	max_integrity = ARMOR_INT_SIDE_HARDLEATHER + 50
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER + ARMOR_INT_LIGHT_FENCER_MODIFIER
 
 /obj/item/clothing/shoes/roguetown/boots/armor/dwarven
 	name = "grudgebearer dwarven boots"
@@ -445,15 +445,8 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
 
-/obj/item/clothing/shoes/roguetown/boots/armor/graggar/heavy/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/clothing/shoes/roguetown/boots/armor/graggar/heavy/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
+/obj/item/clothing/shoes/roguetown/boots/armor/graggar/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_GRAGGAR_ARMOR)
 
 /obj/item/clothing/shoes/roguetown/boots/armor/matthios
 	max_integrity = ARMOR_INT_SIDE_ANTAG
@@ -462,6 +455,9 @@
 	icon_state = "matthiosboots"
 	armor = ARMOR_PLATE_BSTEEL
 	smeltresult = /obj/item/ingot/component/matthios
+
+/obj/item/clothing/shoes/roguetown/boots/armor/matthios/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_MATTHIOS_ARMOR)
 
 //Caustic Edit - Let us remove and drop armors again! For fun stuffs.
 /obj/item/clothing/shoes/roguetown/boots/armor/matthios/Initialize()
@@ -490,6 +486,9 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
 
+/obj/item/clothing/shoes/roguetown/boots/armor/zizo/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_ZIZO_ARMOR)
+
 //Caustic Edit - Let us remove and drop armors again! For fun stuffs.
 /obj/item/clothing/shoes/roguetown/boots/armor/zizo/heavy/Initialize()
 	. = ..()
@@ -513,6 +512,9 @@
 	armor = ARMOR_PLATE_BSTEEL
 	armor_class = ARMOR_CLASS_MEDIUM
 	smeltresult = /obj/item/ingot/avantyne
+
+/obj/item/clothing/shoes/roguetown/boots/armor/avantyne/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_ZIZO_ARMOR)
 
 /obj/item/clothing/shoes/roguetown/boots/armor/baotha
 	name = "saccharine heels"
@@ -539,6 +541,9 @@
 	if(QDELETED(src))
 		return
 	qdel(src)
+
+/obj/item/clothing/shoes/roguetown/boots/armor/baotha/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_BAOTHA_ARMOR)
 
 /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	name = "iron plated boots"
@@ -825,3 +830,64 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
+//Wraps
+
+/obj/item/clothing/shoes/roguetown/footwraps
+	name = "cloth footwraps"
+	desc = "Thickly-woven bandages that've been wrapped around the ankles to protect from any unwanted shattered teeth from sticking in your precious legs."
+	gender = PLURAL
+	icon_state = "footwraps"
+	sewrepair = TRUE
+	salvage_result = /obj/item/natural/cloth
+	var/atom/movable/holdingknife = null
+
+/obj/item/clothing/shoes/roguetown/footwraps/examine(mob/user)
+	. = ..()
+	if(holdingknife)
+		. += span_notice("There is a knife tucked into the side of the footwraps.")
+
+/obj/item/clothing/shoes/roguetown/footwraps/attackby(obj/item/W, mob/living/carbon/user, params)
+	// Special exception for rotfang to help deal with inventory woes / make it harder to steal.
+	if(istype(W, /obj/item/rogueweapon/huntingknife/throwingknife) || istype(W, /obj/item/rogueweapon/huntingknife/idagger/steel/rotfang))
+		if(holdingknife == null)
+			for(var/obj/item/clothing/shoes/roguetown/footwraps/B in user.get_equipped_items(TRUE))
+				to_chat(loc, span_warning("I quickly slot [W] into [B]!"))
+				user.transferItemToLoc(W, holdingknife)
+				holdingknife = W
+				playsound(loc, 'sound/foley/equip/swordsmall1.ogg')
+		else
+			to_chat(loc, span_warning("My boot already holds a knife."))
+		return
+	. = ..()
+
+/obj/item/clothing/shoes/roguetown/footwraps/attack_right(mob/user)
+	if(holdingknife != null)
+		if(!user.get_active_held_item())
+			user.put_in_active_hand(holdingknife, user.active_hand_index)
+			holdingknife = null
+			playsound(loc, 'sound/foley/equip/swordsmall1.ogg')
+			return TRUE
+
+/obj/item/clothing/shoes/roguetown/footwraps/padded
+	name = "padded cloth footwraps"
+	desc = "Thickly-woven padded bandages wrapped about one's ankles to maintain mobility for climbing and kicking."
+	armor = ARMOR_PADDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+
+/obj/item/clothing/shoes/roguetown/footwraps/hleather
+	name = "hardened leather footwraps"
+	desc = "A cut down pair of boots maintaining most of the cover they'd normally offer with added comfort for those with inhumen anatomy."
+	icon_state = "footwraps_hleather"
+	salvage_result = /obj/item/natural/hide/cured
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
+
+/obj/item/clothing/shoes/roguetown/sandals/toga
+	name = "toga sandals"
+	desc = "A fancy pair of sandals delicately woven in a style that harken back to bygone yils of antiquity."
+	gender = PLURAL
+	icon_state = "togasandals"
+	item_state = "togasandals"
+	salvage_amount = 1
+	salvage_result = /obj/item/natural/cloth

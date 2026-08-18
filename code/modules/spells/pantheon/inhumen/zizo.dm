@@ -124,7 +124,7 @@
 		secondary_resource_cost = 0
 		projectile_type = /obj/projectile/magic/profane/enhanced
 		user.visible_message(span_purple("Lingering bones crumble around [user]'s hand..."), span_purple("Lingering bones enhance your Divine evocation. Blessed four!"))
-	
+
 	. = ..()
 	projectile_type = original_projectile
 	primary_resource_cost = original_primary
@@ -306,6 +306,9 @@
 
 	if(out_of_effective_range())
 		return
+	if(blocked >= 100)
+		qdel(src)
+		return
 	try_embed_target(L)
 	qdel(src)
 
@@ -434,7 +437,7 @@
 /datum/action/cooldown/spell/zizo/rituos
 	name = "Rituos"
 	desc = "Enact one of the Lesser Work of Zizo - a single, agonizing ritual that tears open a path to power. Choose Progress to gain arcyne knowledge, or Unlife to embrace undeath."
-	fluff_desc = "The holiest of Zizo's Lesser Works among the Cabal. A rite of surrendering weakness and mortality to embrace your purpose in Her design. Through agony, the faithful offer either mind or flesh, allowing Zizo to strip away mortal frailty and shape them into reflections of her ascension. Some surrender thought for forbidden understanding. Others surrender flesh for the stillness of unlife. Few endure enough to become what She envisioned. When the gifts fade, the faithful are taught only one truth: they have not sacrificed enough."	
+	fluff_desc = "The holiest of Zizo's Lesser Works among the Cabal. A rite of surrendering weakness and mortality to embrace your purpose in Her design. Through agony, the faithful offer either mind or flesh, allowing Zizo to strip away mortal frailty and shape them into reflections of her ascension. Some surrender thought for forbidden understanding. Others surrender flesh for the stillness of unlife. Few endure enough to become what She envisioned. When the gifts fade, the faithful are taught only one truth: they have not sacrificed enough."
 	button_icon = 'icons/mob/actions/zizomiracles.dmi'
 	button_icon_state = "rituos"
 	charge_sound = 'sound/magic/chargingold.ogg'
@@ -491,7 +494,7 @@
 		if(path_choice == "Progress")
 			user.emote(pick("whimper", "painmoan", "gag", "choke"))
 		else
-			user.emote(pick("painscream", "agony", "paincrit", "choke"))
+			user.emote(pick("painscream", "superagony", "agony", "paincrit", "choke"))
 		if(i > 1)
 			shake_camera(user, i * 2, i)
 		if(!do_after(user, 3 SECONDS, target = user))
@@ -504,7 +507,7 @@
 		if("Progress") // support path, your mind is twisted in Her design
 			user.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 			if(user.mind)
-				user.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 2, "utilities" = 6))
+				user.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 2, "utilities" = 8))
 				ADD_TRAIT(user, TRAIT_STEELHEARTED, "[type]") // so you can commit atrocities with a smile
 				ADD_TRAIT(user, TRAIT_JACKOFALLTRADES, "[type]") // the progress palooza to let you grind more efficiently
 				ADD_TRAIT(user, TRAIT_SELF_SUSTENANCE, "[type]") // also fitting for the progress vibe, way more balanced than the specialist traits IMO
@@ -535,7 +538,7 @@
 			user.update_body_parts()
 			user.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 			if(user.mind)
-				user.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 2, "utilities" = 4))
+				user.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 2, "utilities" = 5))
 				user.mind.AddSpell(new /datum/action/cooldown/spell/bonechill)
 				user.mind.AddSpell(new /datum/action/cooldown/spell/bonemend)
 				grant_poke_spell(user)
@@ -552,7 +555,7 @@
 /datum/action/cooldown/spell/zizo/bone_cataclysm
 	name = "Bone Cataclysm"
 	desc = "Detonate all of your nearby skeletons in a wave of profane bone shrapnel. You and Gravemarked allies will not be harmed by it.<br><br>If used outside Combat Mode, you will disintegrate them and restore your energy."
-	fluff_desc = "Zizo taught her faithful that the dead must always serve twice: once in unlife, and once more when their bones are shattered in her name."	
+	fluff_desc = "Zizo taught her faithful that the dead must always serve twice: once in unlife, and once more when their bones are shattered in her name."
 	button_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	button_icon_state = "Kindle"
 	click_to_activate = FALSE
@@ -604,7 +607,7 @@
 			S.Jitter(100)
 			var/datum/beam/B = caster.Beam(S, icon_state = "necra_beam", time = 50, maxdistance = 20)
 			addtimer(CALLBACK(src, PROC_REF(explode_skeleton), S, caster, B), rand(3 SECONDS, 6 SECONDS))
-		
+
 		return TRUE
 
 	else
@@ -622,113 +625,3 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "chronobolt"
 	embedding = list("embed_chance" = 100, "embedded_pain_chance" = 45, "embedded_fall_chance" = 0, "embedded_bloodloss" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
-
-/datum/action/cooldown/spell/zizo/bone_cataclysm/proc/explode_skeleton(mob/living/S, mob/living/caster, datum/beam/B)
-	if(B)
-		B.End()
-	if(!S || QDELETED(S))
-		return
-	if(!caster || QDELETED(caster))
-		return
-
-	var/turf/T = get_turf(S)
-	if(!T)
-		return
-
-	var/faction_tag = "[caster.real_name]_faction"
-
-	S.visible_message(span_danger("[S] erupts into a storm of bone fragments!"))
-	new /obj/effect/temp_visual/explosion(T)
-	playsound(T, 'sound/misc/explode/explosion.ogg', 50)
-
-// Repulse copypasta for more chupatz, will affect you too, just not do damage.
-	var/list/thrownatoms = list()
-	for(var/turf/nearby in get_hear(1, T))
-		for(var/atom/movable/AM in nearby)
-			thrownatoms += AM
-	for(var/atom/movable/AM in thrownatoms)
-		if(QDELETED(AM))
-			continue
-		if(AM == S)
-			continue
-		if(AM.anchored)
-			continue
-		if(isliving(AM))
-			var/mob/living/M = AM
-			if(M == owner)
-				continue
-			if(M.mind?.current)
-				if(faction_tag in M.mind.current.faction)
-					continue
-			else
-				if(faction_tag in M.faction)
-					continue
-			if(!M.mind && M.resting && M.stat != CONSCIOUS) // to finish off NPCs in a cooler way
-				M.gib(TRUE, TRUE, TRUE, FALSE)
-			if(!M.mind)
-				M.Stun(50)
-			M.set_resting(TRUE, TRUE)
-			to_chat(M, span_danger("The blast hurls you backwards!"))
-		var/atom/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(AM, T)))
-		AM.safe_throw_at(throwtarget, 2, 1, owner, force = MOVE_FORCE_EXTREMELY_STRONG)
-
-	for(var/mob/living/carbon/C in view(4, T))
-		if(C.stat == DEAD && C.mind)
-			continue
-		if(C == owner)
-			continue
-		if(C.mind?.current)
-			if(faction_tag in C.mind.current.faction)
-				continue
-		else
-			if(faction_tag in C.faction)
-				continue
-
-		var/dist = get_dist(C, T)
-		var/min_splinters
-		var/max_splinters
-
-		switch(dist)
-			if(0,1)
-				min_splinters = 3
-				max_splinters = 4
-			if(2)
-				min_splinters = 1
-				max_splinters = 3
-			if(3)
-				min_splinters = 1
-				max_splinters = 2
-			else
-				continue
-		var/splinter_count = rand(min_splinters, max_splinters)
-		C.adjustBruteLoss(rand(10,20))
-
-		for(var/i in 1 to splinter_count)
-			if(!length(C.bodyparts))
-				break
-			var/obj/item/bodypart/limb = pick(C.bodyparts)
-			var/obj/item/bone/splinter/P = new
-			limb.add_embedded_object(P, FALSE, TRUE)
-		C.apply_status_effect(/datum/status_effect/debuff/clickcd, 8 SECONDS)
-		C.apply_status_effect(/datum/status_effect/debuff/exposed, 10 SECONDS)
-		to_chat(C, span_userdanger("Bone splinters bury themselves deep into your flesh!"))
-	new /obj/effect/decal/remains/human(T)
-	qdel(S)
-
-/datum/action/cooldown/spell/zizo/bone_cataclysm/proc/despawn_skeleton(mob/living/S,	mob/living/caster, datum/beam/B)	
-	if(B)
-		B.End()
-	if(!S || QDELETED(S))
-		return
-	if(!caster || QDELETED(caster))
-		return
-	var/turf/T = get_turf(S)
-	if(!T)
-		return
-	S.visible_message(span_warning("[S] crumbles apart into pale dust as its essence is siphoned away!"), span_warning("Ashes to ashes, dust to dust..."))
-	playsound(T, 'sound/magic/swap.ogg', 50, TRUE)
-	caster.energy_add(100)
-	caster.stamina_add(-50)
-	new /obj/item/ash(T)
-	new /obj/item/ash(T)
-	qdel(S)

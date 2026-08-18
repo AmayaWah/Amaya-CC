@@ -20,13 +20,13 @@
 	melee_damage_lower = 6
 	base_intents = list(/datum/intent/simple/claw/cabbit_undead)
 
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat_rotten = 2, 
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat_rotten = 2,
 							/obj/item/alch/sinew = 1,
 							/obj/item/alch/bone = 1,
 							/obj/item/natural/fur/rabbit = 1,
 							/obj/item/natural/rabbitsfoot = 0,
 							/obj/item/alch/viscera = 1)
-	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat_rotten = 3, 
+	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat_rotten = 3,
 							/obj/item/alch/sinew = 1,
 							/obj/item/alch/bone = 1,
 							/obj/item/natural/fur/rabbit = 1,
@@ -54,7 +54,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/cabbit/undead/Initialize()
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
-	AddComponent(/datum/component/deadite, 15 MINUTES, 30, 30, "cabbit_downed", 1)
+	AddComponent(/datum/component/deadite, 15 MINUTES, 30, 30, "cabbit_downed", 0) //Caustic Edit - Infection Chance set to 0, from 1
 
 /datum/intent/simple/claw/cabbit_undead
 	clickcd = CABBIT_UNDEAD_ATTACK_SPEED

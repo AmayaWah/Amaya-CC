@@ -30,7 +30,7 @@
 	var/ignore_los = FALSE
 	var/glow_intensity = 0 // How much does the user glow when using the ability
 	var/glow_color = null // The color of the glow
-	var/hide_charge_effect = FALSE // If true, will not show the spell's icon when charging 
+	var/hide_charge_effect = FALSE // If true, will not show the spell's icon when charging
 	/// This spell holder's cooldown does not scale with any stat
 	var/is_cdr_exempt = FALSE
 	var/obj/effect/mob_charge_effect = null
@@ -189,6 +189,7 @@ GLOBAL_LIST_INIT(action_spells, typesof(/datum/action/cooldown/spell)) //Caustic
 	var/gesture_required = FALSE // Can it be cast while cuffed? Rule of thumb: Offensive spells + Mobility cannot be cast
 	var/spell_tier = 1 // Tier of the spell, used to determine whether you can learn it based on your spell. Starts at 1.
 	var/spell_impact_intensity = SPELL_IMPACT_NONE // Visual impact intensity for on-hit effects. See SPELL_IMPACT defines.
+	var/source_aspect // Aspect type path this spell was granted by, if any.
 	var/zizo_spell = FALSE // If this spell is fucked up & evil and can only be learned by heretics.
 
 	var/overlay = 0
@@ -361,7 +362,7 @@ GLOBAL_LIST_INIT(action_spells, typesof(/datum/action/cooldown/spell)) //Caustic
 		return FALSE
 
 	var/mob/living/living_user = user
-	if(istype(living_user) && living_user.has_status_effect(/datum/status_effect/debuff/exposed))
+	if(istype(living_user) && living_user.has_status_effect(/datum/status_effect/debuff/cast_disrupted))
 		to_chat(user, span_warning("I'm too exposed to focus on casting!"))
 		return FALSE
 
@@ -864,7 +865,7 @@ GLOBAL_LIST_INIT(action_spells, typesof(/datum/action/cooldown/spell)) //Caustic
 				return FALSE
 			if(!H.has_active_hand())
 				return FALSE
-	
+
 	if((invocation_type == "whisper" || invocation_type == "shout") && isliving(user))
 		var/mob/living/living_user = user
 		if(!living_user.can_speak_vocal())
@@ -907,14 +908,14 @@ GLOBAL_LIST_INIT(action_spells, typesof(/datum/action/cooldown/spell)) //Caustic
 /// Helper for non-projectile spells. Call before applying effects to a target.
 /// Returns TRUE if the target's Guard or parry buffer deflected the spell (skip this target).
 /// Returns FALSE if the spell should proceed normally.
-/// If attacker is provided, they get Exposed when guard deflects (pseudo-melee punishment).
+/// The caster is Exposed when guard deflects (pseudo-melee punishment); pass attacker to override who is punished.
 /// Usage in cast(): if(spell_guard_check(L)) continue
 /obj/effect/proc_holder/spell/proc/spell_guard_check(mob/living/target, no_message = FALSE, mob/living/attacker)
 	if(!isliving(target))
 		return FALSE
 	if(target == (ranged_ability_user || action?.owner))
 		return FALSE
-	if(isnull(attacker) && ispath(associated_skill, /datum/skill/magic/arcane))
+	if(isnull(attacker))
 		attacker = ranged_ability_user || action?.owner
 	return target.guard_deflect_spell(name, no_message, attacker)
 

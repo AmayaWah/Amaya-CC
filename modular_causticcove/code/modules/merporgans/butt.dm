@@ -28,6 +28,8 @@ GLOBAL_LIST_INIT(named_butt_sizes, list(
 	"enormous" = 6,
 	"gigantic" = 7,
 	"gargantuan" = 8,
+	"colossal" = 9,
+	"ungodly big" = 10,
 ))
 
 /datum/sprite_accessory/butt

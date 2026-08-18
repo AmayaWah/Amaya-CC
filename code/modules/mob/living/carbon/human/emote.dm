@@ -6,6 +6,7 @@
 	key_third_person = "cries"
 	message = "cries."
 	emote_type = EMOTE_AUDIBLE
+	needs_emotion = TRUE
 
 /mob/living/carbon/human/verb/emote_cry()
 	set name = "Cry"
@@ -32,6 +33,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	is_quiet = TRUE
+	needs_emotion = TRUE
 
 /datum/emote/living/carbon/human/sexmoanlight/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
@@ -46,6 +48,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	is_quiet = TRUE
+	needs_emotion = TRUE
 
 /datum/emote/living/carbon/human/sexmoanhvy/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
@@ -167,6 +170,35 @@
 
 /mob/living/carbon/human/proc/CloseWings()
 	return
+
+/datum/emote/living/carbon/human/eflick
+	key = "eflick"
+	key_third_person = "flicks"
+	message = "flicks their ears."
+	emote_type = EMOTE_VISIBLE
+	show_runechat = TRUE
+
+/datum/emote/living/carbon/human/eflick/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = user
+	if(!istype(H) || !H.dna || !H.dna.species || !H.dna.species.can_flick_ears(H))
+		return
+	if(!H.dna.species.is_flicking_ears(H))
+		H.dna.species.perform_flick_ears(H)
+
+/datum/emote/living/carbon/human/eflick/can_run_emote(mob/user, status_check = TRUE , intentional)
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	return H.dna && H.dna.species && H.dna.species.can_flick_ears(user)
+
+/mob/living/carbon/human/verb/emote_eflick()
+	set name = "Ear Flick"
+	set category = "EMOTES"
+
+	emote("eflick", intentional = TRUE)
 
 /datum/emote/living/carbon/human/weh
 	key = "weh"

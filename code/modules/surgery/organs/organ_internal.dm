@@ -172,12 +172,13 @@
 	var/obj/item/organ/organ_inside
 
 /obj/item/reagent_containers/food/snacks/organ/On_Consume(mob/living/eater)		//Graggarites looove eating organs, they loooove eating organs!
-	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER))
+	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER)) //Caustic Edit - Allow Nasty and Wild Eaters to also not get sick from eating these along with Graggarites!
 		eat_effect = /datum/status_effect/buff/snackbuff
+	if(HAS_TRAIT(eater, TRAIT_NASTY_EATER) || HAS_TRAIT(eater, TRAIT_WILD_EATER) || HAS_TRAIT(eater, TRAIT_ORGAN_EATER))
 		foodtype = RAW | MEAT
 	else
 		eat_effect = initial(eat_effect)
-		foodtype = initial(foodtype)
+		foodtype = initial(foodtype) //Caustic Edit End
 	if(bitecount >= bitesize)
 		record_featured_stat(FEATURED_STATS_CRIMINALS, eater)
 		record_round_statistic(STATS_ORGANS_EATEN)
@@ -332,6 +333,9 @@
 
 		bodypart_overlays(organ_overlay)
 		return organ_overlay
+
+/obj/item/organ/proc/get_cache_key()
+	return "[accessory_type]-[accessory_colors]-[bodypart_icon]-[bodypart_icon_state]-[color]-[bodypart_layer]"
 
 /// Proc to customize the base icon of the organ.
 /obj/item/organ/proc/bodypart_icon(mutable_appearance/standing)

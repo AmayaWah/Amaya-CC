@@ -315,6 +315,9 @@
 //What we do after closing in
 /mob/living/simple_animal/hostile/proc/MeleeAction(patience = TRUE)
 	//Caustic Cove Edit
+	if (melee_cooled_down > world.time)
+		return
+
 	melee_cooled_down = world.time + melee_cooldown
 	//Caustic Cove Edit End
 
@@ -362,14 +365,10 @@
 			Goto(target,move_to_delay,minimum_distance)
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
-				//Caustic Cove Edit
-				if (melee_cooled_down <= world.time)
-					MeleeAction()
+				MeleeAction()
 			else
 				if(rapid_melee > 1 && target_distance <= melee_queue_distance)
-					if (melee_cooled_down <= world.time)
-						MeleeAction(FALSE)
-				//Caustic Cove Edit End
+					MeleeAction(FALSE)
 				in_melee = FALSE //If we're just preparing to strike do not enter sidestep mode
 			return 1
 		return 0

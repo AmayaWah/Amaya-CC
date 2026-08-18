@@ -1,8 +1,7 @@
 /datum/advclass/mystic
 	name = "Mystic"
-	tutorial = "I have spent my youth deepening my faith, only to be lured by the way of the magi, to the great regret of my family"
+	tutorial = "I have spent my youth deepening my faith, only to be lured by the way of the magi, to the great regret of my family and scorn of the Church, they will treat my wounds but they wont ever accept me within the fold"
 	allowed_sexes = list(MALE, FEMALE)
-	
 	outfit = /datum/outfit/job/roguetown/adventurer/mystic
 	class_select_category = CLASS_CAT_MYSTIC
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
@@ -21,17 +20,16 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE, 
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN, // average weapon skill for an adventurer role
 	)
 
 /datum/outfit/job/roguetown/adventurer/mystic/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("I have spent my youth deepening my faith, only to be lured by the way of the magi, to the great regret of my family"))
+	to_chat(H, span_warning("I have spent my youth deepening my faith, only to be lured by the way of the magi, to the great regret of my family and scorn of the Church, they will treat my wounds but they wont ever accept me within the fold"))
 	head = /obj/item/clothing/head/roguetown/roguehood/mage
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -41,11 +39,9 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/backpack
-	r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
-	l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 	H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/wizard]
 	backpack_contents = list(
-		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/flashlight/flare/torch/lantern/censer = 1,
 		/obj/item/recipe_book/survival = 1,
 		/obj/item/folding_alchcauldron_stored = 1,
 		/obj/item/reagent_containers/glass/bottle = 3,
@@ -53,9 +49,56 @@
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/rogueweapon/spellbook = 1,
 		/obj/item/chalk = 1,
+		/obj/item/herbmill/bootleg = 1,
 		)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)
+
+	if(H.mind)
+		H.mind.RemoveSpell(/datum/action/cooldown/spell/miracle/heal)
+		H.mind.RemoveSpell(/datum/action/cooldown/spell/miracle/heal/undivided)
+
+	switch(H.patron?.type)
+		if(/datum/patron/divine/undivided)
+			var/list/heal = list("Greater Miracle (Divine)", "Fortifying Vapors (Secular)")
+			var/highheal_options = input(H, "Choose your healing training.", "Experientia Medica") as anything in heal
+			switch(highheal_options)
+				if("Greater Miracle (Divine)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/heal/undivided)
+				if("Fortifying Vapors (Secular)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+
+		if(/datum/patron/old_god)
+			H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+
+		else
+			var/list/heal = list("Miracle (Divine)", "Fortifying Vapors (Secular)")
+			var/heal_options = input(H, "Choose your healing training.", "Experientia Medica") as anything in heal
+			switch(heal_options)
+				if("Miracle (Divine)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/heal)
+				if("Fortifying Vapors (Secular)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+
+
+	if(H.mind)
+		var/weapons = list("Lesser Staff", "Lesser Tome", "Quarterstaff")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Lesser Staff")
+				r_hand = /obj/item/rogueweapon/woodstaff/implement
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/arcyne, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if("Lesser Tome")
+				r_hand = /obj/item/rogueweapon/spellbook
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/arcyne, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if("Quarterstaff")
+				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
+				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/arcyne, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross
@@ -106,9 +149,8 @@
 
 /datum/advclass/mystic/resilientsoul
 	name = "Sage"
-	tutorial = "I have spent my youth studying both the Arcyne and Miraculous ways, and developed my mastery of shielding and preserving lyfe under my care."
+	tutorial = "I have spent my youth studying both the Arcyne in secret and Miraculous ways in the open, and developed my mastery of shielding and preserving lyfe under my care. to the great displeasure of the Church they will still treat my wounds but will never welcome me back amoung the flock."
 	allowed_sexes = list(MALE, FEMALE)
-	
 	outfit = /datum/outfit/job/roguetown/adventurer/resilient
 	class_select_category = CLASS_CAT_MYSTIC
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
@@ -131,12 +173,11 @@
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/adventurer/resilient/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("I have spent my youth deepening my faith, but soon followed closely on the side of a generous enchantor who taught me a few tricks to preserve and save lyves"))
+	to_chat(H, span_warning("I have spent my youth studying both the Arcyne in secret and Miraculous ways in the open, and developed my mastery of shielding and preserving lyfe under my care. to the great displeasure of the Church they will still treat my wounds but will never welcome me back amoung the flock."))
 	head = /obj/item/clothing/head/roguetown/roguehood/mage
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -146,43 +187,60 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/woodstaff
 	H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/wizard]
 	backpack_contents = list(
-		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/flashlight/flare/torch/lantern/censer = 1,
 		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/spellbook = 1,
 		/obj/item/chalk = 1,
+		/obj/item/herbmill/bootleg = 1,
 		)
 
 	grant_poke_spell(H)
 	H.mind.AddSpell(new /datum/action/cooldown/spell/augment_buff/blood_rush)
 	H.mind.AddSpell(new /datum/action/cooldown/spell/bestow_ward)
-
-	var/list/poke_options = list("Spitfire", "Frost Bolt", "Arc Bolt", "Greater Arcyne Bolt", "Stygian Efflorescence", "Arcyne Lance", "Lesser Gravel Blast", "Lesser Soulshot")
-	var/poke_choice = input(H, "Choose your offensive cantrip.", "Arcyne Training") as anything in poke_options
-	switch(poke_choice)
-		if("Spitfire")
-			H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/spitfire)
-		if("Frost Bolt")
-			H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/frost_bolt)
-		if("Arc Bolt")
-			H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/arc_bolt)
-		if("Greater Arcyne Bolt")
-			H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/greater_arcyne_bolt)
-		if("Stygian Efflorescence")
-			H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/stygian_efflorescence)
-		if("Arcyne Lance")
-			H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/arcyne_lance)
-		if("Lesser Gravel Blast")
-			H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/gravel_blast/lesser)
-		if("Lesser Soulshot")
-			H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/soulshot/lesser)
-			
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)
 	if(H.mind)
 		H.mind.RemoveSpell(/datum/action/cooldown/spell/miracle/bloodmiracle)
+		H.mind.RemoveSpell(/datum/action/cooldown/spell/miracle/heal)
+		H.mind.RemoveSpell(/datum/action/cooldown/spell/miracle/heal/undivided)
+
+	switch(H.patron?.type)
+		if(/datum/patron/divine/undivided)
+			var/list/heal = list("Greater Miracle (Miracle)", "Fortifying Vapors (Secular)")
+			var/highheal_options = input(H, "Choose your healing training.", "Experientia Medica") as anything in heal
+			switch(highheal_options)
+				if("Greater Miracle (Divine)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/heal/undivided)
+				if("Fortifying Vapors (Secular)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+
+		if(/datum/patron/old_god)
+			H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+
+		else
+			var/list/heal = list("Miracle (Divine)", "Fortifying Vapors (Secular)")
+			var/heal_options = input(H, "Choose your healing training.", "Experientia Medica") as anything in heal
+			switch(heal_options)
+				if("Miracle (Divine)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/heal)
+				if("Fortifying Vapors (Secular)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+
+	if(H.mind)
+		var/weapons = list("Lesser Staff", "Lesser Tome")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Lesser Staff")
+				r_hand = /obj/item/rogueweapon/woodstaff/implement
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/arcyne, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if("Lesser Tome")
+				r_hand = /obj/item/rogueweapon/spellbook
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/arcyne, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross
@@ -233,9 +291,8 @@
 
 /datum/advclass/mystic/holyblade
 	name = "Luminary"
-	tutorial = "I have spent my youth deepening my faith and one day an azurcaephan was under my care at the church, ever since their recovery i became the pupil of the noccite priests and templars"
+	tutorial = "I have spent my youth deepening my faith and one day a spellblade was under my care at the church, after they recovered they taught me a thing of two of the arcyne, abandoning my duties for but a few daes infuriated the Bishop that banished me from the flock, they will still gladely treat my wounds in their infinite goodness."
 	allowed_sexes = list(MALE, FEMALE)
-	
 	outfit = /datum/outfit/job/roguetown/adventurer/holyblade
 	class_select_category = CLASS_CAT_MYSTIC
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
@@ -262,7 +319,7 @@
 
 /datum/outfit/job/roguetown/adventurer/holyblade/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("I have spent my youth deepening my faith and one day a spellblade was under my care at the church, ever since their recovery they accepted me as their pupil and taught me the way of the blade and arcyne"))
+	to_chat(H, span_warning("I have spent my youth deepening my faith and one day a spellblade was under my care at the church, after they recovered they taught me a thing of two of the arcyne, abandoning my duties for but a few daes infuriated the Bishop that banished me from the flock, they will still gladely treat my wounds in their infinite goodness."))
 	head = /obj/item/clothing/head/roguetown/roguehood/mage
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	pants = /obj/item/clothing/under/roguetown/trou/leather
@@ -291,7 +348,8 @@
 			if("Quarterstaff")
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/arcyne, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("Mace + Shield")
 				r_hand = /obj/item/rogueweapon/mace
 				backr = /obj/item/rogueweapon/shield/wood
@@ -304,17 +362,44 @@
 
 	H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/wizard]
 	backpack_contents = list(
-		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/flashlight/flare/torch/lantern/censer = 1,
 		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/spellbook = 1,
 		/obj/item/chalk = 1,
+		/obj/item/herbmill/bootleg = 1,
 		)
 	grant_poke_spell(H)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_1)
+
+	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)
 	if(H.mind)
-		H.mind.RemoveSpell(/datum/action/cooldown/spell/miracle/bloodmiracle)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/selfbuff)
+		H.mind.RemoveSpell(/datum/action/cooldown/spell/miracle/bloodmiracle)
+		H.mind.RemoveSpell(/datum/action/cooldown/spell/miracle/heal)
+		H.mind.RemoveSpell(/datum/action/cooldown/spell/miracle/heal/undivided)
+
+	switch(H.patron?.type)
+		if(/datum/patron/divine/undivided)
+			var/list/heal = list("Greater Miracle (Miracle)", "Fortifying Vapors (Secular)")
+			var/highheal_options = input(H, "Choose your healing training.", "Experientia Medica") as anything in heal
+			switch(highheal_options)
+				if("Greater Miracle (Divine)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/heal/undivided)
+				if("Fortifying Vapors (Secular)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+
+		if(/datum/patron/old_god)
+			H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+
+		else
+			var/list/heal = list("Miracle (Divine)", "Fortifying Vapors (Secular)")
+			var/heal_options = input(H, "Choose your healing training.", "Experientia Medica") as anything in heal
+			switch(heal_options)
+				if("Miracle (Divine)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/miracle/heal)
+				if("Fortifying Vapors (Secular)")
+					H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			id = /obj/item/clothing/neck/roguetown/psicross
@@ -362,4 +447,3 @@
 		if(/datum/patron/divine/xylix)
 			id = /obj/item/clothing/neck/roguetown/luckcharm
 			H.cmode_music = 'sound/music/combat_jester.ogg'
-

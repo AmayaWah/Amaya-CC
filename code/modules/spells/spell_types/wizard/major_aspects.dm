@@ -19,7 +19,18 @@
 		"Ignis, a me discedere!",
 	)
 	fixed_spells = list(
+		/datum/action/cooldown/spell/telegraphed_strike/dragons_breath,
+		/datum/action/cooldown/spell/projectile/fireball/barrage,
+		/datum/action/cooldown/spell/fire_curtain,
+		/datum/action/cooldown/spell/projectile/smoke_burst,
+		/datum/action/cooldown/spell/create_campfire,
+	)
+	choice_spells = list(
 		/datum/action/cooldown/spell/projectile/spitfire,
+		/datum/action/cooldown/spell/ultio,
+	)
+	spell_order = list(
+		ASPECT_CHOICE,
 		/datum/action/cooldown/spell/telegraphed_strike/dragons_breath,
 		/datum/action/cooldown/spell/projectile/fireball/barrage,
 		/datum/action/cooldown/spell/fire_curtain,
@@ -165,6 +176,7 @@
 		/datum/action/cooldown/spell/gravity,
 		/datum/action/cooldown/spell/telegraphed_strike/kinetic_burst,
 		/datum/action/cooldown/spell/greater_cleaning,
+		/datum/action/cooldown/spell/levitation,
 	)
 	variants = list(
 		"mastery" = list(
@@ -271,7 +283,7 @@
 		/datum/action/cooldown/spell/conjure_arcyne_ward/steelhide,
 		/datum/action/cooldown/spell/bind_armament,
 		/datum/action/cooldown/spell/arcyne_forge,
-		/datum/action/cooldown/spell/mending,
+		/datum/action/cooldown/spell/touch/conjure_repairkit,
 	)
 	variants = list(
 		"mastery" = list(
@@ -333,6 +345,7 @@
 		"Vocatio, a me discedere!",
 	)
 	fixed_spells = list(
+		/datum/action/cooldown/spell/projectile/basic_offensive,
 		/datum/action/cooldown/spell/minion_order/conjurer,
 		/datum/action/cooldown/spell/command_word/fray,
 		/datum/action/cooldown/spell/command_word/harry,
@@ -354,6 +367,7 @@
 		/datum/action/cooldown/spell/conjure_summon/peasant_swarm,
 	)
 	spell_order = list(
+		/datum/action/cooldown/spell/projectile/basic_offensive,
 		/datum/action/cooldown/spell/minion_order/conjurer,
 		/datum/action/cooldown/spell/command_word/fray,
 		/datum/action/cooldown/spell/command_word/harry,
@@ -411,6 +425,7 @@
 		/datum/action/cooldown/spell/augment_buff/surge,
 		/datum/action/cooldown/spell/augment_buff/precognition,
 		/datum/action/cooldown/spell/augment_buff/grasp,
+		/datum/action/cooldown/spell/touch/conjure_repairkit,
 		/datum/action/cooldown/spell/forcewall,
 		/datum/action/cooldown/spell/featherfall,
 		/datum/action/cooldown/spell/augment_buff/enlarge,

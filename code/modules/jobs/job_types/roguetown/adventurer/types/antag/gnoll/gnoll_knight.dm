@@ -2,14 +2,14 @@
 	name = "Gnoll Knight"
 	tutorial = "You were forged in the fires of the volcano, burn marks have long since healed, but the armor hammered against your muscle isn't so fleeting."
 	allowed_sexes = list(MALE, FEMALE)
-	
+
 	outfit = /datum/outfit/job/roguetown/gnoll/knight
 	category_tags = list(CTAG_GNOLL)
 	traits_applied = list(TRAIT_HEAVYARMOR) // Flavoring
-	
+
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	reset_stats = TRUE
-	subclass_stats = list( //Caustic Edit start. 
+	subclass_stats = list( //Caustic Edit start.
 		STATKEY_STR = 2,
 		STATKEY_WIL = 3,
 		STATKEY_CON = 5,
@@ -22,9 +22,12 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/hunting = SKILL_LEVEL_JOURNEYMAN,
@@ -36,6 +39,7 @@
 		H.set_species(/datum/species/gnoll)
 		H.skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/knight(H)
 		neck = /obj/item/storage/belt/rogue/pouch/healing
+		backr = /obj/item/storage/backpack/rogue/satchel/gnoll
 		don_pelt(H)
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/knight

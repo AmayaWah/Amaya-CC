@@ -152,11 +152,14 @@
 		if(existing)
 			target.RemoveSpell(existing)
 
-/datum/magic_aspect/proc/mark_aspect_spell(datum/action/cooldown/spell/spell_instance)
-	if(!istype(spell_instance))
-		return
-	spell_instance.refundable = FALSE
-	spell_instance.source_aspect = type
+/proc/mark_spell_source_aspect(datum/spell_instance, aspect_path)
+	if(istype(spell_instance, /datum/action/cooldown/spell))
+		var/datum/action/cooldown/spell/S = spell_instance
+		S.refundable = FALSE
+		S.source_aspect = aspect_path
+
+/datum/magic_aspect/proc/mark_aspect_spell(datum/spell_instance)
+	mark_spell_source_aspect(spell_instance, type)
 
 /// Perform the binding or unbinding chant. Returns TRUE if completed, FALSE if interrupted.
 /// Each line is spoken aloud with a 2-second do_after between them.
@@ -170,6 +173,37 @@
 			return FALSE
 	return TRUE
 
+/datum/magic_aspect/pseudo
+	aspect_type = ASPECT_PSEUDO
+
+/datum/magic_aspect/pseudo/wards
+	name = "Warding"
+// Pseudo aspect meant for gating purpose
+
+/datum/magic_aspect/pseudo/spellblade
+	name = "Spellblade"
+
+/datum/magic_aspect/pseudo/spellfist
+	name = "Spellfist"
+
+/datum/magic_aspect/pseudo/bardic
+	name = "Bardic"
+
+/datum/magic_aspect/pseudo/vizier
+	name = "Vizier"
+
+/datum/magic_aspect/pseudo/hierophant
+	name = "Hierophant"
+
+/datum/magic_aspect/pseudo/luminary
+	name = "Luminary"
+
+/datum/magic_aspect/pseudo/desertrider
+	name = "Desert Rider"
+
+/datum/magic_aspect/pseudo/berserker
+	name = "Berserker"
+
 GLOBAL_LIST_INIT(magic_aspects_major, init_magic_aspects(ASPECT_MAJOR))
 GLOBAL_LIST_INIT(magic_aspects_minor, init_magic_aspects(ASPECT_MINOR))
 GLOBAL_LIST_INIT(magic_aspect_singletons, init_magic_aspect_singletons())
@@ -181,7 +215,6 @@ GLOBAL_LIST_INIT(magic_aspect_singletons, init_magic_aspect_singletons())
 		if(initial(A.aspect_type) == filter_type)
 			result += path
 	return result
-
 
 /proc/init_magic_aspect_singletons()
 	var/list/result = list()

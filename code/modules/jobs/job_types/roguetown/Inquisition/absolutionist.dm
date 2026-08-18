@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = 1 // THE ONE.
 	spawn_positions = 1
-	
+
 	allowed_patrons = list(/datum/patron/old_god) //Requires the character to be a practicing Psydonite.
 	tutorial = "Once, you were alone in this monastery; a chapel of stone, protecting a shard of Psydon's divinity. Now, you've a whole sect to shepherd - and their propensity for violence oft-clashes with your own vows of pacifism. Temper the floch with your wisdom, siphon away their wounds with your blessings, and guide the wayard towards absolution."
 	selection_color = JCOLOR_INQUISITION
@@ -47,7 +47,7 @@
 		STATKEY_SPD = -2 //A fairly unorthodox statspread, but one that's compensated by the Absolver's shtick of (mostly) forced pacifism and healing-through-damage-transferance.
 	)
 	subclass_skills = list(
-		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT, // Healing skills. Lesser than the Priest, but still commendable. 
+		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT, // Healing skills. Lesser than the Priest, but still commendable.
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
@@ -144,6 +144,23 @@
 		to_chat(user, span_warning("[target] is already faithful to Psydon!"))
 		revert_cast()
 		return FALSE
+
+	if(istype(target.patron, /datum/patron/vheslyn)) //UNFORGIVABLE SIN, UNFORGIVABLE, DIE. DIE. DIE.
+		to_chat(user, span_userdanger("[target] is UNFORGIVABLE, my attempt to convert them to PSYDON, violently sunders my lux!"))
+		if(!HAS_TRAIT(user, TRAIT_NOPAIN))
+			user.emote("agony")
+		if(!HAS_TRAIT(user, TRAIT_NOMOOD))
+			user.freak_out()
+		playsound(user, 'sound/misc/lava_death.ogg', 100, TRUE)
+		user.adjust_fire_stacks(40, /datum/status_effect/fire_handler/fire_stacks/vheslyn) //YOU FUCKING DESERVE THIS
+		user.adjustFireLoss(120)//This will kill you, always.
+		user.Knockdown(30)
+		user.Jitter(30)
+		user.Stun(25)
+		user.ignite_mob()
+		explosion(get_turf(user), light_impact_range = 1, flame_range = 1, smoke = FALSE)
+		user.visible_message(span_danger("[user] is violently smited as profane flames engulf their entire body!"))
+		return TRUE
 
 	if(alert(target, "[user.real_name] offers you the chance to renounce your sins, and to worship Psydon once more. Do you take it?", "REDEMPTION OR REFUSAL", "Yes", "No") != "Yes")
 		to_chat(user, span_warning("[target] has refused your offer of redemption."))

@@ -99,6 +99,60 @@
 	else
 		remove_stress(/datum/stressevent/pallid_outdoors)
 
+	if(HAS_TRAIT(src, TRAIT_SUNLIGHT_SENSITIVE))
+		var/turf/T = get_turf(src)
+		if(T.can_see_sky() && GLOB.tod == "day")
+			if(HAS_TRAIT(src, TRAIT_WEATHER_PROTECTED))
+				// Weather protection replaces all normal sunlight penalties.
+				remove_stress(/datum/stressevent/sun_sensitivity_dark)
+				src.set_blurriness(0)
+				remove_status_effect(/datum/status_effect/debuff/badvision)
+				add_stress(/datum/stressevent/lesser_sun_sensitivity)
+			else
+				// Normal sunlight sensitivity.
+				remove_stress(/datum/stressevent/lesser_sun_sensitivity)
+				src.set_blurriness(100)
+				apply_status_effect(/datum/status_effect/debuff/badvision)
+				add_stress(/datum/stressevent/sun_sensitivity_dark)
+		else
+			remove_stress(/datum/stressevent/lesser_sun_sensitivity)
+			remove_stress(/datum/stressevent/sun_sensitivity_dark)
+			src.set_blurriness(0)
+			remove_status_effect(/datum/status_effect/debuff/badvision)
+	else
+		remove_stress(/datum/stressevent/lesser_sun_sensitivity)
+		remove_stress(/datum/stressevent/sun_sensitivity_dark)
+		src.set_blurriness(0)
+		remove_status_effect(/datum/status_effect/debuff/badvision)
+
+	if(HAS_TRAIT(src, TRAIT_SUN_AVERSE))
+		var/turf/T = get_turf(src)
+		if(T.can_see_sky() && GLOB.tod == "day")
+			if(HAS_TRAIT(src, TRAIT_WEATHER_PROTECTED))
+				// Weather protection replaces normal sun aversion.
+				remove_stress(/datum/stressevent/sun_sensitivity)
+				add_stress(/datum/stressevent/lesser_sun_sensitivity)
+			else
+				remove_stress(/datum/stressevent/lesser_sun_sensitivity)
+				add_stress(/datum/stressevent/sun_sensitivity)
+		else
+			remove_stress(/datum/stressevent/sun_sensitivity)
+			remove_stress(/datum/stressevent/lesser_sun_sensitivity)
+
+	if(HAS_TRAIT(src, TRAIT_MOON_AVERSE))
+		var/turf/T = get_turf(src)
+		if(T.can_see_sky() && GLOB.tod == "night")
+			if(HAS_TRAIT(src, TRAIT_WEATHER_PROTECTED))
+				// Weather protection replaces normal moon aversion.
+				remove_stress(/datum/stressevent/moon_sensitivity)
+				add_stress(/datum/stressevent/lesser_moon_sensitivity)
+			else
+				remove_stress(/datum/stressevent/lesser_moon_sensitivity)
+				add_stress(/datum/stressevent/moon_sensitivity)
+		else
+			remove_stress(/datum/stressevent/moon_sensitivity)
+			remove_stress(/datum/stressevent/lesser_moon_sensitivity)
+
 	var/ascending = (new_stress > oldstress)
 
 	if(new_stress != oldstress)

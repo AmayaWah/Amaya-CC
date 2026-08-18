@@ -10,7 +10,7 @@
 	var/stored_icon_living
 	var/reanim_timer_id
 
-/datum/component/deadite/Initialize(reanim_time = 15 MINUTES, leg_hp = 150, head_hp = 100, downed_state, inf_chance = 20)
+/datum/component/deadite/Initialize(reanim_time = 15 MINUTES, leg_hp = 150, head_hp = 100, downed_state, inf_chance = 0) //Caustic Edit - Infection Chance set to 0, from 20 default
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -73,7 +73,7 @@
 	// If we're not in our downed state, we get crippled, but don't die. Leaving us alive means we get back up eventually.
 	if((L.health - damage) <= 0)
 		// Prevent the standard damage from going through so the mob doesn't die right now
-		. = COMPONENT_DAMAGE_HANDLED 
+		. = COMPONENT_DAMAGE_HANDLED
 
 		L.unbuckle_all_mobs()
 		L.can_buckle = FALSE

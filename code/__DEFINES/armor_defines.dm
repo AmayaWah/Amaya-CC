@@ -54,7 +54,7 @@
 /*------------------------\
 | ARMOR INTEGRITY DEFINES | // Use these when possible on armor to keep value consistent.
 \------------------------*/
-// Side = Non-chest armor integrity 
+// Side = Non-chest armor integrity
 // For now. Steel vs Iron will be a difference of 75% integrity without rating differences.
 // So Iron will actually be pretty decent and there shouldn't be a compulsive need to upgrade.
 
@@ -69,13 +69,13 @@
 #define ARMOR_INT_HELMET_HEAVY_DECREPIT 200
 #define ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY 50 // Integrity reduction, if a helmet is adjustable
 #define ARMOR_INT_HELMET_BRONZE 350 //More integrity, less protection.
-#define ARMOR_INT_HELMET_STEEL 300 
+#define ARMOR_INT_HELMET_STEEL 300
 #define ARMOR_INT_HELMET_IRON 225
 #define ARMOR_INT_HELMET_HARDLEATHER 250
 #define ARMOR_INT_HELMET_LEATHER 200
 #define ARMOR_INT_HELMET_CLOTH 100
 
-// Chest / Armor Pieces 
+// Chest / Armor Pieces
 
 // HEAVY
 #define ARMOR_INT_CHEST_PLATE_ANTAG 700
@@ -85,8 +85,6 @@
 #define ARMOR_INT_CHEST_PLATE_STEELLIGHT 450
 #define ARMOR_INT_CHEST_PLATE_PSYDON 400 // You get free training, less int
 #define ARMOR_INT_CHEST_PLATE_IRON 375
-#define ARMOR_INT_CHEST_PLATE_BRIGANDINE 350
-#define ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER 50 //Light AC brigandine parts get -50, Heavy AC brigandine parts get +50.
 #define ARMOR_INT_CHEST_PLATE_IRONLIGHT 325
 #define ARMOR_INT_CHEST_PLATE_DECREPIT 250
 #define ARMOR_INT_CHEST_PLATE_DECREPITLIGHT 200
@@ -96,19 +94,26 @@
 #define ARMOR_INT_CHEST_MEDIUM_STEEL 300
 #define ARMOR_INT_CHEST_MEDIUM_IRON 225
 #define ARMOR_INT_CHEST_MEDIUM_SCALE 200 // More coverage, less integrity
+#define ARMOR_INT_CHEST_PLATE_BRIGANDINE 350 //weaker protection, more integrity.
+#define ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER 100 //Deducted from Light AC brigandine parts, added to Heavy AC brigandine parts.
 #define ARMOR_INT_CHEST_MEDIUM_DECREPIT 150
 
 // LIGHT
+#define ARMOR_INT_CHEST_LIGHT_ANTAG 360 //1.5x Master.
+#define ARMOR_INT_CHEST_LIGHT_ELITE 300 //1.25x Master. Snowflake top-tier light armor
 #define ARMOR_INT_CHEST_LIGHT_MASTER 300 // High tier cloth / leather armor
 #define ARMOR_INT_CHEST_LIGHT_MEDIUM 250 // Medium tier cloth / leather armor
 #define ARMOR_INT_CHEST_LIGHT_BASE 200
+#define ARMOR_INT_CHEST_LIGHT_BRONZE 180
 #define ARMOR_INT_CHEST_LIGHT_STEEL 180
 #define ARMOR_INT_CHEST_LIGHT_IRON 180
 #define ARMOR_INT_CHEST_CIVILIAN 100
+#define ARMOR_INT_LIGHT_FENCER_MODIFIER 30 //bonus integrity for Fencer items over standard light armor.
+#define ARMOR_INT_LIGHT_BETWEENTIER_MODIFIER 25 //Penalty for studded leather, bonus for various other variants.
 
 // LEG PIECES - Leg Armor
 #define ARMOR_INT_LEG_ANTAG 600
-#define ARMOR_INT_LEG_BLACKSTEEL 500 
+#define ARMOR_INT_LEG_BLACKSTEEL 500
 #define ARMOR_INT_LEG_STEEL_PLATE 400
 #define ARMOR_INT_LEG_IRON_PLATE 300
 #define ARMOR_INT_LEG_BRONZE 250
@@ -135,8 +140,21 @@
 #define ARMOR_INT_SIDE_GOLD 5 // Integrity for golden / ceremonial pieces
 #define ARMOR_INT_SIDE_COVERAGE_BONUS 50 //bonus integrity for side pieces lacking coverage, eg. gorgets
 
+//MASKS - Facemasks
+#define ARMOR_INT_MASK_BRONZE 150 //Integrity for bronze facemasks.
+#define ARMOR_INT_MASK_STEEL 200 //Integrity for steel facemasks.
+#define ARMOR_INT_MASK_IRON 100 //Integrity for iron facemasks.
+#define ARMOR_INT_MASK_GOLD 150 //Integrity for gold facemasks. No idea why so durable when they have iron protection also.
+#define ARMOR_INT_MASK_STEEL_MAILLE 250 //Integrity for steel maille facemasks. Less defence than plate masks, more integ.
+#define ARMOR_INT_MASK_IRON_MAILLE 150 //Integrity for iron maille facemasks.
+#define ARMOR_INT_MASK_LEATHER 180 //Integrity for leather facemasks.
+#define ARMOR_INT_MASK_CLOTH 150 //Integrity for cloth facemasks.
+#define ARMOR_INT_MASK_WOOD 100 //Integrity for carved wood facemasks.
+#define ARMOR_INT_MASK_BONE 100 //Integrity for bone/skull facemasks.
+#define ARMOR_INT_MASK_STONE 50 //Integrity for carved stone facemasks.
+
 /*--------------------\
-| ARMOR VALUE DEFINES |	
+| ARMOR VALUE DEFINES |
 \--------------------*/
 // Misc defines. These are here just in case. Inherited by their relevant subtypes.
 #define ARMOR_MACHINERY list("blunt" = DR_LIGHT, "slash" = DBLOCK_LIGHT, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_LIGHT, "fire" = DR_MEDIUM)
@@ -150,7 +168,7 @@
 #define ARMOR_PADDED_BAD list("blunt" = DR_MEDIUM, "slash" = DBLOCK_LIGHT, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_LIGHT, "fire" = DR_NONE)
 
 // LIGHT ARMOR - Split into two sidegrades: PADDED VS LEATHER
-// PADDED: Best Blunt protection, Bodkin immune. But Axe CHOP (MEDIUM) and most thrusts (LIGHT) get through. 
+// PADDED: Best Blunt protection, Bodkin immune. But Axe CHOP (MEDIUM) and most thrusts (LIGHT) get through.
 // LEATHER: Decent Blunt DR. Axe CHOP (MEDIUM), sword thrust (MEDIUM) and bodkin (HEAVY) get through. Better vs stab than padded, worse vs piercing.
 #define ARMOR_PADDED list("blunt" = DR_SUPER, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_BSTEEL, "fire" = DR_LIGHT)
 #define ARMOR_LEATHER_NPC list("blunt" = DR_HEAVY, "slash" = DBLOCK_LIGHT, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_MEDIUM, "fire" = DR_MEDIUM)
@@ -169,7 +187,7 @@
 // MAILLE — Chainmail. Medium: Plate level protection but weak vs Bodkin (100% through)
 #define ARMOR_MAILLE list("blunt" = DR_MEDIUM, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_LIGHT, "fire" = DR_NONE)
 
-// PLATE — Cuirass, plate. All plate-tier items; differentiated by integrity, not rating. Spear (PEN_HEAVY) gets 20% through stab. Bodkin goes through 100% - MEDIUM rating. Weak vs Blunt. 
+// PLATE — Cuirass, plate. All plate-tier items; differentiated by integrity, not rating. Spear (PEN_HEAVY) gets 20% through stab. Bodkin goes through 100% - MEDIUM rating. Weak vs Blunt.
 #define ARMOR_PLATE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_NONE)
 
 // BSTEEL — Blacksteel, antagonist. DBLOCK_BSTEEL (4).
@@ -177,7 +195,7 @@
 #define ARMOR_PLATE_BSTEEL list("blunt" = DR_MEDIUM, "slash" = DBLOCK_BSTEEL, "stab" = DBLOCK_BSTEEL, "piercing" = DBLOCK_BSTEEL, "fire" = DR_LIGHT)
 
 //Antag / Special / Unique armor defines
-// If you DO NOT have a VERY VERY good design reasons for why your armor should varies 
+// If you DO NOT have a VERY VERY good design reasons for why your armor should varies
 // Please do not add it and use an existing one, so to prevent armor bloat and keep armor
 // reasonable and intuitive.
 #define ARMOR_VAMP list("blunt" = DR_ULTRA, "slash" = DBLOCK_BSTEEL, "stab" = DBLOCK_BSTEEL, "piercing" = DBLOCK_BSTEEL, "fire" = DR_ULTRA) //Some of the most cracked armor in the game, exclusive to vlord.

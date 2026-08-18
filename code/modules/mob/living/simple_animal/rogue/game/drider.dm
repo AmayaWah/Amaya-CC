@@ -19,7 +19,7 @@
 	base_intents = list(/datum/intent/simple/bite/mirespider_lurker)
 	health = 660
 	maxHealth = 660
-	pass_flags = PASSTABLE | PASSMOB
+	//pass_flags = PASSTABLE | PASSMOB //Caustic Edit - Lets just remove this for now, since as a mount it was letting people just ignite themselves by accidentally running over the braziers
 	mob_size = MOB_SMALL
 	milkies = FALSE
 	melee_damage_lower = 60

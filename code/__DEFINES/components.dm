@@ -238,10 +238,13 @@
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"	//Called when the movable's glide size is updated: (new_glide_size)
 
 // /mob signals
+#define COMSIG_MOB_SLEEP "mob_sleep" 							//from base of mob/living/carbon/handle_sleep(): (mob/sleeper)
 #define COMSIG_MOB_BREAK_SNEAK "mob_break_sneak"
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
 #define COMSIG_MOB_TRY_BARK "try_bark"
 #define COMSIG_MOB_TRY_EMOTE "try_emote"
+#define COMSIG_MOB_EMOTED "mob_emoted"							//from /mob/proc/emote() when a keyed emote is intentionally invoked
+#define COMSIG_MOB_MEDITATED "mob_meditated"						//from /datum/emote/living/meditate/run_emote() when a meditation focus completes uninterrupted: ()
 #define COMSIG_MOB_MODIFY_AGGRO_LINES "comsig_mob_modify_aggro_lines"
 #define COMSIG_MOB_MODIFY_DEATH_LINES "comsig_mob_modify_death_lines"
 

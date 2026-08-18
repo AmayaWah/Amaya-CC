@@ -125,3 +125,18 @@
 	miss_text = "strikes the air!"
 	miss_sound = "bluntwooshlarge"
 	attack_verb = list("punches", "strikes", "tears")
+
+/obj/item/storage/backpack/rogue/satchel/gnoll
+	name = "stained satchel"
+	desc = "A fetid sack fashioned into a storage accessory. Whatever's put there inevitably comes out twice the bloody."
+	mob_overlay_icon = null
+
+/obj/item/storage/backpack/rogue/satchel/gnoll/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/storage/backpack/rogue/satchel/gnoll/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(QDELETED(src))
+		return
+	qdel(src)

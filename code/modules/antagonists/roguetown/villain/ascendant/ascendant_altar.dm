@@ -165,31 +165,22 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 			priority_announce("The sky begins to turn quicker - MAJOR ARCANA: THE HANGED MAN, REVERSED", "THE DREAMER ", 'sound/villain/dreamer_warning.ogg')
 		if(3)
 			to_chat(user, span_danger("AGONY. SPLITTING HEADACHE. THROBBING OF THE SOUL."))
-			//Caustic Edit
-			if(user.show_redflash())
-				user.flash_fullscreen("redflash3")
-			//Caustic Edit End
-			user.emote("agony", forced = TRUE)
+			user.flash_fullscreen("redflash3")
+			user.emote("superagony", forced = TRUE)
 			sleep(20)
 			to_chat(user, span_userdanger("THEW ORLD is not real. my BREATH IS gone. my heart barely baeats. my veins are empty."))
 			sleep(50)
 			to_chat(user, span_userdanger("i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god. i am god."))
 			sleep(30)
 			to_chat(user, span_userdanger("i am god i am god i am go di am ogod I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD"))
-			//Caustic Edit
-			if(user.show_redflash())
-				user.flash_fullscreen("redflash3")
-			//Caustic Edit End
-			user.emote("agony", forced = TRUE)
+			user.flash_fullscreen("redflash3")
+			user.emote("superagony", forced = TRUE)
 			user.Stun(30)
 			user.Knockdown(30)
 			sleep(30)
 			to_chat(user, span_userdanger("i am god i am god i am go di am ogod I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD"))
-			//Caustic Edit
-			if(user.show_redflash())
-				user.flash_fullscreen("redflash3")
-			//Caustic Edit End
-			user.emote("agony", forced = TRUE)
+			user.flash_fullscreen("redflash3")
+			user.emote("superagony", forced = TRUE)
 			user.Stun(100)
 			user.Knockdown(100)
 			for(var/i = 1, i <= 10, i++)

@@ -2,7 +2,7 @@
 	name = "Heretic"
 	tutorial = "You father your unholy cause through the most time-tested of ways: hard, heavy steel in both arms and armor."
 	allowed_sexes = list(MALE, FEMALE)
-	
+
 	outfit = /datum/outfit/job/roguetown/wretch/heretic
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
@@ -506,7 +506,10 @@
 			"WHO IS YOUR SHEPHERD!?",
 		)
 		src.visible_message(span_warning("[src] shoves the decrepit zcross into [H]'s lux!"))
-		say(pick(faith_lines), spans = list("torture"))
+		if(HAS_TRAIT(src, TRAIT_UNFORGIVABLE))
+			say(pick(faith_lines), spans = list("bloody"))//Vheslynites aren't people.
+		else
+			say(pick(faith_lines), spans = list("torture"))
 		H.emote("agony", forced = TRUE)
 
 		if(!(do_mob(src, H, 10 SECONDS)))

@@ -55,6 +55,7 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/Initialize()
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 	. = ..()
+
 ///Caustic edit
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/death(gibbed)
 	..()
@@ -67,6 +68,7 @@
 	spill_embedded_objects()
 	qdel(src)
 ///Caustic edit End
+
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/AttackingTarget(atom/movable/target)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_PREATTACK)
 		return FALSE //but more importantly return before attack_animal called

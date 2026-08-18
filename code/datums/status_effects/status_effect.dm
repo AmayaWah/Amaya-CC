@@ -2,10 +2,6 @@
 //This file contains their code, plus code for applying and removing them.
 //When making a new status effect, add a define to status_effects.dm in __DEFINES for ease of use!
 
-/mob/living
-	/// ass list [id] = /datum/status_effect. ATTENTION THE CODER IS A RETARD THIS IS NOT SUPPOSED TO BE HERE I REPEART!!!!!!
-	var/alist/status_effects_by_id
-
 /datum/status_effect
 	/// The ID of the effect. ID is used in adding and removing effects to check for duplicates, among other things.
 	var/id = "effect"
@@ -34,7 +30,7 @@
 	var/job_specific_examine
 	//Add a list of Job names to this variable and it will limit who can see the job-specific text by these jobs
 	var/specific_jobs
-	
+
 	//Caustic Edit End
 	/// The typepath to the alert thrown by the status effect when created.
 	/// Status effect "name"s and "description"s are shown to the owner here.

@@ -709,7 +709,52 @@
 	/obj/structure/flora/roguegrass/herb/wild/sunflowers,
 	/obj/structure/flora/roguegrass/herb/wild/poppy)
 
+//Caustic Edit - Desert Town Flora Spawn lists
+/obj/structure/flora/roguegrass/herb/wild/random/desertsands 
+	name = "random wild desertsand plant"
+	icon_state = "wild_plant_desertsand"
+	plant_types = list( 
+	/obj/structure/flora/roguegrass/herb/wild/eggplant,
+	/obj/structure/flora/roguegrass/herb/wild/potato,
+	/obj/structure/flora/roguegrass/herb/wild/poppy,
+	/obj/structure/flora/roguegrass/herb/wild/coffee,
+	/obj/structure/flora/roguegrass/herb/wild/tea)
 
+/obj/structure/flora/roguegrass/herb/wild/random/desertdirtngrass
+	name = "random wild desert dirtngrass plant"
+	icon_state = "wild_plant_desertdirtngrass"
+	plant_types = list(
+	/obj/structure/flora/roguegrass/herb/wild/potato,
+	/obj/structure/flora/roguegrass/herb/wild/oats,
+	/obj/structure/flora/roguegrass/herb/wild/jackberry,
+	/obj/structure/flora/roguegrass/herb/wild/jackberry/poison,
+	/obj/structure/flora/roguegrass/herb/wild/sunflowers,
+	/obj/structure/flora/roguegrass/herb/wild/rocknut,
+	/obj/structure/flora/roguegrass/herb/wild/rice,
+	/obj/structure/flora/roguegrass/herb/wild/sugarcane)
+
+/obj/structure/flora/roguegrass/herb/wild/random/desertvillaplant
+	name = "random wild desert villa plant"
+	icon_state = "wild_plant_desertvilla"
+	plant_types = list(
+	/obj/structure/flora/roguegrass/herb/wild/oats,
+	/obj/structure/flora/roguegrass/herb/wild/plum,
+	/obj/structure/flora/roguegrass/herb/wild/lemon,
+	/obj/structure/flora/roguegrass/herb/wild/jackberry,
+	/obj/structure/flora/roguegrass/herb/wild/jackberry/poison,
+	/obj/structure/flora/roguegrass/herb/wild/strawberry,
+	/obj/structure/flora/roguegrass/herb/wild/blackberry,
+	/obj/structure/flora/roguegrass/herb/wild/raspberry,
+	/obj/structure/flora/roguegrass/herb/wild/tomato,
+	/obj/structure/flora/roguegrass/herb/wild/eggplant,
+	/obj/structure/flora/roguegrass/herb/wild/cabbage,
+	/obj/structure/flora/roguegrass/herb/wild/potato,
+	/obj/structure/flora/roguegrass/herb/wild/westleach,
+	/obj/structure/flora/roguegrass/herb/wild/rice,
+	/obj/structure/flora/roguegrass/herb/wild/sunflowers,
+	/obj/structure/flora/roguegrass/herb/wild/sugarcane)
+
+//End Caustic Edit
 
 // Mapgen stuffs to actually put the plants in
 
@@ -761,3 +806,15 @@
 /datum/mapGeneratorModule/decapgrass/place()
 	spawnableAtoms |= list(/obj/structure/flora/roguegrass/herb/wild/random/decap = 7)
 	. = ..()
+
+//Caustic Edit - Desert Town Mapgen stuffs
+
+/datum/mapGeneratorModule/desertsand/place()
+	spawnableAtoms |= list(/obj/structure/flora/roguegrass/herb/wild/random/desertsands = 0.8)
+	. = ..()
+
+/datum/mapGeneratorModule/desertgrass/place()
+	spawnableAtoms |= list(/obj/structure/flora/roguegrass/herb/wild/random/desertdirtngrass = 20)
+	. = ..()
+
+// End Caustic Edit

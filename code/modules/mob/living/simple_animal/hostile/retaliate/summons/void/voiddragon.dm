@@ -282,6 +282,13 @@ F
 		continue
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/MeleeAction(patience = TRUE)
+	//Caustic Cove Edit
+	if (melee_cooled_down > world.time)
+		return
+
+	melee_cooled_down = world.time + melee_cooldown
+	//Caustic Cove Edit End
+
 	if(rapid_melee > 1)
 		var/datum/callback/cb = CALLBACK(src, PROC_REF(CheckAndAttack))
 		var/delay = SSnpcpool.wait / rapid_melee
@@ -653,9 +660,9 @@ F
 	new /obj/item/clothing/ring/dragon_ring(deathspot)
 	new /obj/item/clothing/ring/dragon_ring(deathspot)
 	new /obj/item/clothing/ring/dragon_ring(deathspot)
-	new /obj/item/book/granter/arcane_aspect/minor(deathspot)
-	new /obj/item/book/granter/arcane_aspect/minor(deathspot)
-	new /obj/item/book/granter/arcane_aspect/major(deathspot)
+	new /obj/item/book/granter/arcane_aspect/magic/minor(deathspot)
+	new /obj/item/book/granter/arcane_aspect/magic/minor(deathspot)
+	new /obj/item/book/granter/arcane_aspect/magic/major(deathspot)
 	update_icon()
 	spill_embedded_objects()
 

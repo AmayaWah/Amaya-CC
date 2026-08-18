@@ -79,6 +79,7 @@ GLOBAL_LIST_INIT(melee_combat_skills, list( \
 	// Gate checks — can an ambush even happen right now?
 	// Region is considered "safe" when latent_ambush is at or below AMBUSH_SAFE_FLOOR.
 	// Signal horn (always=TRUE) can still dip below this floor.
+	// Caustic Edit, Desert Town Bog-Walker Interaction added
 	if(TR)
 		if(TR.latent_ambush <= AMBUSH_SAFE_FLOOR && !always)
 			return FALSE
@@ -90,6 +91,8 @@ GLOBAL_LIST_INIT(melee_combat_skills, list( \
 		if(HAS_TRAIT(src, TRAIT_AZURENATIVE))
 			return FALSE
 		if(HAS_TRAIT(src, TRAIT_BOGWALKER) && istype(get_area(src), /area/rogue/outdoors/bog))
+			return FALSE
+		if(HAS_TRAIT(src, TRAIT_BOGWALKER) && istype(get_area(src), /area/rogue/under/desertbog))
 			return FALSE
 		if(world.time > last_client_interact + 0.3 SECONDS)
 			return FALSE // unmoving afks can't trigger random ambushes i.e. when being pulled/kicked/etc

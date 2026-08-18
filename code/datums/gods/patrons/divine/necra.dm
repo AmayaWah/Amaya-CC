@@ -14,6 +14,7 @@
 					/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance	= CLERIC_T2,
 					/datum/action/cooldown/spell/miracle/necra_consecrate			= CLERIC_T2,
 					/obj/effect/proc_holder/spell/targeted/abrogation				= CLERIC_T2, // CC Edit - We do not have a lot of PvP. Give them these spells back! \\ Imagine that, another disabled Necran spell. Replaced with bless_cross for now.
+					/obj/effect/proc_holder/spell/invoked/necra_vow					= CLERIC_T3, //Caustic Edit - Return Necras Vow. T3 seems fine?
 					/obj/effect/proc_holder/spell/invoked/bless_cross				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/deaths_door				= CLERIC_T3, // CC Edit - Necran Buff, lower from T4 to T3
 					/obj/effect/proc_holder/spell/targeted/churn					= CLERIC_T4, //CC Edit

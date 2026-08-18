@@ -2,12 +2,12 @@
 	name = "Gnoll Templar"
 	tutorial = "None are as valued to protect graggarite worship as his gnoll champions themselves."
 	allowed_sexes = list(MALE, FEMALE)
-	
+
 	outfit = /datum/outfit/job/roguetown/gnoll/templar
 	category_tags = list(CTAG_GNOLL)
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	reset_stats = TRUE
-	subclass_stats = list( //Caustic Edit start. 
+	subclass_stats = list( //Caustic Edit start.
 		STATKEY_STR = 4,
 		STATKEY_CON = 3,
 		STATKEY_WIL = 2,
@@ -20,8 +20,10 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
@@ -34,6 +36,7 @@
 		H.set_species(/datum/species/gnoll)
 		H.skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/templar(H)
 		neck = /obj/item/storage/belt/rogue/pouch
+		backr = /obj/item/storage/backpack/rogue/satchel/gnoll
 		wrists = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
 		don_pelt(H)
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
