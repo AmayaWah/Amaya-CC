@@ -828,4 +828,7 @@
 	req_table = TRUE
 	structurecraft = /obj/structure/table
 
+/obj/item/reagent_containers/food/snacks/canned/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_VERYODD)
+
 /// ---------end caustic edit saltpot----------
