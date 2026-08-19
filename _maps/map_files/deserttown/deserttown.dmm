@@ -18160,6 +18160,16 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/under/desertcaldera/outlawsvillage)
+"foj" = (
+/obj/structure/roguemachine/scomm{
+	pixel_y = -32;
+	scom_tag = "Martyr's Chambers"
+	},
+/turf/open/floor/rogue/metal{
+	dir = 1;
+	icon_state = "plating2"
+	},
+/area/rogue/indoors/town/church)
 "fop" = (
 /obj/effect/landmark/chimeric_calyx_spawner/fifteen,
 /turf/open/floor/rogue/naturalstone/sandstone,
@@ -21016,6 +21026,9 @@
 /area/rogue/indoors/town/bath/desert)
 "ghN" = (
 /obj/structure/closet/crate/roguecloset,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/storage/belt/rogue/surgery_bag/full,
+/obj/item/roguekey/church,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/church)
 "gic" = (
@@ -31211,6 +31224,18 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/outdoors/town/desert)
+"jvm" = (
+/obj/structure/table/wood{
+	icon_state = "longtable"
+	},
+/obj/effect/spawner/lootdrop/valuable_candle_spawner,
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Martyr's Chambers";
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/open/floor/carpet/purple,
+/area/rogue/indoors/town/church)
 "jvp" = (
 /obj/structure/table/wood/map,
 /obj/structure/giantfur{
@@ -68130,7 +68155,7 @@
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/obj/item/clothing/neck/roguetown/psicross,
+/obj/item/clothing/neck/roguetown/psicross/undivided,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/church)
 "uAq" = (
@@ -510751,10 +510776,10 @@ btw
 dAN
 nlB
 lDT
-dzp
+jvm
 vLm
 btw
-btw
+foj
 xPK
 pAl
 tDJ
