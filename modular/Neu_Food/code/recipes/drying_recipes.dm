@@ -806,10 +806,10 @@
 		/obj/item/reagent_containers/glass/cup/can,
 	)
 	reqs = list(/obj/item/ingot/tin = 1)
-	verbage_simple = "engineer"
-	verbage = "engineers"
+	verbage_simple = "shape"
+	verbage = "shapes"
 	skillcraft = /datum/skill/craft/engineering
-	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	tools = list(/obj/item/rogueweapon/hammer = 1)
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/cooking/tinmeat
