@@ -562,7 +562,7 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	blocking_behavior = SAMEWEAR
 	armor = ARMOR_DRAGONHIDE
-	max_integrity = 450
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_IRON //halved compared to chest
 	repairmsg_rest_begin = "I lay down, my gilded scales slowly reforming.."
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/iconoclast/chest
