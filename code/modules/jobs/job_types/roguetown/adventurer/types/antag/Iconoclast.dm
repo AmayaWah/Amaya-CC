@@ -71,13 +71,15 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 			if("Golden Serpent") //Pugilist
+				r_hand = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy //cc addition, optional swag
 				head = /obj/item/clothing/head/roguetown/headband/monk
 //				mask = /obj/item/clothing/mask/rogue/eyepatch //cc edit
 				neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios //cc edit, for some reason they didn't have it before?? without it they can't use freemans tools
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
-				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/iconoclast
-				shirt = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/resting/iconoclast/chest //cc addition
+				shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/iconoclast //cc addition
+//				shirt = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy //cc edit for updated skinarmor
 //				ADD_TRAIT(H, TRAIT_GNARLYDIGITS, TRAIT_GENERIC) //cc edit
 //				ADD_TRAIT(H, TRAIT_CYCLOPS_RIGHT, TRAIT_GENERIC) //cc edit
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC) //cc edit | gnarlydigits sucks and it makes no sense as to why they would have it. weaponless oath is far better as it lets them use tools
