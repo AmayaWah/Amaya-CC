@@ -32067,6 +32067,10 @@
 	},
 /turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/physician/desert)
+"jzP" = (
+/obj/item/cushion/desert1,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/inq/office)
 "jzT" = (
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 8
@@ -36094,6 +36098,17 @@
 "kLd" = (
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/desert)
+"kLi" = (
+/obj/effect/decal/cobbleedge{
+	dir = 8;
+	icon_state = "borderfall";
+	pixel_x = -8
+	},
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Inquisitors Office"
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/inq/office)
 "kLp" = (
 /obj/structure/pillar/sand1,
 /turf/open/floor/rogue/sandbrick,
@@ -37574,7 +37589,9 @@
 /obj/structure/roguemachine/mail{
 	mailtag = "Merchantry"
 	},
-/obj/structure/roguemachine/contractledger,
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/shop/desert)
 "liM" = (
@@ -67982,7 +67999,10 @@
 /obj/structure/roguemachine/scomm{
 	scom_tag = "Bishop's Quarters"
 	},
-/turf/open/floor/rogue/wood,
+/turf/open/floor/rogue/metal{
+	dir = 1;
+	icon_state = "plating2"
+	},
 /area/rogue/indoors/town/church)
 "ujg" = (
 /obj/structure/rack/rogue,
@@ -73082,11 +73102,9 @@
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/outdoors/town/desert)
 "vKu" = (
-/obj/structure/stairs/stone{
-	dir = 4
-	},
-/turf/open/floor/rogue/wood,
-/area/rogue/indoors/town/church)
+/obj/structure/table/wood,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/inq/office)
 "vKA" = (
 /obj/item/cushion/desert2,
 /turf/open/floor/carpet/royalblack,
@@ -517321,7 +517339,7 @@ lDT
 sVR
 uSL
 msJ
-vKu
+btw
 btw
 dAX
 wYp
@@ -664874,7 +664892,7 @@ kHE
 wOQ
 pVa
 mKh
-pVa
+kLi
 pVa
 kHE
 sil
@@ -665185,7 +665203,7 @@ kHE
 dYs
 qtR
 qtR
-uWO
+jzP
 uWO
 uWO
 kHE
@@ -665497,7 +665515,7 @@ kHE
 wkm
 ksH
 qtR
-uWO
+vKu
 uWO
 arW
 usP
@@ -665809,7 +665827,7 @@ kHE
 nLX
 qtR
 qtR
-uWO
+jzP
 uWO
 uWO
 kHE
