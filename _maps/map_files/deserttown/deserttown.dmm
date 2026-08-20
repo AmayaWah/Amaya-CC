@@ -4743,6 +4743,12 @@
 	},
 /turf/open/floor/rogue/darkpath,
 /area/rogue/under/desertunderdark/pyramid)
+"btg" = (
+/obj/effect/decal/duneedge{
+	dir = 8
+	},
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "bts" = (
 /obj/structure/closet/crate/roguecloset,
 /obj/item/reagent_containers/glass/bucket,
@@ -6159,8 +6165,30 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/dragonden)
 "bNY" = (
-/obj/structure/pillory{
-	lockid = list("warden", "walls", "garrison", "dungeon")
+/obj/structure/fluff/signage{
+	dir = 8;
+	layer = 10;
+	name = "Mines - West"
+	},
+/obj/structure/fluff/signage{
+	dir = 4;
+	pixel_y = 11;
+	pixel_x = -1;
+	layer = 9;
+	name = "Great Farm - East"
+	},
+/obj/structure/fluff/signage{
+	dir = 8;
+	layer = 8;
+	pixel_y = 21;
+	name = "Wardens Fort and Outer Dunes - West, Southwest"
+	},
+/obj/structure/fluff/signage{
+	dir = 4;
+	layer = 7;
+	pixel_y = 31;
+	pixel_x = -1;
+	name = "Al-Ashur - North"
 	},
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/town/desertvilla)
@@ -9417,6 +9445,17 @@
 /obj/effect/landmark/chimeric_calyx_spawner/thirty,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave/desertdeep)
+"cJu" = (
+/obj/effect/decal/cobbleedge{
+	dir = 8;
+	icon_state = "borderfall";
+	pixel_x = -8
+	},
+/obj/structure/roguemachine/mail/l{
+	mailtag = "Inquisitors Office"
+	},
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/inq/office)
 "cJw" = (
 /obj/effect/decal/remains/wolf,
 /turf/open/floor/rogue/naturalstone/sandstone,
@@ -12685,6 +12724,10 @@
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/tavern/desert)
+"dFm" = (
+/obj/structure/fluff/railing/corner/south_west,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "dFn" = (
 /obj/structure/table/wood{
 	icon_state = "longtable";
@@ -15939,6 +15982,12 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/under/desertcaldera/outlawsvillage)
+"eBH" = (
+/obj/effect/decal/duneedge{
+	dir = 8
+	},
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep)
 "eBJ" = (
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/dragonden)
@@ -16394,6 +16443,10 @@
 /obj/item/natural/stone,
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/desertdeep/above)
+"eJn" = (
+/obj/structure/table/wood,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/inq/office)
 "eJp" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider,
 /turf/open/floor/rogue/dirt/road,
@@ -21562,6 +21615,9 @@
 /obj/structure/roguemachine/mail/paired_hermes/cove,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave/desertdeep)
+"gmU" = (
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "gnb" = (
 /obj/structure/fluff/railing/border{
 	dir = 10;
@@ -24930,12 +24986,8 @@
 /turf/open/floor/rogue/lightpath,
 /area/rogue/indoors/town/desert)
 "hnV" = (
-/obj/structure/fluff/signage{
-	name = "Al Ashur - NorthEast";
-	dir = 4
-	},
-/turf/open/floor/rogue/dunes,
-/area/rogue/outdoors/town/desertvilla)
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep)
 "hoj" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
@@ -31727,6 +31779,12 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/under/cave/desertdeep)
+"jvq" = (
+/obj/structure/stairs{
+	dir = 2
+	},
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep)
 "jvv" = (
 /obj/effect/decal/cobbleedge{
 	icon_state = "borderfall";
@@ -32067,10 +32125,6 @@
 	},
 /turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/physician/desert)
-"jzP" = (
-/obj/item/cushion/desert1,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/inq/office)
 "jzT" = (
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 8
@@ -32246,6 +32300,10 @@
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/desert/warden)
+"jCk" = (
+/obj/item/cushion/desert1,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/inq/office)
 "jCm" = (
 /obj/item/cushion/zybantine{
 	pixel_y = 5;
@@ -34447,6 +34505,13 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/under/desertunderdark/undercity)
+"kjM" = (
+/obj/structure/fluff/railing/corner,
+/obj/effect/decal/duneedge{
+	dir = 4
+	},
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "kjP" = (
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/indoors/town/desert/arenaview)
@@ -36098,17 +36163,6 @@
 "kLd" = (
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/desert)
-"kLi" = (
-/obj/effect/decal/cobbleedge{
-	dir = 8;
-	icon_state = "borderfall";
-	pixel_x = -8
-	},
-/obj/structure/roguemachine/mail/l{
-	mailtag = "Inquisitors Office"
-	},
-/turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/inq/office)
 "kLp" = (
 /obj/structure/pillar/sand1,
 /turf/open/floor/rogue/sandbrick,
@@ -37658,6 +37712,15 @@
 /obj/item/clothing/neck/roguetown/collar/leather,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave/desertdeep)
+"ljI" = (
+/obj/effect/decal/duneedge{
+	dir = 1
+	},
+/obj/effect/decal/duneedge{
+	dir = 8
+	},
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "ljL" = (
 /obj/structure/curtain/drab{
 	layer = 2.8
@@ -40323,6 +40386,13 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/indoors/town/tavern/desert)
+"lYZ" = (
+/obj/structure/fluff/signage{
+	dir = 1;
+	name = "Ashur Dunes - Northwest"
+	},
+/turf/open/floor/rogue/lightpath,
+/area/rogue/outdoors/desertdeep)
 "lZc" = (
 /mob/living/carbon/human/species/skeleton/npc/easy,
 /turf/open/floor/rogue/blocks/newstone/alt,
@@ -42338,6 +42408,13 @@
 /obj/structure/bars,
 /turf/open/water/river/flow/east,
 /area/rogue/under/desertcavewet)
+"mFv" = (
+/obj/structure/fluff/signage{
+	name = "Mines - West";
+	dir = 8
+	},
+/turf/open/floor/rogue/lightpath,
+/area/rogue/outdoors/desert)
 "mFz" = (
 /obj/effect/decal/cobbleedge{
 	icon_state = "borderfall";
@@ -42999,6 +43076,12 @@
 /mob/living/carbon/human/species/skeleton/npc/archer,
 /turf/open/floor/rogue/darkpath,
 /area/rogue/under/cave/dunelord)
+"mQl" = (
+/obj/effect/decal/duneedge{
+	dir = 1
+	},
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "mQm" = (
 /obj/structure/table/wood/large_table/south_west,
 /obj/item/perfume/random{
@@ -45553,6 +45636,13 @@
 /obj/item/cushion/desert2,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern/desert)
+"nDa" = (
+/obj/structure/fluff/signage{
+	dir = 4;
+	name = "Ashur Dunes - North"
+	},
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desertdeep)
 "nDb" = (
 /obj/structure/fluff/psycross,
 /obj/structure/fluff/walldeco/church/line{
@@ -45904,6 +45994,13 @@
 "nJv" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/under/cave/desertdeep)
+"nJz" = (
+/obj/structure/fluff/signage{
+	dir = 4;
+	name = "Al-Ashur - Northeast"
+	},
+/turf/open/floor/rogue/lightpath,
+/area/rogue/outdoors/desert)
 "nJA" = (
 /obj/machinery/light/rogue/hearth{
 	pixel_y = 10;
@@ -49026,6 +49123,10 @@
 /obj/structure/mineral_door/wood/deadbolt,
 /turf/open/floor/rogue/deserttile,
 /area/rogue/indoors/town/garrison/desert)
+"oFe" = (
+/obj/structure/mineral_door/wood/deadbolt,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "oFi" = (
 /mob/living/carbon/human/species/skeleton/npc/dungeon,
 /turf/open/floor/rogue/ruinedwood{
@@ -58365,6 +58466,12 @@
 /obj/machinery/light/rogue/candle/weak/r,
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/under/cave/rhgoblinencampment)
+"rvP" = (
+/obj/structure/stairs{
+	dir = 2
+	},
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "rvR" = (
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/lightpath,
@@ -69152,6 +69259,10 @@
 	},
 /turf/open/floor/rogue/carpet/lord/left,
 /area/rogue/indoors/town/manor/desert)
+"uAt" = (
+/obj/structure/fluff/railing/border/west,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "uAz" = (
 /obj/effect/decal/carpet/kover_black{
 	dir = 4;
@@ -69462,6 +69573,10 @@
 /obj/item/clothing/suit/roguetown/shirt/rags,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/desertdeep)
+"uFm" = (
+/obj/structure/fluff/railing/border,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "uFr" = (
 /obj/structure/flagpole,
 /turf/open/floor/rogue/woodturned,
@@ -70382,6 +70497,12 @@
 	},
 /turf/open/floor/rogue/lightpath,
 /area/rogue/under/desertbog)
+"uSD" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 1
+	},
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep/above)
 "uSF" = (
 /obj/effect/landmark/events/haunts,
 /turf/open/floor/rogue/dunes,
@@ -72820,6 +72941,28 @@
 	},
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/indoors/town/grove)
+"vFJ" = (
+/obj/structure/fluff/signage{
+	dir = 1;
+	name = "Caldera Pass - Northwest";
+	pixel_y = 16;
+	pixel_x = -2;
+	layer = 6
+	},
+/obj/structure/fluff/signage{
+	name = "Dunelords Pass - West";
+	dir = 8;
+	layer = 8
+	},
+/obj/structure/fluff/signage{
+	pixel_y = 32;
+	pixel_x = -2;
+	dir = 1;
+	layer = 5;
+	name = "Tomb of Aletheos - North"
+	},
+/turf/open/floor/rogue/lightpath,
+/area/rogue/outdoors/desert)
 "vFM" = (
 /obj/structure/fluff/railing/border,
 /turf/open/transparent/openspace,
@@ -73102,9 +73245,12 @@
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/outdoors/town/desert)
 "vKu" = (
-/obj/structure/table/wood,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/inq/office)
+/obj/effect/decal/duneedge{
+	dir = 8
+	},
+/obj/effect/decal/duneedge,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep)
 "vKA" = (
 /obj/item/cushion/desert2,
 /turf/open/floor/carpet/royalblack,
@@ -76182,6 +76328,15 @@
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/tavern/desert)
+"wEn" = (
+/obj/effect/decal/duneedge{
+	dir = 8
+	},
+/obj/effect/decal/duneedge{
+	dir = 1
+	},
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/desertdeep)
 "wEs" = (
 /obj/structure/table/wood/poor,
 /obj/item/reagent_containers/glass/cup/steel{
@@ -362661,7 +362816,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
+nJz
 adk
 cRY
 cRY
@@ -362973,7 +363128,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
+cRY
 cRY
 adk
 adk
@@ -363284,8 +363439,8 @@ eMy
 eMy
 eMy
 eMy
-eMy
-eMy
+cRY
+cRY
 adk
 cRY
 cRY
@@ -363596,7 +363751,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
+cRY
 adk
 cRY
 cRY
@@ -363908,7 +364063,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
+cRY
 adk
 eMy
 eMy
@@ -364220,7 +364375,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
+cRY
 adk
 eMy
 eMy
@@ -364532,7 +364687,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
+cRY
 adk
 eMy
 eMy
@@ -364845,7 +365000,7 @@ eMy
 eMy
 eMy
 adk
-eMy
+cRY
 eMy
 tud
 tud
@@ -375860,13 +376015,13 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+iwP
+iwP
+iwP
+iwP
+iwP
+iwP
 mVA
 mVA
 mVA
@@ -376172,13 +376327,13 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+hnV
+hnV
+iwP
+iwP
+iwP
+iwP
 mVA
 mVA
 mVA
@@ -376483,15 +376638,15 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+iwP
+hnV
+hnV
+jvq
+krW
+iwP
+iwP
+iwP
 mVA
 mVA
 mVA
@@ -376795,15 +376950,15 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+hnV
+hnV
+hnV
+hnV
+hnV
+iwP
+isT
+iwP
 mVA
 mVA
 mVA
@@ -377106,17 +377261,17 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mIL
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+iwP
+hnV
+hnV
+hnV
+hnV
+hnV
+iwP
+isT
+iwP
+iwP
 mVA
 mVA
 mVA
@@ -377418,17 +377573,17 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+iwP
 mVA
 mVA
 mVA
@@ -377730,17 +377885,17 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+iwP
 mVA
 mVA
 mVA
@@ -378042,17 +378197,17 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+iwP
 mVA
 mVA
 mVA
@@ -378086,7 +378241,7 @@ mVA
 mVA
 mVA
 mVA
-mVA
+lok
 mVA
 mVA
 mVA
@@ -378354,17 +378509,17 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+hnV
+iwP
 mVA
 mVA
 mVA
@@ -378666,17 +378821,17 @@ isT
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-vmB
-mVA
-vmB
+iwP
+iwP
+hnV
+hnV
+eBH
+eBH
+eBH
+hnV
+hnV
+iwP
+iwP
 mVA
 mVA
 mVA
@@ -378979,17 +379134,17 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+hnV
+wEn
 vmB
 vmB
+vmB
+vKu
+hnV
+iwP
+mVA
+mVA
 mVA
 mVA
 mVA
@@ -379291,15 +379446,15 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
+iwP
+vmB
+vmB
+ezD
+vmB
+vmB
+iwP
+iwP
 mVA
 mVA
 mVA
@@ -379604,16 +379759,16 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
+iwP
 vmB
+ezD
+ezD
+ezD
+vmB
+iwP
+mVA
+mVA
+mVA
 mVA
 mVA
 mVA
@@ -379916,14 +380071,14 @@ mVA
 mVA
 mVA
 mVA
+iwP
+iwP
+iwP
+ezD
+iwP
+iwP
+iwP
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-mVA
-lok
 mVA
 mVA
 mVA
@@ -380231,13 +380386,13 @@ mVA
 mVA
 mVA
 mVA
+ezD
 mVA
 mVA
 mVA
 mVA
 mVA
 mVA
-vmB
 mVA
 mVA
 mVA
@@ -380543,8 +380698,8 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
+vmB
+vmB
 mVA
 mVA
 mVA
@@ -380856,12 +381011,12 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
-mVA
 vmB
+mVA
+mVA
+mVA
+mVA
+mVA
 mVA
 mVA
 mVA
@@ -381167,9 +381322,9 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
+ezD
+vmB
+ezD
 mVA
 mVA
 mVA
@@ -381480,11 +381635,11 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
-mVA
 vmB
+vmB
+ezD
+mVA
+mVA
 mVA
 mVA
 mVA
@@ -381793,10 +381948,10 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
 vmB
+mVA
+mVA
+mVA
 mVA
 mVA
 mVA
@@ -382104,8 +382259,8 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
+ezD
+vmB
 mVA
 mVA
 mVA
@@ -382417,8 +382572,8 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
+vmB
+ezD
 mVA
 mVA
 mVA
@@ -382729,7 +382884,7 @@ mVA
 mVA
 mVA
 mVA
-mVA
+vmB
 mVA
 mVA
 mVA
@@ -383041,8 +383196,8 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
+vmB
+ezD
 mVA
 mVA
 mVA
@@ -383353,8 +383508,8 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
+ezD
+vmB
 mVA
 mVA
 mVA
@@ -383666,8 +383821,8 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
+vmB
+ezD
 mVA
 mVA
 mVA
@@ -383978,7 +384133,7 @@ mVA
 mVA
 mVA
 mVA
-mVA
+vmB
 mVA
 mVA
 mVA
@@ -384290,8 +384445,8 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
+vmB
+ezD
 mVA
 mVA
 mVA
@@ -384601,9 +384756,9 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
-mVA
+nDa
+ezD
+vmB
 mVA
 mVA
 mVA
@@ -384914,8 +385069,8 @@ mVA
 mVA
 mVA
 mVA
-mVA
-mVA
+vmB
+vmB
 ezD
 ezD
 ezD
@@ -385225,7 +385380,7 @@ mVA
 mVA
 mVA
 ezD
-mVA
+vmB
 ezD
 ezD
 vmB
@@ -386621,7 +386776,7 @@ eMy
 eMy
 eMy
 eMy
-cRY
+vFJ
 adk
 adk
 cRY
@@ -394190,7 +394345,7 @@ eMy
 eMy
 eMy
 eMy
-cRY
+mFv
 adk
 cRY
 cRY
@@ -397734,7 +397889,7 @@ mVA
 vmB
 ezD
 vmB
-vmB
+lYZ
 mVA
 qlF
 qlF
@@ -407284,7 +407439,7 @@ hPM
 hPM
 qLU
 ovJ
-hnV
+hPM
 hPM
 hPM
 hPM
@@ -488666,7 +488821,7 @@ eMy
 eMy
 eMy
 cRY
-eMy
+cRY
 eMy
 tSu
 tSu
@@ -488978,7 +489133,7 @@ eMy
 eMy
 eMy
 cRY
-eMy
+cRY
 eMy
 tSu
 tSu
@@ -494421,13 +494576,13 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+wHE
+wHE
+wHE
+wHE
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -494733,13 +494888,13 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+lrw
+lrw
+lrw
+dMO
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -495044,15 +495199,15 @@ xRy
 xRy
 xRy
 xRy
+wHE
+wHE
+lrw
+uFm
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+rvP
+dMO
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -495356,15 +495511,15 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+lrw
+lrw
+dFm
+uAt
+uAt
+kjM
+lrw
+wHE
 xRy
 xRy
 xRy
@@ -495667,17 +495822,17 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+wHE
+lrw
+gmU
+gmU
+gmU
+gmU
+gmU
+lrw
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -495979,17 +496134,17 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+lrw
+lrw
+lrw
+lrw
+gmU
+lrw
+lrw
+lrw
+lrw
+wHE
 xRy
 xRy
 xRy
@@ -496291,17 +496446,17 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+lrw
+gmU
+gmU
+lrw
+gmU
+lrw
+gmU
+gmU
+lrw
+wHE
 xRy
 xRy
 xRy
@@ -496603,17 +496758,17 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+lrw
+gmU
+gmU
+uSD
+gmU
+oFe
+gmU
+btg
+lrw
+wHE
 xRy
 xRy
 xRy
@@ -496915,17 +497070,17 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+lrw
+lrw
+gmU
+lrw
+gmU
+lrw
+mQl
+dMO
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -497227,17 +497382,17 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+wHE
+lrw
+lrw
+lrw
+gmU
+lrw
+lrw
+dMO
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -497540,15 +497695,15 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+lrw
+lrw
+gmU
+gmU
+gmU
+ljI
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -497852,15 +498007,15 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+wHE
+lrw
+gmU
+btg
+ljI
+dMO
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -498165,13 +498320,13 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+lrw
+lrw
+dMO
+dMO
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -498477,13 +498632,13 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+wHE
+wHE
+wHE
+wHE
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -613295,9 +613450,9 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
+wHE
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -613607,9 +613762,9 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
+wHE
+dMO
+dMO
 xRy
 xRy
 xRy
@@ -613918,13 +614073,13 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+wHE
+dMO
+dMO
+dMO
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -614230,13 +614385,13 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+dMO
+dMO
+dMO
+dMO
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -614541,15 +614696,15 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+wHE
+dMO
+dMO
+dMO
+dMO
+dMO
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -614853,15 +615008,15 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+dMO
+dMO
+dMO
+dMO
+dMO
+dMO
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -615165,15 +615320,15 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+dMO
+dMO
+dMO
+dMO
+dMO
+dMO
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -615477,15 +615632,15 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+wHE
+dMO
+dMO
+dMO
+dMO
+dMO
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -615790,13 +615945,13 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+wHE
+dMO
+dMO
+dMO
+dMO
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -616102,13 +616257,13 @@ xRy
 xRy
 xRy
 xRy
+wHE
+wHE
+dMO
 xRy
 xRy
-xRy
-xRy
-xRy
-xRy
-xRy
+dMO
+wHE
 xRy
 xRy
 xRy
@@ -616415,7 +616570,7 @@ xRy
 xRy
 xRy
 xRy
-xRy
+wHE
 xRy
 xRy
 xRy
@@ -616727,8 +616882,8 @@ xRy
 xRy
 xRy
 xRy
-xRy
-xRy
+wHE
+wHE
 xRy
 xRy
 xRy
@@ -664892,7 +665047,7 @@ kHE
 wOQ
 pVa
 mKh
-kLi
+cJu
 pVa
 kHE
 sil
@@ -665203,7 +665358,7 @@ kHE
 dYs
 qtR
 qtR
-jzP
+jCk
 uWO
 uWO
 kHE
@@ -665515,7 +665670,7 @@ kHE
 wkm
 ksH
 qtR
-vKu
+eJn
 uWO
 arW
 usP
@@ -665827,7 +665982,7 @@ kHE
 nLX
 qtR
 qtR
-jzP
+jCk
 uWO
 uWO
 kHE
