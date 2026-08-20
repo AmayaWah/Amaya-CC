@@ -71,7 +71,6 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 			if("Golden Serpent") //Pugilist
-				r_hand = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy //cc addition, optional swag
 				head = /obj/item/clothing/head/roguetown/headband/monk
 //				mask = /obj/item/clothing/mask/rogue/eyepatch //cc edit
 				neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios //cc edit, for some reason they didn't have it before?? without it they can't use freemans tools
@@ -84,23 +83,31 @@
 //				ADD_TRAIT(H, TRAIT_CYCLOPS_RIGHT, TRAIT_GENERIC) //cc edit
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC) //cc edit | gnarlydigits sucks and it makes no sense as to why they would have it. weaponless oath is far better as it lets them use tools
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_LEGENDARY, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_LEGENDARY, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE) //CC change, legend wrestling is insane.
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE) //CC change, legendary was also insane
 				H.change_stat(STATKEY_CON, 2)
 //				H.change_stat(STATKEY_LCK, -2) //cc edit
 //				H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)//So he can fix his arm //cc edit
 				var/static/list/safe_bodyzones = list(
 					BODY_ZONE_HEAD,
 					BODY_ZONE_CHEST,
-					BODY_ZONE_L_ARM, //CC edit
 					BODY_ZONE_R_ARM,
 					BODY_ZONE_L_LEG,
-					BODY_ZONE_R_LEG
-				)
-//				for(var/obj/item/bodypart/limb in H.bodyparts) //cc edit start
-//					if(limb.body_zone in safe_bodyzones)
-//						continue
-//					limb.drop_limb()
-//					qdel(limb)
-//				var/obj/item/bodypart/l_arm/prosthetic/bronzeleft/L = new()
-//				L.attach_limb(H) //cc edit end
+					BODY_ZONE_R_LEG,
+					BODY_ZONE_TAUR
+								)
+				var/arm = list("Yes", "No") //cc edit start
+				if(H.mind)
+					var/armchoice = input(H, "Bronze arm?", "Pick your damage.") as anything in arm
+					H.set_blindness(0)
+					switch(armchoice)
+						if("No")
+							return
+						if("Yes")
+							for(var/obj/item/bodypart/limb in H.bodyparts)
+								if(limb.body_zone in safe_bodyzones)
+									continue
+								limb.drop_limb()
+								qdel(limb)
+							var/obj/item/bodypart/l_arm/prosthetic/bronzeleft/L = new()
+							L.attach_limb(H) //cc edit end

@@ -418,7 +418,7 @@
 	/// world.time the wearer began their current uninterrupted rest on a bed, 0 when not resting.
 	var/resting_since = 0
 	/// Structures on the wearer's turf that count as a bed.
-	var/static/list/repair_rest_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
+	var/list/repair_rest_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/Initialize(mapload)
 	. = ..()
@@ -562,8 +562,9 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	blocking_behavior = SAMEWEAR
 	armor = ARMOR_DRAGONHIDE
-	max_integrity = ARMOR_INT_CHEST_MEDIUM_IRON //halved compared to chest
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_IRON
 	repairmsg_rest_begin = "I lay down, my gilded scales slowly reforming.."
+	repair_rest_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet, /obj/item/roguecoin/gold/pile)
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/iconoclast/chest
 	name = "dragon's chest"
@@ -573,6 +574,6 @@
 	body_parts_inherent = COVERAGE_VEST
 	desc = "Scales of stolen gold protect you, secret miracles of the Fyre-Thief's most devout shimmer like coin upon you."
 	armor = ARMOR_DRAGONSKIN
-	max_integrity = 450
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_IRON
 
 //CC addition, iconoclast golden serpent skin armor
