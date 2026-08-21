@@ -575,5 +575,6 @@
 	desc = "Scales of stolen gold protect you, secret miracles of the Fyre-Thief's most devout shimmer like coin upon you."
 	armor = ARMOR_DRAGONSKIN
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_IRON
+	blocksound = SOFTHIT
 
 //CC addition, iconoclast golden serpent skin armor
