@@ -76,8 +76,8 @@
 				neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios //cc edit, for some reason they didn't have it before?? without it they can't use freemans tools
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
-				armor = /obj/item/clothing/suit/roguetown/armor/manual/resting/iconoclast/chest //cc addition
-				shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/iconoclast //cc addition
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/resting/iconoclast //cc addition
+				shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/iconoclast/chest //cc addition
 //				shirt = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy //cc edit for updated skinarmor
 //				ADD_TRAIT(H, TRAIT_GNARLYDIGITS, TRAIT_GENERIC) //cc edit
 //				ADD_TRAIT(H, TRAIT_CYCLOPS_RIGHT, TRAIT_GENERIC) //cc edit
