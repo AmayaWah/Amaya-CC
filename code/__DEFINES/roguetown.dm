@@ -574,11 +574,11 @@ GLOBAL_LIST_EMPTY(round_join_times)
 //CC BEGIN
 
 /*
-	Defines the ratio that armor ABSORBS when integrity damage is taken to the piece of armor worn by multiplying the damage by the defined value.
+	Defines the ratio that armor REDUCES when integrity damage is taken to the piece of armor worn by multiplying the damage by the defined value.
 */
 #define AC_NONE_RATIO 0
 #define AC_LIGHT_RATIO 0.1 //10% \
-#define AC_MEDIUM_RATIO 0.3 //30% -- Absorbed Damage
+#define AC_MEDIUM_RATIO 0.3 //30% -- Reduced Integrity Damage
 #define AC_HEAVY_RATIO 0.6 //60% /
 
 #define ARMOR_SHIELD TRUE //Used for armor types that are not meant to last permanently and act as an overshield across the entire body, I.E. Fateweaver/Dragonhide.
