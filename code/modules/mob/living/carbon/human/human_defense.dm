@@ -85,6 +85,11 @@
 					remove_status_effect(/datum/status_effect/debuff/vulnerable)
 					emote("groan", forced = TRUE)
 
+			//CC Edit - Reduce Total Integrity Damage Taken via AC ratio after all calculations were made.
+			var/armor_ratio = get_armor_class_ratio(used)
+			intdamage -= (intdamage * armor_ratio)
+			//CC Edit End
+
 			used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 	else
 		// DR types: blunt, fire, acid
@@ -128,6 +133,12 @@
 
 			if(d_type in ARMOR_DR_SINGLE_LAYER_TYPES)
 				if(best_layer)
+
+					//CC Edit - Reduce Total Integrity Damage Taken via AC ratio after all calculations were made.
+					var/armor_ratio = get_armor_class_ratio(best_layer)
+					intdamage -= (intdamage * armor_ratio)
+					//CC Edit End
+
 					best_layer.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 					if(best_layer.blocksound)
 						playsound(loc, get_armor_sound(best_layer.blocksound, blade_dulling), 100)
@@ -138,6 +149,12 @@
 					var/actualdmg = intdamage
 					if(!full_dmg)
 						actualdmg /= layers_deep
+
+					//CC Edit - Reduce Total Integrity Damage Taken via AC ratio after all calculations were made.
+					var/armor_ratio = get_armor_class_ratio(C)
+					intdamage -= (intdamage * armor_ratio)
+					//CC Edit End
+
 					C.take_damage(actualdmg, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 					if(C.blocksound && !played_sound)
 						playsound(loc, get_armor_sound(C.blocksound, blade_dulling), 100)
@@ -971,25 +988,19 @@
 		I.fire_act(stacks * 25 * seconds_per_tick) //damage taken is reduced to 2% of this value by fire_act()
 
 
-//Used to grab the ratio for all armor pieces meant to be damaged for use with the checkarmor() proc.
-//Can handle either one, or multiple pieces of armor.
+//Grabs the armor class ratio for the used armor piece when calculating the amount of damage to absorb.
 
-/mob/living/carbon/human/proc/get_armor_class_ratio(armor_list)
-	var/cur_armor = 1 //List indexing value
-	var/list/ratio_list = list()
-	for(var/i in 1 to length(armor_list))
-		var/obj/item/clothing/used = armor_list[cur_armor]
-		var/cur_ratio = 0
-		switch(used.armor_class)
-			if(ARMOR_CLASS_NONE)
-				cur_ratio = AC_NONE_RATIO
-			if(ARMOR_CLASS_LIGHT)
-				cur_ratio = AC_LIGHT_RATIO
-			if(ARMOR_CLASS_MEDIUM)
-				cur_ratio = AC_MEDIUM_RATIO
-			if(ARMOR_CLASS_HEAVY)
-				cur_ratio = AC_HEAVY_RATIO
-		ratio_list += cur_ratio
-		cur_armor++
-	return ratio_list
+/mob/living/carbon/human/proc/get_armor_class_ratio(armor_piece)
+	var/obj/item/clothing/used = armor_piece
+	var/cur_ratio = 0
+	switch(used.armor_class)
+		if(ARMOR_CLASS_NONE)
+			cur_ratio = AC_NONE_RATIO
+		if(ARMOR_CLASS_LIGHT)
+			cur_ratio = AC_LIGHT_RATIO
+		if(ARMOR_CLASS_MEDIUM)
+			cur_ratio = AC_MEDIUM_RATIO
+		if(ARMOR_CLASS_HEAVY)
+			cur_ratio = AC_HEAVY_RATIO
+	return cur_ratio
 
