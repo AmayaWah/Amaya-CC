@@ -202,10 +202,6 @@
 		html += {"
 			<tr><th>Damage</th><td>[proj_damage] [proj_damage_type]</td></tr>
 		"}
-		if(proj_npc_mult != 1)
-			html += {"
-				<tr><th>NPC Damage Mult</th><td>[proj_npc_mult]x</td></tr>
-			"}
 
 	if(proj_ap)
 		html += {"

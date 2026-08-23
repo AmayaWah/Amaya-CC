@@ -344,7 +344,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		. = GOAL_COLOR_ACHIEVED
 	else if(goal_value > 125) //Not the true "max maximum" but you went well and beyond 125 which is great in anyone's books.
 		. = GOAL_COLOR_MAXIMUM
-	
+
 //CC Edit End
 
 /datum/mind/proc/get_language_holder()
@@ -625,6 +625,11 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 				if(A.type == datum_type)
 					return A
 
+/datum/mind/proc/has_spellmiracle_block_antag()
+	for(var/antag_type in SPELLMIRACLE_BLOCK_ANTAGS)
+		if(has_antag_datum(antag_type))
+			return TRUE
+	return FALSE
 
 /datum/mind/proc/remove_traitor()
 	remove_antag_datum(/datum/antagonist/traitor)

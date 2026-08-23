@@ -375,7 +375,7 @@
 #undef COOLDOWN_NO_DISPLAY_TIME
 
 /proc/grant_poke_spell(mob/living/carbon/human/user) // unified proc because atm this is spread across like 5-6 places, uughhghghghgh
-	var/list/poke_options = list("Spitfire", "Frost Bolt", "Arc Bolt", "Greater Arcyne Bolt", "Arcyne Lance", "Lesser Soulshot")
+	var/list/poke_options = list("Spitfire", "Frost Bolt", "Arc Bolt", "Greater Arcyne Bolt", "Arcyne Lance")
 	var/poke_choice = tgui_input_list(user, "Choose your offensive cantrip.", "Arcyne Awakening", poke_options)
 	if(!poke_choice || !user.mind)
 		return
@@ -390,8 +390,6 @@
 			user.mind.AddSpell(new /datum/action/cooldown/spell/projectile/greater_arcyne_bolt)
 		if("Arcyne Lance")
 			user.mind.AddSpell(new /datum/action/cooldown/spell/projectile/arcyne_lance)
-		if("Lesser Soulshot")
-			user.mind.AddSpell(new /datum/action/cooldown/spell/projectile/soulshot/lesser)
 
 /proc/grant_poke_spell_ex(mob/living/carbon/human/user) // unified proc because atm this is spread across like 5-6 places, uughhghghghgh
 	var/list/poke_options = list("Spitfire", "Frost Bolt", "Arc Bolt", "Greater Arcyne Bolt", "Stygian Efflorescence", "Arcyne Lance", "Soulshot")
