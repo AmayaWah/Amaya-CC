@@ -26,6 +26,7 @@
 	spread = 0
 	can_parry = TRUE
 	associated_skill = /datum/skill/combat/crossbows
+	var/ranged_skill = /datum/skill/combat/crossbows
 	wdefense = 3
 	max_integrity = 100
 	var/chargingspeed = 40
