@@ -562,7 +562,7 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	blocking_behavior = SAMEWEAR
 	armor = ARMOR_DRAGONHIDE
-	max_integrity = ARMOR_INT_CHEST_MEDIUM_IRON
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT
 	repairmsg_rest_begin = "I lay down, my gilded scales slowly reforming.."
 	repair_rest_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet, /obj/item/roguecoin/gold/pile)
 
