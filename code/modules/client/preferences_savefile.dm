@@ -215,7 +215,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["pda_color"]			>> pda_color
 	///Caustic edit
 	S["epilepsy"]			>> epilepsy
-	
+
 	S["vore_health_bars"]	>> vore_health_bars
 	S["digestion_noises"]	>> digestion_noises
 	S["eating_noises"]		>> eating_noises
@@ -404,7 +404,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	///Caustic edit end
 
 	WRITE_FILE(S["tat_build"], tat_build.export_to_list()) //CC + TA edit
-	
+
 	return TRUE
 
 
@@ -502,13 +502,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		if(length(virtue.picked_choices) > sane_virtue.max_choices)
 			error_found = TRUE
-		
+
 		if(sane_virtue.max_choices != virtue.max_choices)
 			error_found = TRUE
-		
+
 		if(length(virtue.extra_choices) != length(sane_virtue.extra_choices))
 			error_found = TRUE
-		
+
 		if(!error_found)
 			for(var/choice in virtue.extra_choices)
 				if(!(choice in sane_virtue.extra_choices))
@@ -557,13 +557,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		if(length(virtuetwo.picked_choices) > sane_virtuetwo.max_choices)
 			error_found = TRUE
-		
+
 		if(sane_virtuetwo.max_choices != virtuetwo.max_choices)
 			error_found = TRUE
-		
+
 		if(length(virtuetwo.extra_choices) != length(sane_virtuetwo.extra_choices))
 			error_found = TRUE
-		
+
 		if(!error_found)
 			for(var/choice in virtuetwo.extra_choices)
 				if(!(choice in sane_virtuetwo.extra_choices))
@@ -577,7 +577,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				total_ours += cost
 			for(var/cost in sane_virtuetwo.choice_costs)
 				total_sane += cost
-				
+
 			if(total_ours != total_sane)
 				error_found = TRUE
 
@@ -826,17 +826,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["examine_theme"]		>> examine_theme
 
-	S["char_accent"]		>> char_accent
-	if (!char_accent)
-		char_accent = "No accent"
-
 	S["pronouns"] >> pronouns
 	S["voice_type"] >> voice_type
 	S["voice_pack"] >> voice_pack
 	S["body_size"] >> features["body_size"]
 	if (!features["body_size"] || features["body_size"] != BODY_SIZE_NORMAL) //Caustic Edit - Since we replaced Sprite Scale with Size Scale, lets just reset this to 1.00 for everyone.
 		features["body_size"] = BODY_SIZE_NORMAL
-	
+
 	_load_char_directory(S) //Caustic Edit - Add call to load Character Directory info!
 
 	//try to fix any outdated data if necessary
@@ -1063,7 +1059,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["song_artist"] , song_artist)
 	WRITE_FILE(S["song_title"] , song_title)
 	WRITE_FILE(S["examine_theme"] , examine_theme)
-	WRITE_FILE(S["char_accent"] , char_accent)
 	WRITE_FILE(S["voice_type"] , voice_type)
 	WRITE_FILE(S["voice_pack"] , voice_pack)
 	WRITE_FILE(S["pronouns"] , pronouns)
