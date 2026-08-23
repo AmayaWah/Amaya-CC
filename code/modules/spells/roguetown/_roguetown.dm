@@ -181,7 +181,6 @@
 	var/proj_range = initial(projectile_type:range)
 	var/proj_speed = initial(projectile_type:speed)
 	var/proj_ap = initial(projectile_type:armor_penetration)
-	var/proj_npc_mult = initial(projectile_type:npc_simple_damage_mult)
 	var/proj_nodamage = initial(projectile_type:nodamage)
 	var/proj_guard = initial(projectile_type:guard_deflectable)
 
