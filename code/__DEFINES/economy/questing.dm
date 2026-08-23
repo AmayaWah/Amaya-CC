@@ -13,6 +13,10 @@
 #define QUEST_TOWNER_SMITH_CARAVAN "Smith Caravan"
 #define QUEST_TOWNER_MINER_OREVEIN "Ore Vein"
 
+//CC Edit - PvP Contracts
+#define QUEST_ASCENDED_BOUNTY "Ascended Bounty"
+//CC Edit End - PvP Contracts
+
 #define QUEST_TURNIN_SELF 1
 #define QUEST_TURNIN_FELLOWSHIP 2
 #define QUEST_TURNIN_OFFICIAL 3
@@ -57,7 +61,7 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 
 // Multipliers applied to the base TP for kill request rewards
 #define QUEST_KILL_THREAT_MULT 1.0
-// Bounty's main target is further multiplied  
+// Bounty's main target is further multiplied
 #define QUEST_BOUNTY_THREAT_MULT 1
 
 // Max mobs for kill request to avoid lagging
