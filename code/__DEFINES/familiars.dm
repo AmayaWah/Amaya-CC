@@ -94,14 +94,19 @@ GLOBAL_LIST_INIT(elemental_familiars, list(
 	"Warden" = /mob/living/carbon/human/species/familiar/elemental,
 	"Pondstone Toad" = /mob/living/carbon/human/species/familiar/elemental/pondstone_toad,
 	"Gravemoss Serpent" = /mob/living/carbon/human/species/familiar/elemental/gravemoss_serpent,
-	"Thornback Turtle" = /mob/living/carbon/human/species/familiar/elemental/thornback_turtle
+	"Thornback Turtle" = /mob/living/carbon/human/species/familiar/elemental/thornback_turtle,
+	"Brass Thrum" = /mob/living/carbon/human/species/familiar/elemental/brass_thrum
+))
+
+GLOBAL_LIST_INIT(void_familiars, list(
+	"Void Drakeling" = /mob/living/carbon/human/species/familiar/void
 ))
 
 GLOBAL_LIST_INIT(planar_lists, list(
 	"fae" = GLOB.fae_familiars,
 	"infernal" = GLOB.infernal_familiars,
 	"elemental" = GLOB.elemental_familiars,
-	"void" = null
+	"void" = GLOB.void_familiars
 ))
 
 GLOBAL_LIST_INIT(familiar_advertised, list())

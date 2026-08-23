@@ -34,7 +34,7 @@
 	var/list/speak_emote = list()
 	var/binded = FALSE
 	var/voiceclips = list() // list of sounds that'll be chosen to play when we talk
-	can_do_sex = FALSE // I HATE YOU ALL???
+	can_do_sex = TRUE // I HATE YOU ALL??? //Caustic Edit - LOL. LMAO.
 
 	// stats: should be squishy, but able to keep up with their summoner
 	STACON = 5 // might be too low? it's more than skeletons...
@@ -130,7 +130,7 @@
 	inherent_biotypes = MOB_HUMANOID
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE, SLOT_BELT_L, SLOT_BELT_R, SLOT_WRISTS, SLOT_RING)
 	nojumpsuit = 1
-	sexes = 0
+	sexes = 1 //Caustic Edit - This doesn't appear to actually do anything though.
 	offset_features = list(OFFSET_HANDS = list(0,2), OFFSET_HANDS_F = list(0,2))
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
