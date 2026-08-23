@@ -156,10 +156,6 @@
 /obj/structure/fluff/statue/tdummy,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
-"ei" = (
-/obj/effect/landmark/quest_spawner/pvp,
-/turf/open/floor/rogue/dirt,
-/area/rogue/under/underdark/north)
 "ej" = (
 /turf/closed/mineral/random/rogue/med,
 /area/rogue/outdoors/rtfield)
@@ -630,10 +626,6 @@
 "rT" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
-"rZ" = (
-/obj/effect/landmark/quest_spawner/pvp,
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/outdoors/woods/north)
 "sh" = (
 /obj/structure/roguemachine/steward,
 /obj/structure/roguemachine/atm,
@@ -1057,10 +1049,6 @@
 	},
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors)
-"Cz" = (
-/obj/effect/landmark/quest_spawner/pvp,
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/outdoors/rtfield)
 "CB" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/trufflepig,
 /turf/open/floor/rogue/hay,
@@ -1590,10 +1578,6 @@
 /obj/structure/roguemachine/scrapper/smith,
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/indoors/town/manor)
-"Tf" = (
-/obj/effect/landmark/quest_spawner/pvp,
-/turf/open/floor/rogue/snow,
-/area/rogue/indoors/shelter/mountains/decap)
 "Tj" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/dirt/road,
@@ -1629,10 +1613,6 @@
 /obj/effect/landmark/quest_spawner/defense,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods/north)
-"UG" = (
-/obj/effect/landmark/quest_spawner/pvp,
-/turf/open/floor/rogue/dirt,
-/area/rogue/outdoors/beach/forest/north)
 "UL" = (
 /obj/structure/table/wood{
 	icon_state = "longtable"
@@ -1740,10 +1720,6 @@
 /obj/item/rogueweapon/huntingknife/idagger/silver,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
-"Wg" = (
-/obj/effect/landmark/quest_spawner/pvp,
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/outdoors/bog/north)
 "Wh" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog,
 /turf/open/floor/rogue/hay,
@@ -2483,14 +2459,14 @@ Rk
 Fi
 xU
 Lz
-Cz
+Rk
 Rk
 Lg
 Lg
 bh
 rh
 nH
-Tf
+Lg
 yF
 "}
 (13,1,1) = {"
@@ -3159,14 +3135,14 @@ MX
 rn
 rt
 Uv
-rZ
+wX
 wX
 bW
 bW
 VQ
 Ex
 rD
-ei
+bW
 rk
 "}
 (26,1,1) = {"
@@ -3887,14 +3863,14 @@ Ln
 kz
 hQ
 yG
-Wg
+Ln
 cQ
 cQ
 cQ
 wr
 Ka
 MD
-UG
+cQ
 il
 "}
 (40,1,1) = {"

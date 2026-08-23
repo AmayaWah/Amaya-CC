@@ -53,10 +53,11 @@
 /obj/effect/landmark/quest_spawner/generic
 	name = "generic quest landmark"
 	icon_state = "quest_marker_low"
-	quest_type = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_RECOVERY, QUEST_BLOCKADE_DEFENSE, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN)
+	//CC Edit - Quest Ascended Bounty Addition
+	quest_type = list(QUEST_ASCENDED_BOUNTY, QUEST_RETRIEVAL, QUEST_COURIER, QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_RECOVERY, QUEST_BLOCKADE_DEFENSE, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN)
 
 //CC Edit - Custom Ascended Bounty marker for PvP contracts so we can map them into specific locations.
-/obj/effect/landmark/quest_spawner/pvp
+/obj/effect/landmark/quest_spawner/pvp //Currently unused - could be used in the future.
 	name = "pvp quest landmark"
 	icon_state = "quest_marker_pvp"
 	quest_type = list(QUEST_ASCENDED_BOUNTY)
