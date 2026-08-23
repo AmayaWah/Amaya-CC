@@ -135,7 +135,7 @@
 		if("familiar_examine")
 			setup_examine_window(user,planar_origin)
 			return
-		
+
 		if("familiar_headshot")
 			to_chat(user, "<span class='notice'>Please use a relatively SFW image of the head and shoulder area to maintain immersion level. <b>Do not use a real life photo or unserious images.</b></span>")
 			to_chat(user, "<span class='notice'>Ensure it's a direct image link. The photo will be resized to 325x325 pixels.</span>")
@@ -217,7 +217,7 @@
 				setup_examine_window(user,planar_origin)
 				return
 			familiar_ooc_extra_link[planar_origin] = link
-			var/ext = lowertext(splittext(link, ".")[length(splittext(link, "."))])
+			var/ext = LOWER_TEXT(splittext(link, ".")[length(splittext(link, "."))])
 			var/info
 			switch(ext)
 				if("jpg", "jpeg", "png", "gif")

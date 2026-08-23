@@ -745,6 +745,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					str = "Heavy"
 					spdcap = AC_HEAVY_SPDCAP
 			inspec += "\n<b>ARMOR CLASS:</b> [str]"
+			inspec += "\n<b>MOVEMENT SPD CAP:</b> [spdcap ? spdcap : "None"]"
 
 		var/output = inspec.Join()
 		if(!usr.client.prefs.no_examine_blocks)
