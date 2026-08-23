@@ -731,6 +731,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(istype(src, /obj/item/clothing))	//awful
 			var/obj/item/clothing/C = src
 			var/str
+			var/spdcap
 			switch(C.armor_class)
 				if(ARMOR_CLASS_NONE)
 					str = "None"
