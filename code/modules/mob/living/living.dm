@@ -2069,6 +2069,9 @@
 	mob_pickup(user)
 	return TRUE
 
+/mob/living/proc/can_be_held(mob/by)
+	return FALSE
+
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()

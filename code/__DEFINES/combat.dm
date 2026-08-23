@@ -359,6 +359,13 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define UNARMED_DAMAGE_DEFAULT		15
 #define UNARMED_DAMAGE_CIVILBARB	5
 
+#define PARRY_PER_WDEF_POINT 10
+#define PARRY_PER_SKILL_LEVEL 20
+
+//Base weapon-defense for an unarmed parry. Multiplied by PARRY_PER_WDEF_POINT to become a parry percentage.
+#define UNARMED_BASE_WDEF_BARE 2		// Bare fists — still bad, but not hopeless
+#define UNARMED_BASE_WDEF_EQUIPPED 8	// Bracers / knuckles / bandages — 80 base parry for expert pugilists
+
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
 

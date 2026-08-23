@@ -285,6 +285,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	/// "Lesser" silver items still count as silver, but their bite against the silver-weak is muted: no pickup ignition,
 	/// no force-undisguise on hit, and only a slow accumulation of (non-igniting) sunder stacks while held/worn.
 	var/is_lesser_silver = FALSE
+	/// PVE-only effects - for stuff like the cleric longsword, which is lorewise just blessed, not actual silver.
+	var/is_even_lesser_silver = FALSE
 	var/last_used = 0
 	var/override_state = null
 	var/icon_x_offset = 0
