@@ -390,7 +390,7 @@
 /proc/pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
 	var/list/candidates = list()
 
-	for(var/mob/dead/observer/G in GLOB.player_list)
+	for(var/mob/dead/G in GLOB.player_list)
 		if(isscryeye(G))
 			continue
 		candidates += G
@@ -422,6 +422,7 @@
 				continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
+		SEND_SOUND(M, 'sound/misc/updatebook.ogg') // CC Edit - Give Poll Candidates a sound for when they get notified. Thanks.
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.

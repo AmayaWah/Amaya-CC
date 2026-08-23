@@ -173,6 +173,11 @@
 /obj/machinery/light/rogue/firebowl,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/desertbog)
+"adq" = (
+/obj/structure/flora/roguegrass/jungle,
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/under/desertcavewet)
 "adF" = (
 /obj/structure/bed/rogue/inn/wool,
 /obj/item/bedsheet/rogue/fabric,
@@ -7228,6 +7233,10 @@
 /obj/effect/landmark/chimeric_calyx_spawner/fifteen,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/under/cave/dungeon1)
+"cdT" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desertdeep)
 "cdU" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/transparent/openspace,
@@ -10594,6 +10603,10 @@
 "dct" = (
 /turf/closed/mineral/rogue/sandstone,
 /area/rogue/outdoors/desert/above)
+"dcx" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/dirt/desert,
+/area/rogue/under/desertbog)
 "dcL" = (
 /obj/structure/fluff/railing/corner,
 /obj/structure/stairs{
@@ -11119,6 +11132,10 @@
 	},
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/church/basement)
+"dlr" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert)
 "dls" = (
 /obj/item/rogueore/silver,
 /turf/open/floor/rogue/naturalstone/sandstone,
@@ -13573,6 +13590,10 @@
 "dWd" = (
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/physician/desert)
+"dWj" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/desertunderdark)
 "dWl" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -30658,6 +30679,10 @@
 "jrH" = (
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/inq)
+"jrI" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/lightpath,
+/area/rogue/outdoors/desertdeep)
 "jrJ" = (
 /obj/structure/chair/bench/couchablack/r,
 /obj/structure/rack/rogue/shelf,
@@ -31768,6 +31793,7 @@
 /area/rogue/under/cave/dungeon1)
 "jHA" = (
 /obj/structure/flora/roguegrass,
+/obj/effect/landmark/quest_spawner/pvp,
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/under/desertcavewet)
 "jHG" = (
@@ -47680,6 +47706,10 @@
 /obj/item/book/rogue/bibble,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/church)
+"oDk" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/desertunderdark)
 "oDl" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -47739,6 +47769,10 @@
 "oDZ" = (
 /turf/open/floor/rogue/woodturned,
 /area/rogue/outdoors/desert)
+"oEb" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/dirt/desert,
+/area/rogue/under/desertcavewet)
 "oEh" = (
 /obj/item/cushion/desert1,
 /turf/open/floor/rogue/herringbone,
@@ -50851,6 +50885,11 @@
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/transparent/openspace,
 /area/rogue/under/desertcaldera/outlawsvillage)
+"pzw" = (
+/obj/structure/flora/roguegrass/jungle,
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/dirt/desert,
+/area/rogue/under/desertcavewet)
 "pzy" = (
 /mob/living/carbon/human/species/skeleton/npc/easy,
 /turf/open/floor/rogue/metal{
@@ -73978,6 +74017,10 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/desertdeep/coastal)
+"wAl" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/sandbrick,
+/area/rogue/under/desertbog)
 "wAz" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/ruinedwood{
@@ -79289,6 +79332,10 @@
 	},
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/bath/desert)
+"ydT" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/naturalstone/sandstone,
+/area/rogue/under/desertcavewet)
 "ydZ" = (
 /obj/structure/closet/crate/chest/wicker,
 /obj/effect/spawner/lootdrop/general_loot_mid/x3,
@@ -148451,7 +148498,7 @@ mGu
 iyP
 tDY
 tDY
-tDY
+dcx
 eTt
 eTt
 eTt
@@ -171861,7 +171908,7 @@ bwX
 avC
 avC
 amV
-amV
+wAl
 avC
 cbk
 qCo
@@ -180262,7 +180309,7 @@ amV
 amV
 tpZ
 tpZ
-amV
+wAl
 amV
 amV
 amV
@@ -208680,7 +208727,7 @@ und
 jaQ
 und
 und
-hNq
+adq
 piX
 jcr
 nuQ
@@ -209867,7 +209914,7 @@ vmB
 vmB
 vmB
 vmB
-vmB
+jrI
 tSq
 xFG
 vmB
@@ -213035,7 +213082,7 @@ und
 und
 und
 und
-wXp
+oEb
 wXp
 fGu
 fGu
@@ -213060,7 +213107,7 @@ euC
 euC
 vWb
 hNq
-hbF
+pzw
 und
 und
 und
@@ -221376,7 +221423,7 @@ ftg
 vmB
 vmB
 vmB
-vmB
+jrI
 qpn
 iuX
 vmB
@@ -230818,7 +230865,7 @@ kkJ
 kkJ
 kkJ
 uQT
-uQT
+dWj
 uQT
 uQT
 uQT
@@ -234879,7 +234926,7 @@ nWB
 nNx
 nNx
 hMv
-nNx
+oDk
 nNx
 nNx
 kkJ
@@ -238314,7 +238361,7 @@ nWB
 nWB
 uQT
 uQT
-uQT
+dWj
 lrX
 uQT
 uQT
@@ -247945,7 +247992,7 @@ kkJ
 kkJ
 nNx
 nNx
-nNx
+oDk
 kkJ
 kkJ
 kkJ
@@ -294157,7 +294204,7 @@ kVm
 kVm
 kVm
 dNM
-kVm
+ydT
 kVm
 und
 und
@@ -300969,7 +301016,7 @@ kVm
 kVm
 kVm
 dNM
-kVm
+ydT
 pAJ
 kVm
 kVm
@@ -317783,7 +317830,7 @@ ydN
 ydN
 ydN
 ydN
-mVA
+cdT
 mVA
 mVA
 mVA
@@ -317855,7 +317902,7 @@ ydN
 ydN
 ydN
 ydN
-mVA
+cdT
 mVA
 mVA
 mVA
@@ -328641,7 +328688,7 @@ iZp
 iZp
 iZp
 iZp
-mVA
+cdT
 mVA
 mVA
 mVA
@@ -332587,7 +332634,7 @@ mVA
 mVA
 mVA
 mVA
-mVA
+cdT
 ydN
 ydN
 vpW
@@ -369382,7 +369429,7 @@ mVA
 mVA
 mVA
 iZp
-mVA
+cdT
 iZp
 iZp
 iZp
@@ -376070,7 +376117,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
+dlr
 eMy
 eMy
 eMy
@@ -409962,7 +410009,7 @@ mVA
 mVA
 mVA
 mVA
-mVA
+cdT
 iZp
 iZp
 iZp
@@ -428496,7 +428543,7 @@ eMy
 eMy
 cRY
 eMy
-eMy
+dlr
 eMy
 eMy
 eMy
@@ -434514,7 +434561,7 @@ mVA
 mVA
 mVA
 mVA
-mVA
+cdT
 ydN
 ydN
 ydN

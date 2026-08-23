@@ -1,6 +1,7 @@
 #define QUEST_DIFFICULTY_EASY "Easy"
 #define QUEST_DIFFICULTY_MEDIUM "Medium"
 #define QUEST_DIFFICULTY_HARD "Hard"
+#define QUEST_DIFFICULTY_PLAYER_VS_PLAYER "Player VS Player" //CC Edit - PvP Difficulty
 
 #define QUEST_RETRIEVAL "Retrieval"
 #define QUEST_COURIER "Courier"
@@ -64,6 +65,9 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 // Bounty's main target is further multiplied
 #define QUEST_BOUNTY_THREAT_MULT 1
 
+//Ascended Bounty is 1.5x better.
+#define QUEST_ASCENDED_BOUNTY_THREAT_MULT 1.5
+
 // Max mobs for kill request to avoid lagging
 #define QUEST_KILL_MAX_MOBS 20
 // Floor for TP to avoid no TP mob from being spammed
@@ -99,10 +103,12 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 #define QUEST_DIFFICULTY_BONUS_EASY 0
 #define QUEST_DIFFICULTY_BONUS_MEDIUM 0
 #define QUEST_DIFFICULTY_BONUS_HARD 25
+#define QUEST_DIFFICULTY_BONUS_PLAYER_VS_PLAYER 75 //CC Edit - PvP Bonus Reward, 75 Mammaroons!
 
 #define QUEST_DEPOSIT_EASY 5
 #define QUEST_DEPOSIT_MEDIUM 10
 #define QUEST_DEPOSIT_HARD 20
+#define QUEST_DEPOSIT_PLAYER_VS_PLAYER 40 //CC Edit - Costs 40 Mammons, earn 35 back from the bonus!
 
 
 // Jobs may override via /datum/job.max_active_quests.

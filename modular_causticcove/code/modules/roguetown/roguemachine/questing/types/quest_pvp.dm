@@ -1,25 +1,25 @@
-/// Goblin goon pool used when the goblin warlord variant fires on a bounty quest.
-GLOBAL_LIST_INIT(quest_bounty_goblin_goons, list(
-	/mob/living/carbon/human/species/goblin/npc,
-	/mob/living/carbon/human/species/goblin/npc,
-	/mob/living/carbon/human/species/goblin/npc,
-	/mob/living/carbon/human/species/goblin/npc/bomber,
+//Normal Bounty - But our target has possibly ascended or gotten improved stats, allowing ghosts to play as the mob.
+//Otherwise, if no one takes the mob, spawns a strong NPC in place.
+
+GLOBAL_LIST_INIT(ascended_bounty_mobs, list(
+	/mob/living/carbon/human/species/human/northern/outlaw_duelist,
+	/mob/living/carbon/human/species/human/northern/outlaw_ranger,
+	/mob/living/carbon/human/species/human/northern/outlaw_tank
 ))
 
-//Bounty - But our target has possibly ascended or gotten improved stats, allowing ghosts to play as the mob.
-//Otherwise, if no one takes the mob, spawns a strong NPC in place.
 /datum/quest/kill/ascended_bounty
 	quest_type = QUEST_ASCENDED_BOUNTY
+	quest_difficulty = QUEST_DIFFICULTY_PLAYER_VS_PLAYER
 	tp_budget = QUEST_TP_BUDGET_BOUNTY_GOONS
 	threat_bands_cleared = QUEST_BANDS_BOUNTY
-	required_fellowship_size = 2
+	required_fellowship_size = 0
 	/// Generated boss name for title/objective. Set at preview.
 	var/boss_name
 	/// If TRUE, the boss is a large goblin and goons are drawn from quest_bounty_goblin_goons
 	/// instead of the region faction. Rolled at preview time.
 	var/goblin_warlord_variant = FALSE
 
-/datum/quest/kill/bounty/preview(obj/effect/landmark/quest_spawner/landmark)
+/datum/quest/kill/ascended_bounty/preview(obj/effect/landmark/quest_spawner/landmark)
 	if(!landmark)
 		return FALSE
 	pending_landmark_ref = WEAKREF(landmark)
@@ -32,68 +32,55 @@ GLOBAL_LIST_INIT(quest_bounty_goblin_goons, list(
 	if(!faction)
 		return FALSE
 	faction_id = faction.id
-	// Scale goon budget by regional danger, then roll variance.
-	tp_budget = roll_tp_budget(tp_budget, TR.tp_budget_multiplier)
-	// 20% chance: goblin warlord variant overrides boss type and goon pool.
-	if(prob(20))
-		goblin_warlord_variant = TRUE
-		target_mob_type = /mob/living/carbon/human/species/goblin/npc/large
-		var/datum/quest_faction/goblin_faction = get_quest_faction(QUEST_FACTION_FOREST_GOBLIN)
-		boss_name = goblin_faction ? goblin_faction.generate_boss_name() : "the Goblin Warchief"
-	else
-		target_mob_type = faction.pick_boss_mob_type()
-		if(!target_mob_type)
-			return FALSE
-		boss_name = faction.generate_boss_name()
+	target_mob_type = pick(GLOB.ascended_bounty_mobs) //Pick between 3 outlaw variants.
 	progress_required = 1
 	finalize_preview_title()
 	return TRUE
 
-/datum/quest/kill/bounty/get_named_target()
+/datum/quest/kill/ascended_bounty/get_named_target()
 	return boss_name
 
-/datum/quest/kill/bounty/get_title()
+/datum/quest/kill/ascended_bounty/get_title()
 	if(title)
 		return title
-	if(!boss_name)
-		return "Bring down a notorious outlaw"
-	return "Bring down [boss_name]"
+	return "Bring down a notorious outlaw"
 
-/datum/quest/kill/bounty/get_objective_text()
-	if(!boss_name)
-		return "Slay [initial(target_mob_type.name)]."
-	return "Slay [boss_name] and the gang that shelters them."
+/datum/quest/kill/ascended_bounty/get_objective_text()
+	return "Slay the target, but be warned! They are rumored to be quite the formidable opponent!"
 
-/datum/quest/kill/bounty/get_additional_reward(turf/origin_turf, turf/target_turf)
+/datum/quest/kill/ascended_bounty/get_additional_reward(turf/origin_turf, turf/target_turf)
 	if(!target_mob_type)
 		return 0
 	var/boss_threat = initial(target_mob_type.threat_point) || 0
-	var/goon_threat = (total_spawned_tp > 0) ? total_spawned_tp : tp_budget
-	return (boss_threat * QUEST_BOUNTY_THREAT_MULT) + (goon_threat * QUEST_KILL_THREAT_MULT)
+	return (boss_threat * QUEST_ASCENDED_BOUNTY_THREAT_MULT)
 
 /// Override — bounty progress is fixed at 1 (the boss), regardless of goon count.
-/datum/quest/kill/bounty/estimate_mob_count()
+/datum/quest/kill/ascended_bounty/estimate_mob_count()
 	return 1
 
-/datum/quest/kill/bounty/materialize(obj/effect/landmark/quest_spawner/landmark)
+/datum/quest/kill/ascended_bounty/materialize(obj/effect/landmark/quest_spawner/landmark)
 	if(!landmark)
 		return FALSE
 	if(!faction)
 		return FALSE
 	spawn_boss(landmark)
-	spawn_goons(landmark)
+	//spawn_goons(landmark) //Unused.
 	progress_required = 1
 	// Rename the boss mob after a delay so subtype after_creation() doesn't clobber it.
 	// Some subtypes (e.g. large_goblin) call after_creation on a 1s timer and set their own name.
 	addtimer(CALLBACK(src, PROC_REF(apply_boss_name)), 2 SECONDS)
 	return TRUE
 
-/datum/quest/kill/bounty/proc/spawn_boss(obj/effect/landmark/quest_spawner/landmark)
+/datum/quest/kill/ascended_bounty/proc/spawn_boss(obj/effect/landmark/quest_spawner/landmark)
 	var/turf/spawn_turf = landmark.get_safe_spawn_turf()
 	if(!spawn_turf)
 		return
-	var/obj/effect/quest_spawn/spawn_effect = new /obj/effect/quest_spawn(spawn_turf)
-	var/mob/living/boss = new target_mob_type(spawn_effect)
+
+	//We handle the mind transfer within the spawn_effect itself as opposed to the quest,
+	//  that way we can trigger the ghost poll when the contract holders are actually within range to release the mob appropriately.
+	var/obj/effect/quest_spawn/pvp/spawn_effect = new /obj/effect/quest_spawn/pvp(spawn_turf)
+	var/mob/living/boss = new target_mob_type(spawn_turf)
+
 	boss.faction |= "quest"
 	if(faction?.faction_tag)
 		boss.faction |= faction.faction_tag
@@ -107,7 +94,7 @@ GLOBAL_LIST_INIT(quest_bounty_goblin_goons, list(
 	add_tracked_atom(boss)
 	landmark.add_quest_faction_to_nearby_mobs(spawn_turf)
 
-/datum/quest/kill/bounty/proc/apply_boss_name()
+/datum/quest/kill/ascended_bounty/proc/apply_boss_name()
 	for(var/datum/weakref/ref in tracked_atoms)
 		var/mob/living/M = ref.resolve()
 		if(QDELETED(M))
@@ -117,12 +104,10 @@ GLOBAL_LIST_INIT(quest_bounty_goblin_goons, list(
 		M.real_name = boss_name
 		M.name = boss_name
 
-/// Spawn goons alongside the bounty boss. Uses goblin horde pool for the warlord variant;
-/// otherwise spends TP budget drawing from the region faction.
-/datum/quest/kill/bounty/proc/spawn_goons(obj/effect/landmark/quest_spawner/landmark)
-	if(goblin_warlord_variant)
-		spawn_goblin_horde(landmark)
-		return
+/// Spawn goons alongside the bounty boss.
+/// Otherwise spends TP budget drawing from the region faction.
+/// Currently unused.
+/* /datum/quest/kill/ascended_bounty/proc/spawn_goons(obj/effect/landmark/quest_spawner/landmark)
 	var/list/to_spawn = compose_warband()
 	total_spawned_tp = 0
 	for(var/goon_type in to_spawn)
@@ -140,10 +125,11 @@ GLOBAL_LIST_INIT(quest_bounty_goblin_goons, list(
 		spawn_effect.contained_atom = goon
 		spawn_effect.AddComponent(/datum/component/quest_object/mob_spawner, src)
 		register_spawner(spawn_effect)
-		total_spawned_tp += initial(goon.threat_point) || 0
+		total_spawned_tp += initial(goon.threat_point) || 0 */
 
 /// Spawns 5-9 mixed goblin goons for the goblin warlord variant.
-/datum/quest/kill/bounty/proc/spawn_goblin_horde(obj/effect/landmark/quest_spawner/landmark)
+/// Currently unused.
+/* /datum/quest/kill/ascended_bounty/proc/spawn_goblin_horde(obj/effect/landmark/quest_spawner/landmark)
 	total_spawned_tp = 0
 	for(var/i in 1 to rand(5, 9))
 		var/turf/spawn_turf = landmark.get_safe_spawn_turf()
@@ -159,4 +145,4 @@ GLOBAL_LIST_INIT(quest_bounty_goblin_goons, list(
 		spawn_effect.contained_atom = goon
 		spawn_effect.AddComponent(/datum/component/quest_object/mob_spawner, src)
 		register_spawner(spawn_effect)
-		total_spawned_tp += initial(goon.threat_point) || 0
+		total_spawned_tp += initial(goon.threat_point) || 0 */

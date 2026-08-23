@@ -156,6 +156,10 @@
 /obj/structure/fluff/statue/tdummy,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
+"ei" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/underdark/north)
 "ej" = (
 /turf/closed/mineral/random/rogue/med,
 /area/rogue/outdoors/rtfield)
@@ -308,7 +312,6 @@
 /area/rogue/indoors/town/physician)
 "jC" = (
 /obj/structure/bed/rogue,
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
 "jI" = (
@@ -628,9 +631,9 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
 "rZ" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
+/obj/effect/landmark/quest_spawner/pvp,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/outdoors)
+/area/rogue/outdoors/woods/north)
 "sh" = (
 /obj/structure/roguemachine/steward,
 /obj/structure/roguemachine/atm,
@@ -1055,10 +1058,9 @@
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors)
 "Cz" = (
-/mob/living/carbon/human/species/human/northern/highwayman/archer,
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
+/obj/effect/landmark/quest_spawner/pvp,
 /turf/open/floor/rogue/dirt/road,
-/area/rogue/outdoors)
+/area/rogue/outdoors/rtfield)
 "CB" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/trufflepig,
 /turf/open/floor/rogue/hay,
@@ -1588,6 +1590,10 @@
 /obj/structure/roguemachine/scrapper/smith,
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/indoors/town/manor)
+"Tf" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/snow,
+/area/rogue/indoors/shelter/mountains/decap)
 "Tj" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/dirt/road,
@@ -1623,6 +1629,10 @@
 /obj/effect/landmark/quest_spawner/defense,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods/north)
+"UG" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/beach/forest/north)
 "UL" = (
 /obj/structure/table/wood{
 	icon_state = "longtable"
@@ -1730,6 +1740,10 @@
 /obj/item/rogueweapon/huntingknife/idagger/silver,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
+"Wg" = (
+/obj/effect/landmark/quest_spawner/pvp,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/bog/north)
 "Wh" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog,
 /turf/open/floor/rogue/hay,
@@ -2469,14 +2483,14 @@ Rk
 Fi
 xU
 Lz
-Rk
+Cz
 Rk
 Lg
 Lg
 bh
 rh
 nH
-Lg
+Tf
 yF
 "}
 (13,1,1) = {"
@@ -3145,14 +3159,14 @@ MX
 rn
 rt
 Uv
-wX
+rZ
 wX
 bW
 bW
 VQ
 Ex
 rD
-bW
+ei
 rk
 "}
 (26,1,1) = {"
@@ -3225,9 +3239,9 @@ yK
 rT
 vq
 eg
-Cz
-rZ
-Cz
+rT
+rT
+rT
 sR
 IC
 rT
@@ -3277,9 +3291,9 @@ yK
 rT
 rb
 rT
-rZ
+rT
 YZ
-Cz
+rT
 Yf
 hq
 rT
@@ -3329,9 +3343,9 @@ yK
 rT
 vq
 rT
-Cz
-rZ
-Cz
+rT
+rT
+rT
 YU
 XN
 rT
@@ -3381,9 +3395,9 @@ yK
 yK
 UV
 Vm
-rZ
-rZ
-Cz
+rT
+rT
+rT
 rT
 BU
 rT
@@ -3433,9 +3447,9 @@ yK
 yK
 yK
 ud
-Cz
+rT
 jC
-Cz
+rT
 rT
 rT
 rT
@@ -3485,8 +3499,8 @@ rT
 yK
 yK
 rT
-rZ
-Cz
+rT
+rT
 rT
 rT
 rT
@@ -3873,14 +3887,14 @@ Ln
 kz
 hQ
 yG
-Ln
+Wg
 cQ
 cQ
 cQ
 wr
 Ka
 MD
-cQ
+UG
 il
 "}
 (40,1,1) = {"
