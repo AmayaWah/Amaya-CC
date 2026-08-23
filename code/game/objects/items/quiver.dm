@@ -354,7 +354,7 @@
 /obj/item/quiver/randomfill
 	var/list/fill_table
 
-/obj/item/quiver/randomfill/Initialize()
+/obj/item/quiver/randomfill/Initialize(mapload)
 	. = ..()
 	if(length(fill_table))
 		for(var/i in 1 to max_storage)
@@ -365,32 +365,37 @@
 			arrows += A
 	update_icon()
 
-// Broadhead with a very low chance of bodkin
 /obj/item/quiver/randomfill/skeleton
 	fill_table = list(
-		/obj/item/ammo_casing/caseless/rogue/arrow/iron/aalloy = 55,
-		/obj/item/ammo_casing/caseless/rogue/arrow/steel/paalloy = 5
+		/obj/item/ammo_casing/caseless/rogue/arrow/iron = 100
 	)
 
 
 /obj/item/quiver/randomfill/highwayman
 	fill_table = list(
-		/obj/item/ammo_casing/caseless/rogue/arrow/iron = 70,
-		/obj/item/ammo_casing/caseless/rogue/arrow/steel = 15,
-		/obj/item/ammo_casing/caseless/rogue/arrow/elemental/thunder = 5,
-		/obj/item/ammo_casing/caseless/rogue/arrow/elemental/kinetic = 5,
-		/obj/item/ammo_casing/caseless/rogue/arrow/elemental/fire = 5
+		/obj/item/ammo_casing/caseless/rogue/arrow/iron = 100,
+
 	)
 
-// Slightly higher quality with weight toward kinetic and steel
 /obj/item/quiver/randomfill/reaver
 	fill_table = list(
-		/obj/item/ammo_casing/caseless/rogue/arrow/iron = 50,
-		/obj/item/ammo_casing/caseless/rogue/arrow/steel = 30,
-		/obj/item/ammo_casing/caseless/rogue/arrow/elemental/thunder = 5,
-		/obj/item/ammo_casing/caseless/rogue/arrow/elemental/kinetic = 10,
-		/obj/item/ammo_casing/caseless/rogue/arrow/elemental/fire = 5
+		/obj/item/ammo_casing/caseless/rogue/arrow/iron = 80,
+		/obj/item/ammo_casing/caseless/rogue/arrow/steel = 15,
 	)
+
+/obj/item/quiver/npc
+	var/fill_type = /obj/item/ammo_casing/caseless/rogue/arrow/iron
+
+/obj/item/quiver/npc/Initialize(mapload)
+	. = ..()
+	if(fill_type)
+		for(var/i in 1 to max_storage)
+			var/obj/item/ammo_casing/caseless/rogue/arrow/A = new fill_type()
+			arrows += A
+	update_icon()
+
+/obj/item/quiver/npc/stone
+	fill_type = /obj/item/ammo_casing/caseless/rogue/arrow/stone
 
 //////////// Note - silver quivers and bolt pouches shouldn't be obtainable through normal circumstances.
 // BOLTS  // For now, they should only be available as uncraftable singles.
