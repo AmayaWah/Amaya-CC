@@ -65,6 +65,8 @@ GLOBAL_LIST_INIT(tank_aggro, list(
 /mob/living/carbon/human/species/human/northern/outlaw_tank/death(gibbed, nocutscene = FALSE)
 	. = ..()
 	if(!gibbed)
+		if(client)
+			client.dead_observe()
 		dust(FALSE, FALSE, TRUE)
 
 /datum/outfit/job/roguetown/npc/mini_boss/tank/pre_equip(mob/living/carbon/human/H)

@@ -72,6 +72,9 @@
 			continue
 		if(M.stat == DEAD)
 			continue
+		//CC Edit - Remove clients from mobs before we qdel them.
+		if(M.client)
+			client.dead_observe()
 		qdel(M)
 
 /datum/quest/kill/populate_scroll_ui_data(list/data)
