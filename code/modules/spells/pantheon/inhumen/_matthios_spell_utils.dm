@@ -24,7 +24,6 @@
 	damage = 25 // half the damage from the normal one
 	strike_damage_type = BURN
 	blade_class = BCLASS_BURN
-	npc_simple_damage_mult = 2
 	committed_strike = TRUE
 	interruptible = FALSE
 	charging_slowdown = CHARGING_SLOWDOWN_SMALL

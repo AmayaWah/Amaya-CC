@@ -492,6 +492,9 @@ Medical defines
 #define SIMPLEMOB_DODGE_FATIGUE_REGEN 5
 #define SIMPLEMOB_WINDED_DURATION (4 SECONDS)
 
+#define DODGE_EXPERT_BASE_CAP 90	//What a Dodge Expert with SPD above 10 is hardset to, before max_dodge is added on top.
+#define MAX_DODGE_CLAMP -5 // at 85%. Base is 90%.
+
 /*
 	Melee Accuracy Defines. See resolve_aimed_zone() and melee_accuracy_check().
 */

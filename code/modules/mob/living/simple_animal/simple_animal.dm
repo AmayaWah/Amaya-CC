@@ -259,10 +259,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		AddSpell(newspell)
 	initial_butcher_count = length(butcher_results)
 	add_verb(src, list(
-		/mob/living/proc/emote_squeak,
-		/mob/living/proc/emote_mrrp,
-		/mob/living/proc/emote_prbt,
-		/mob/living/proc/emote_hiss,
+		/mob/living/carbon/human/proc/emote_squeak,
+		/mob/living/carbon/human/proc/emote_mrrp,
+		/mob/living/carbon/human/proc/emote_prbt,
+		/mob/living/carbon/human/proc/emote_hiss,
 	))
 
 /mob/living/simple_animal/Destroy()
@@ -548,10 +548,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	if(stat == DEAD)
 		var/obj/item/held_item = user.get_active_held_item()
 		if(held_item)
-			if((butcher_results || guaranteed_butcher_results) && ((held_item.get_sharpness() && held_item.wlength == WLENGTH_SHORT) || istype(held_item, /obj/item/rogueweapon/contraption/shears)))
+			if((butcher_results || guaranteed_butcher_results) && ((held_item.get_sharpness() && held_item.wlength == WLENGTH_SHORT) || istype(held_item, /obj/item/contraption/shears)))
 				var/used_time = BUTCHERING_UNSKILLED_PRE_TIME
 				var/on_meathook = FALSE
-				if((src.buckled && istype(src.buckled, /obj/structure/meathook))|| istype(held_item, /obj/item/rogueweapon/contraption/shears))
+				if((src.buckled && istype(src.buckled, /obj/structure/meathook))|| istype(held_item, /obj/item/contraption/shears))
 					on_meathook = TRUE //will work efficiently if they are using autosheers as well
 					used_time -= BUTCHERING_UNSKILLED_PRE_TIME
 					visible_message("[user] begins to efficiently butcher [src]...")
