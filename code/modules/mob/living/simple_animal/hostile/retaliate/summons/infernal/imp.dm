@@ -1,4 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp
+	anatomy_type = /datum/anatomy/winged/infernal
 	threat_point = THREAT_LOW
 	icon = 'icons/mob/summonable/32x32.dmi'
 	name = "infernal imp"
@@ -16,19 +17,17 @@
 	move_to_delay = 3
 	base_intents = list(/datum/intent/unarmed/claw)
 	butcher_results = list()
+	death_loot = list(/obj/item/magic/infernal/ash = 4)
 	faction = list(FACTION_INFERNAL)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	health = 70
-	maxHealth = 70
-	melee_damage_lower = 15
-	melee_damage_upper = 17
+	health = 90
+	maxHealth = 90
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	vision_range = 7
 	aggro_vision_range = 9
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	simple_detect_bonus = 20
-	ranged = TRUE
-	ranged_cooldown = 40
-	projectiletype = /obj/projectile/magic/firebolt
 	retreat_distance = 4
 	minimum_distance = 3
 	food_type = list()
@@ -39,10 +38,9 @@
 	STASPD = 12
 	simple_detect_bonus = 20
 	deaggroprob = 0
-	defprob = 40
 	candodge = TRUE
 	// del_on_deaggro = 44 SECONDS
-	retreat_health = 0.3
+	retreat_health = 0
 	food = 0
 	attack_sound = 'sound/combat/hits/bladed/smallslash (1).ogg'
 	attack_verb_continuous = "claws"
@@ -50,9 +48,13 @@
 	dodgetime = 30
 	aggressive = 1
 
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp/Initialize()
+	ai_controller = /datum/ai_controller/infernal/harasser
+	move_base_delay = MOVEMENT_DELAY_SPD_17
+
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
+	var/datum/action/cooldown/spell/projectile/spitfire_bolt/spit = new(src)
+	spit.Grant(src)
 
 /obj/projectile/magic/firebolt
 	name = "ball of fire"
@@ -74,9 +76,6 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp/death(gibbed)
 	..()
-	var/turf/deathspot = get_turf(src) ///Caustic edit
-	for(var/i =1 to 6)
-		new /obj/item/magic/infernal/ash(deathspot) ///Caustic edit end
 	update_icon()
 	spawn(1)
 		qdel(src)

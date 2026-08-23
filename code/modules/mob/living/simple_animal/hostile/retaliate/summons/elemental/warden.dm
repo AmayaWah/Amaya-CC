@@ -1,5 +1,6 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden
+	anatomy_type = /datum/anatomy/construct/standard
 	icon = 'icons/mob/summonable/32x32.dmi'
 	name = "earthen Warden"
 	desc = "An ever-watchful warden, a manner of earthen elemental dutiful in its protection \
@@ -19,6 +20,7 @@
 	move_to_delay = 12
 	base_intents = list(/datum/intent/simple/elemental_unarmed)
 	butcher_results = list()
+	death_loot = list(/obj/item/magic/elemental/shard = 2)
 	faction = list(FACTION_ELEMENTAL)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	health = 340
@@ -38,11 +40,9 @@
 	simple_detect_bonus = 20
 	deaggroprob = 0
 	canparry = TRUE
-	defprob = 30
 	// del_on_deaggro = 44 SECONDS
-	retreat_health = 0.3
+	retreat_health = 0
 	food = 0
-	rapid = TRUE
 	attack_sound = 'sound/combat/hits/onstone/wallhit.ogg'
 	dodgetime = 30
 	aggressive = 1
@@ -52,38 +52,15 @@
 	STASTR = 10
 	STASPD = 6
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/Initialize()
+	ai_controller = /datum/ai_controller/elemental
+	move_base_delay = MOVEMENT_DELAY_SLOW
+
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/Initialize(mapload)
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 	. = ..()
 
-///Caustic edit
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/death(gibbed)
 	..()
-	var/turf/deathspot = get_turf(src) ///Caustic edit
-	for(var/i =1 to 6)
-		new /obj/item/magic/elemental/shard(deathspot)
-	for(var/i =1 to 4)
-		new /obj/item/magic/elemental/mote(deathspot) ///Caustic edit end
 	update_icon()
 	spill_embedded_objects()
 	qdel(src)
-///Caustic edit End
-
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/AttackingTarget(atom/movable/target)
-	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_PREATTACK)
-		return FALSE //but more importantly return before attack_animal called
-	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
-	in_melee = TRUE
-	if(!target)
-		return
-	if(!target.anchored)
-		yeet(target)
-	if(!QDELETED(target))
-		return target.attack_animal(src)
-
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/proc/yeet(atom/movable/target)
-	var/atom/throw_target = get_edge_target_turf(src, get_dir(src, target)) //ill be real I got no idea why this worked.
-	target.throw_at(throw_target, 7, 4)
-	if(isliving(target))
-		var/mob/living/L = target
-		L.adjustBruteLoss(20)
