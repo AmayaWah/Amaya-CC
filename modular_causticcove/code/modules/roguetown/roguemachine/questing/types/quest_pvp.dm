@@ -1,5 +1,5 @@
-//Normal Bounty - But our target has possibly ascended or gotten improved stats, allowing ghosts to play as the mob.
-//Otherwise, if no one takes the mob, spawns a strong NPC in place.
+//Ascended Bounties garuntee spawning the boss mob of the chosen faction and sends a ghost role ping.
+//Players can accept the role and survive until the contract ends.
 
 GLOBAL_LIST_INIT(ascended_bounty_mobs, list(
 	/mob/living/carbon/human/species/human/northern/outlaw_duelist,
