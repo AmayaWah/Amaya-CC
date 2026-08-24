@@ -1,7 +1,7 @@
 #define QUEST_DIFFICULTY_EASY "Easy"
 #define QUEST_DIFFICULTY_MEDIUM "Medium"
 #define QUEST_DIFFICULTY_HARD "Hard"
-#define QUEST_DIFFICULTY_PLAYER_VS_PLAYER "Player VS Player" //CC Edit - PvP Difficulty
+#define QUEST_DIFFICULTY_PLAYER_VS_PLAYER "PvP" //CC Edit - PvP Difficulty
 
 #define QUEST_RETRIEVAL "Retrieval"
 #define QUEST_COURIER "Courier"
@@ -155,7 +155,8 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 	QUEST_RAID = 30,\
 	QUEST_BOUNTY = 15,\
 	QUEST_RECOVERY = 5,\
-)
+	QUEST_ASCENDED_BOUNTY = 20,\
+) //CC Edit - Quest Ascended Bounty addition
 
 
 #define QUEST_EVERGREEN_TYPE_WEIGHTS list(\
