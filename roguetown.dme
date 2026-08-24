@@ -44,7 +44,6 @@
 #include "code\__DEFINES\cleaning.dm"
 #include "code\__DEFINES\cleric.dm"
 #include "code\__DEFINES\click.dm"
-#include "code\__DEFINES\text.dm"
 #include "code\__HELPERS\colors.dm"
 #include "code\__DEFINES\clothing.dm"
 #include "code\__DEFINES\colors.dm"
