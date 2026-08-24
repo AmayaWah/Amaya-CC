@@ -5,7 +5,7 @@
 	var/stored_icon_living
 	var/reanim_timer_id
 
-/datum/component/deadite/Initialize(reanim_time = 15 MINUTES, downed_state, inf_chance = 20)
+/datum/component/deadite/Initialize(reanim_time = 15 MINUTES, downed_state, inf_chance = 10)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
