@@ -127,6 +127,9 @@
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
+	if(!M.density || !density)
+		return FALSE
+
 	if(now_pushing)
 		return TRUE
 
@@ -417,6 +420,8 @@
 		if(I)
 			if(I.wlength > WLENGTH_NORMAL)
 				CZ = TRUE
+				if(I.wlength < WLENGTH_GREAT) //only GREAT weapons reach the head from the ground
+					acceptable = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_R_ARM, BODY_ZONE_CHEST, BODY_ZONE_L_ARM)
 			else
 				acceptable = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_PRECISE_R_HAND,BODY_ZONE_PRECISE_L_HAND,BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG, BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT)
 		else
@@ -762,6 +767,9 @@
 			say(word_input)
 		death()
 
+/mob/living/restrained(ignore_grab)
+	return ..() || istype(loc, /obj/item/mob_item)
+
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = TRUE, check_immobilized = FALSE, ignore_stasis = FALSE)
 	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (!ignore_restraints && restrained(ignore_grab)))
 		return TRUE
@@ -963,6 +971,7 @@
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
 		remove_client_colour(/datum/client_colour/monochrome)
+		//set_sunder(0) //Just in case we didn't
 		// Add message about struggling to recall death circumstances
 		to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
 		to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
@@ -989,6 +998,7 @@
 	SetParalyzed(0, FALSE)
 	SetSleeping(0, FALSE)
 	setStaminaLoss(0)
+	//set_sunder(0)
 	SetUnconscious(0, FALSE)
 	if(should_update_mobility)
 		update_mobility()
@@ -1007,6 +1017,7 @@
 	setCloneLoss(0, 0)
 	remove_CC(FALSE)
 	set_disgust(0)
+	//set_sunder(0)
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
@@ -1957,7 +1968,8 @@
 			stop_pulling()
 	if(!(mobility_flags & MOBILITY_UI))
 		unset_machine()
-	density = !lying
+	if(initial(density))
+		density = !lying
 	if(lying)
 		if(!lying_prev)
 			fall(!canstand_involuntary)
@@ -2041,16 +2053,21 @@
 
 /mob/living/MouseDrop(mob/over)
 	. = ..()
-	var/mob/living/user = usr
-	if(!istype(over) || !istype(user))
+	var/mob/living/user = over
+	if(!istype(user))
 		return
-	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
+	if(user.incapacitated())
 		return
-	if(can_be_held)
-		mob_try_pickup(over)
+	if(user == src)
+		return
+	if(can_be_held(user))
+		mob_try_pickup(user)
 
 /mob/living/proc/mob_pickup(mob/living/L)
-	return
+	var/obj/item/mob_item/orb = become_item()
+	if(!istype(orb))
+		return
+	L.put_in_active_hand(orb)
 
 /mob/living/proc/mob_try_pickup(mob/living/user)
 	if(!ishuman(user))
@@ -2069,6 +2086,9 @@
 	mob_pickup(user)
 	return TRUE
 
+/mob/living/proc/can_be_held(mob/by)
+	return FALSE
+
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()
@@ -2077,6 +2097,18 @@
 			AT.get_remote_view_fullscreens(src)
 		else
 			clear_fullscreen("remote_view", 0)
+
+GLOBAL_LIST_INIT(sight_trait_signals, build_sight_trait_signals())
+
+/proc/build_sight_trait_signals()
+	. = list()
+	for(var/trait in list(TRAIT_DARKVISION, TRAIT_NITEVISION, TRAIT_NOCSHADES, TRAIT_GILDED_SIGHT, TRAIT_THERMAL_VISION, TRAIT_XRAY_VISION, TRAIT_ZIZOSIGHT))
+		. += SIGNAL_ADDTRAIT(trait)
+		. += SIGNAL_REMOVETRAIT(trait)
+
+/mob/living/proc/on_sight_trait_change(datum/source)
+	SIGNAL_HANDLER
+	update_sight()
 
 /mob/living/update_mouse_pointer()
 	if(!client)
@@ -2306,21 +2338,30 @@
 					if((L.m_intent == MOVE_INTENT_SNEAK || HAS_TRAIT(src, TRAIT_LIGHT_STEP)) && !has_sleuth)
 						continue
 					var/turf/T = locate(L.x, L.y, src.z) // We'll want to highlight the turf on -our- z-level.
-					z_highlights[T] = ZTAG_ONE
+					var/val = "[ZTAG_ONE]"
+					if(current_mark && current_mark == L)
+						val += "m"	// "1m" appended to icon state later on.
+					z_highlights[T] = val
 
 			if(turf_up_two)
 				for(var/mob/living/L in get_hearers_in_range(search_range, turf_up_two, RECURSIVE_CONTENTS_CLIENT_MOBS))
 					if((L.m_intent == MOVE_INTENT_SNEAK || HAS_TRAIT(src, TRAIT_LIGHT_STEP)) && !has_sleuth)
 						continue
 					var/turf/T = locate(L.x, L.y, src.z) // We'll want to highlight the turf on -our- z-level.
-					z_highlights[T] = ZTAG_TWO
+					var/val = "[ZTAG_TWO]"
+					if(current_mark && current_mark == L)
+						val += "m"	// "2m" appended to icon state later on.
+					z_highlights[T] = val
 
 			if(turf_up_three)
 				for(var/mob/living/L in get_hearers_in_range(search_range, turf_up_three, RECURSIVE_CONTENTS_CLIENT_MOBS))
 					if((L.m_intent == MOVE_INTENT_SNEAK || HAS_TRAIT(src, TRAIT_LIGHT_STEP)) && !has_sleuth)
 						continue
 					var/turf/T = locate(L.x, L.y, src.z) // We'll want to highlight the turf on -our- z-level.
-					z_highlights[T] = ZTAG_THREE
+					var/val = "[ZTAG_THREE]"
+					if(current_mark && current_mark == L)
+						val += "m"	// "3m" appended to icon state later on.
+					z_highlights[T] = val
 
 			if(length(z_highlights))
 				for(var/turf/T in z_highlights)
@@ -2549,6 +2590,8 @@
 
 /mob/living/proc/stop_looking()
 	if(!client)
+		return
+	if(!client.pixel_x && !client.pixel_y && client.perspective == MOB_PERSPECTIVE && client.eye == client.mob)
 		return
 	animate(client, pixel_x = 0, pixel_y = 0, 2, easing = SINE_EASING)
 	if(client)

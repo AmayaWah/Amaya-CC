@@ -49,6 +49,7 @@
 
 // -------------- BUTTER -----------------
 /obj/item/reagent_containers/food/snacks/butter
+	dish_type = DISH_DAIRY
 	icon = 'modular/Neu_Food/icons/others/dairy.dmi'
 	name = "stick of butter"
 	desc = "Delicious fattiness, fit for elevating meals-a-plenty."
@@ -99,6 +100,7 @@
 			changefood(slice_path, eater)
 
 /obj/item/reagent_containers/food/snacks/butterslice
+	dish_type = DISH_DAIRY
 	icon = 'modular/Neu_Food/icons/others/dairy.dmi'
 	icon_state = "butter_slice"
 	name = "butter"
@@ -161,6 +163,8 @@
 	..()
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesewheel
+	cuisine = CUISINE_OTAVAIS|CUISINE_NORTHERN|CUISINE_ETRUSCAN
+	dish_type = DISH_DAIRY
 	name = "unfinished cheese wheel"
 	icon = 'modular/Neu_Food/icons/others/dairy.dmi'
 	icon_state = "cheesewheel_1"
@@ -214,6 +218,8 @@
 
 // -------------- CHEESE -----------------
 /obj/item/reagent_containers/food/snacks/rogue/cheese
+	cuisine = CUISINE_OTAVAIS|CUISINE_NORTHERN|CUISINE_ETRUSCAN
+	dish_type = DISH_DAIRY
 	name = "fresh cheese"
 	desc = "Clotted and salted milk, eager to be cocooned in cloth so that it may realize its fullest potential."
 	icon = 'modular/Neu_Food/icons/others/dairy.dmi'
@@ -239,6 +245,8 @@
 	. += span_info("Repeating this process until four clumps of fresh cheese are used will result in a tied-together package. This package will eventually blossom into a cheese wheel, once enough time has passed.")
 
 /obj/item/reagent_containers/food/snacks/rogue/cheddar
+	cuisine = CUISINE_OTAVAIS|CUISINE_NORTHERN|CUISINE_ETRUSCAN
+	dish_type = DISH_DAIRY
 	name = "wheel of cheese"
 	desc = "A hunk of burning love, aching to age."
 	icon = 'modular/Neu_Food/icons/others/dairy.dmi'
@@ -280,6 +288,8 @@
 
 
 /obj/item/reagent_containers/food/snacks/rogue/cheddarwedge
+	cuisine = CUISINE_OTAVAIS|CUISINE_NORTHERN|CUISINE_ETRUSCAN
+	dish_type = DISH_DAIRY
 	name = "wedge of cheese"
 	desc = "Talk about a chunk of cheddar!"
 	icon = 'modular/Neu_Food/icons/others/dairy.dmi'
@@ -317,6 +327,8 @@
 
 
 /obj/item/reagent_containers/food/snacks/rogue/cheddarslice
+	cuisine = CUISINE_OTAVAIS|CUISINE_NORTHERN|CUISINE_ETRUSCAN
+	dish_type = DISH_DAIRY
 	name = "slice of cheese"
 	desc = "A sliver of savoriness." 
 	icon = 'modular/Neu_Food/icons/others/dairy.dmi'
@@ -371,6 +383,7 @@
 
 // -------------- FROSTING -----------------
 /obj/item/reagent_containers/food/snacks/rogue/frosting
+	dish_type = DISH_DAIRY
 	name = "frosting"
 	desc = "Butter mixed with sugar and whipped into a delicious frosting."
 	icon = 'modular/Neu_Food/icons/others/dairy.dmi'

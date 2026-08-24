@@ -525,6 +525,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.grant_language(language_type)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
+	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
@@ -554,6 +555,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	C.dna.organ_dna = list()
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
+	UnregisterSignal(C, COMSIG_MOB_SAY)
 
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)

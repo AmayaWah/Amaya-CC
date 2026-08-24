@@ -54,7 +54,7 @@
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE)
 	nojumpsuit = 1
 	sexes = 1
-	
+
 	offset_features = list(OFFSET_HANDS = list(0,2), OFFSET_HANDS_F = list(0,2))
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
@@ -83,10 +83,6 @@
 	H.update_damage_overlays()
 	return TRUE
 
-/datum/species/dendormole/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
 /datum/species/dendormole/update_damage_overlays(mob/living/carbon/human/H)
 	H.remove_overlay(DAMAGE_LAYER)
 	return TRUE
@@ -99,11 +95,11 @@
 	icon_state = null
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
-	armor = ARMOR_LEATHER 
+	armor = ARMOR_LEATHER
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE
-	max_integrity = 400 
+	max_integrity = 400
 	item_flags = DROPDEL
 
 /datum/intent/simple/mole
@@ -155,7 +151,7 @@
 	wlength = WLENGTH_NORMAL
 	wbalance = WBALANCE_NORMAL
 	w_class = WEIGHT_CLASS_NORMAL
-	can_parry = TRUE 
+	can_parry = TRUE
 	sharpness = IS_SHARP
 	parrysound = "bladedmedium"
 	swingsound = list('sound/vo/mobs/vw/attack (1).ogg','sound/vo/mobs/vw/attack (2).ogg','sound/vo/mobs/vw/attack (3).ogg','sound/vo/mobs/vw/attack (4).ogg')
@@ -182,7 +178,7 @@
 	overlay_state = "claws"
 	antimagic_allowed = TRUE
 	recharge_time = 40
-	ignore_cockblock = TRUE	
+	ignore_cockblock = TRUE
 	var/extended = FALSE
 
 /obj/effect/proc_holder/spell/self/moleclaw/cast(mob/user = usr)
