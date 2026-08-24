@@ -57,7 +57,7 @@
 /// Whether the spell requires the target to be on the same Z-level as the caster.
 #define SPELL_REQUIRES_SAME_Z (1 << 8)
 /// Whether the spell can be cast while buckled to a living mount (on horseback).
-#define SPELL_CASTABLE_WHILE_MOUNTED (1 << 9)
+#define SPELL_NOT_CASTABLE_WHILE_MOUNTED (1 << 9) //Caustic Edit - Invert this flag! So now it's if you want a spell to not be castable on horseback!
 /// Whether the spell requires the caster to be in combat mode.
 #define SPELL_REQUIRES_CMODE (1 << 10)
 /// Whether the spell requires the TARGET to be in combat mode.
