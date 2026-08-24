@@ -1,7 +1,7 @@
 /mob/living/carbon/human/species/hobgoblin/boss
 	hobgob_outfit = /datum/outfit/job/roguetown/npc/hobgoblin/boss
 
-/datum/outfit/job/roguetown/npc/hobgoblin/boss
+/datum/outfit/job/roguetown/npc/hobgoblin/boss/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.STASTR = 14
 	H.STAPER = 10
@@ -9,7 +9,18 @@
 	H.STACON = 15 //We are strong and sturdy, naturally tanky even due to our more primitive armor/gear.
 	H.STAWIL = 15
 	H.STASPD = 9
-	H.STAFOR = 10
+	H.STALUC = 10
+
+	//We are an expert jack of all trades for most weapons.
+	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
+
 
 	var/loadout = rand(1,10)
 	switch(loadout)
@@ -65,13 +76,3 @@
 			r_hand = /obj/item/rogueweapon/greatsword/iron
 			head = /obj/item/clothing/head/roguetown/helmet/hobgoblin
 			armor =	/obj/item/clothing/suit/roguetown/armor/plate/cuirass/iron/hobgoblin
-
-	//We are an expert jack of all trades for most weapons.
-	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)

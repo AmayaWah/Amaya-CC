@@ -390,7 +390,7 @@
 /proc/pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
 	var/list/candidates = list()
 
-	for(var/mob/dead/G in GLOB.player_list)
+	for(var/mob/dead/observer/G in GLOB.player_list)
 		if(isscryeye(G))
 			continue
 		candidates += G

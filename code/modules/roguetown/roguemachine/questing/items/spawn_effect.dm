@@ -108,6 +108,7 @@
 		M.adjust_skillrank(/datum/skill/misc/tracking, 6, TRUE) //You should be able to hunt your hunters back!
 		M.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
 		M.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE)
-		M.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+		M.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE) //RP and reading or some shit.
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/siphon_time) //So you can end PvP early or via winning if you don't want to wait.
 		return
 //CC Edit End - PvP specific quest spawn range.

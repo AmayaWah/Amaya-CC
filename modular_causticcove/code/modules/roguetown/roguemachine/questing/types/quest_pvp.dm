@@ -104,6 +104,18 @@ GLOBAL_LIST_INIT(ascended_bounty_mobs, list(
 		M.real_name = boss_name
 		M.name = boss_name
 
+//Reward the PvP mob if the hunt times out, their client is still there, and give them 1 TRIUMPH for surviving the timer or securing the scroll.
+/datum/quest/kill/ascended_bounty/on_hunt_timeout()
+	for(var/datum/weakref/W in tracked_atoms)
+		var/mob/living/M = W.resolve()
+		if(M.stat <= SOFT_CRIT) //If we aren't in soft crit or worse, reward a triumph.
+			if(M.client)
+				//Please, our beautiful player, do not abuse this system of contracts as we are wanting to reward you with
+				//SOMETHING for participating in combat and besting your opponent.
+				M.client.adjust_triumphs(1, TRUE)
+
+	. = ..() //Call this after we reward so we don't delete them early.
+
 /// Spawn goons alongside the bounty boss.
 /// Otherwise spends TP budget drawing from the region faction.
 /// Currently unused.
