@@ -21,10 +21,10 @@
 	//CC Edit Begin
 	//Handle for dietary adjustment. Can have multiple types.
 	//Default types are "Dairy", "Meats", "Fruits", "Vegetables", "Grains"
-	var/diet_types = null
+	var/foodtype = null
 
 	//The amount of nutritional diet earned per bite.
-	var/diet_change_amount = 0
+	//var/diet_change_amount = 0
 	//CC Edit End
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
@@ -34,8 +34,8 @@
 			H.adjust_nutrition(nutriment_factor * metabolization_rate)
 			H.adjust_hydration(hydration_factor * metabolization_rate)
 		//CC Edit Begin
-		if(diet_types)
-			H.dna.species.adjust_diet_value(H, diet_types, diet_change_amount)
+		if(foodtype && quality)
+			H.dna.species.adjust_diet_value(H, foodtype, (quality + 1) * FOOD_DIETARY_REAGENT_MULT)
 		//CC Edit End
 	return ..()
 
