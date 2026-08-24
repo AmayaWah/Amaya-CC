@@ -100,6 +100,6 @@
 
 		//Just something to warn other players that an actual player has accepted the ghost role poll.
 		//We assume that the person playing doesn't just give up neither.
-		M.add_filter("pvp_outline", 1, list("type" = "drop_shadow", "color" = "#9e4700", "size" = 0.1))
+		M.add_filter("pvp_outline", 1, list("type" = "drop_shadow", "color" = "#ffee00", "size" = 0.1))
 		return
 //CC Edit End - PvP specific quest spawn range.
