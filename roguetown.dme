@@ -3812,6 +3812,7 @@
 #include "modular_causticcove\code\modules\roguetown\roguejobs\alchemist\herb_flora.dm"
 #include "modular_causticcove\code\modules\roguetown\roguestock\import.dm"
 #include "modular_causticcove\code\modules\roguetown\roguemachine\questing\factions\graggarite_spawn.dm"
+#include "modular_causticcove\code\modules\roguetown\roguemachine\questing\factions\hell_goblins_overrides.dm"
 #include "modular_causticcove\code\modules\roguetown\roguemachine\questing\types\quest_pvp.dm"
 #include "modular_causticcove\code\modules\sexcon\sex_helpers.dm"
 #include "modular_causticcove\code\modules\size_scaling\helperfunctions.dm"

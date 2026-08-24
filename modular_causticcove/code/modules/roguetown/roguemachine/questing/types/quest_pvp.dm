@@ -29,7 +29,8 @@ GLOBAL_LIST_INIT(ascended_bounty_mobs, list(
 	if(!faction)
 		return FALSE
 	faction_id = faction.id
-	target_mob_type = pick(GLOB.ascended_bounty_mobs) //Pick between 3 outlaw variants.
+	boss_name = faction.generate_boss_name()
+	target_mob_type = pickweight(faction.boss_mob_types) //Should never fail considering only factions with bosses are permitted to have this quest type.
 	progress_required = 1
 	finalize_preview_title()
 	return TRUE
@@ -40,7 +41,9 @@ GLOBAL_LIST_INIT(ascended_bounty_mobs, list(
 /datum/quest/kill/ascended_bounty/get_title()
 	if(title)
 		return title
-	return "Bring down a notorious outlaw"
+	if(!boss_name)
+		return "Bring down a notorious outlaw"
+	return "Bring down [boss_name]"
 
 /datum/quest/kill/ascended_bounty/get_objective_text()
 	return "Slay the target, but be warned! They are rumored to be quite the formidable opponent!"
