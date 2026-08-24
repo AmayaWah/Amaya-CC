@@ -111,7 +111,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/in_critical = InCritical()
 
 	if(one_character_prefix[message_mode])
-		message = copytext(message, 2)
+		//Caustic Edit - Account for forced-muffled here! Only remove the first character if they are not force-muffled. Could make it actually check _if_ the first character is # or not but. EEEH. This is good enough.
+		if(!muffled)
+			message = copytext(message, 2)
+		//Caustic Edit End
 	else if(message_mode || saymode)
 		message = copytext(message, 3)
 	if(findtext_char(message, " ", 1, 2))
