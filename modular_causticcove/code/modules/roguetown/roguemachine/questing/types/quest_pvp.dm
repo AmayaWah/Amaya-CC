@@ -13,6 +13,8 @@ GLOBAL_LIST_INIT(ascended_bounty_mobs, list(
 	tp_budget = QUEST_TP_BUDGET_PLAYER_VS_PLAYER
 	threat_bands_cleared = QUEST_BANDS_PLAYER_VS_PLAYER
 	required_fellowship_size = 2 //Requires 2 people minimum to fight them.
+	/// Generated boss name for title/objective. Set at preview.
+	var/boss_name
 
 /datum/quest/kill/ascended_bounty/preview(obj/effect/landmark/quest_spawner/landmark)
 	if(!landmark)
