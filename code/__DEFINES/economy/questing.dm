@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 #define QUEST_TP_BUDGET_KILL_EASY 35
 #define QUEST_TP_BUDGET_CLEAR_OUT 80
 #define QUEST_TP_BUDGET_RAID 200
+#define QUEST_TP_BUDGET_PLAYER_VS_PLAYER 125 //CC Edit - Cheaper than goons!
 #define QUEST_TP_BUDGET_BOUNTY_GOONS 150
 #define QUEST_TP_BUDGET_RECOVERY 80
 
@@ -87,6 +88,7 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 // Bands of threat cleared on completion
 #define QUEST_BANDS_KILL_EASY 1
 #define QUEST_BANDS_CLEAR_OUT 2
+#define QUEST_BANDS_PLAYER_VS_PLAYER 3 //CC Edit - 3 Bands seems fair, an inbetween of bounty and clear out.
 #define QUEST_BANDS_RAID 4
 #define QUEST_BANDS_BOUNTY 4
 #define QUEST_BANDS_RECOVERY 2

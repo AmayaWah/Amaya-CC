@@ -10,14 +10,9 @@ GLOBAL_LIST_INIT(ascended_bounty_mobs, list(
 /datum/quest/kill/ascended_bounty
 	quest_type = QUEST_ASCENDED_BOUNTY
 	quest_difficulty = QUEST_DIFFICULTY_PLAYER_VS_PLAYER
-	tp_budget = QUEST_TP_BUDGET_BOUNTY_GOONS
-	threat_bands_cleared = QUEST_BANDS_BOUNTY
-	required_fellowship_size = 0
-	/// Generated boss name for title/objective. Set at preview.
-	var/boss_name
-	/// If TRUE, the boss is a large goblin and goons are drawn from quest_bounty_goblin_goons
-	/// instead of the region faction. Rolled at preview time.
-	var/goblin_warlord_variant = FALSE
+	tp_budget = QUEST_TP_BUDGET_PLAYER_VS_PLAYER
+	threat_bands_cleared = QUEST_BANDS_PLAYER_VS_PLAYER
+	required_fellowship_size = 2 //Requires 2 people minimum to fight them.
 
 /datum/quest/kill/ascended_bounty/preview(obj/effect/landmark/quest_spawner/landmark)
 	if(!landmark)
