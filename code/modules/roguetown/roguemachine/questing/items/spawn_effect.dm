@@ -82,8 +82,9 @@
 		//Handle mind transfer.
 		var/mob/living/M = contained_atom
 
-		polling = TRUE //We only attempt to poll one every time a player comes near. If they don't accept quick enough they can't play as one.
-		var/list/candidates = pollGhostCandidates("A challenger approaches! Will you assume the position as a bounty target and defend yourself?!", ROLE_ASCENDED_BOUNTY, null, null, 10 SECONDS, POLL_IGNORE_ASCENDED_BOUNTY)
+		polling = TRUE //We only attempt to poll once every time a player comes near. If they don't accept quick enough they can't play as one.
+		//Defaults to NPC AI if no one accepts the poll.
+		var/list/candidates = pollGhostCandidates("A challenger approaches! Will you assume the position as [M.name], and defend yourself?!", ROLE_ASCENDED_BOUNTY, null, null, 10 SECONDS, POLL_IGNORE_ASCENDED_BOUNTY)
 		if(!LAZYLEN(candidates))
 			return
 
@@ -101,5 +102,12 @@
 		//Just something to warn other players that an actual player has accepted the ghost role poll.
 		//We assume that the person playing doesn't just give up neither.
 		M.add_filter("pvp_outline", 1, list("type" = "drop_shadow", "color" = "#ffee00", "size" = 0.1))
+
+		//Now, to grant the mob special Traits and Skills to assist it in battle and roaming.
+		ADD_TRAIT(M, TRAIT_TEMPO, TRAIT_GENERIC)
+		M.adjust_skillrank(/datum/skill/misc/tracking, 6, TRUE) //You should be able to hunt your hunters back!
+		M.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
+		M.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE)
+		M.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		return
 //CC Edit End - PvP specific quest spawn range.

@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(ascended_bounty_mobs, list(
 	quest_difficulty = QUEST_DIFFICULTY_PLAYER_VS_PLAYER
 	tp_budget = QUEST_TP_BUDGET_PLAYER_VS_PLAYER
 	threat_bands_cleared = QUEST_BANDS_PLAYER_VS_PLAYER
-	required_fellowship_size = 2 //Requires 2 people minimum to fight them.
+	required_fellowship_size = 1 //I suggest 2 people but only 1 so people can 1v1 others if they really want to.
 	/// Generated boss name for title/objective. Set at preview.
 	var/boss_name
 

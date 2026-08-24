@@ -63,10 +63,6 @@ GLOBAL_LIST_INIT(ranger_aggro, list(
 /mob/living/carbon/human/species/human/northern/outlaw_ranger/death(gibbed, nocutscene = FALSE)
 	. = ..()
 	if(!gibbed)
-		//CC Edit Begin
-		if(client)
-			client.dead_observe()
-		//CC Edit End
 		dust(FALSE, FALSE, TRUE)
 
 /datum/outfit/job/roguetown/npc/mini_boss/ranger/pre_equip(mob/living/carbon/human/H)
