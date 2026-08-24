@@ -65,8 +65,10 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 // Bounty's main target is further multiplied
 #define QUEST_BOUNTY_THREAT_MULT 1
 
+//CC Edit - Ascended Bounty Multiplier
 //Ascended Bounty is 1.5x better.
-#define QUEST_ASCENDED_BOUNTY_THREAT_MULT 1.5
+#define QUEST_ASCENDED_BOUNTY_THREAT_MULT 2 //2x the threat point value is ideal
+//CC Edit End
 
 // Max mobs for kill request to avoid lagging
 #define QUEST_KILL_MAX_MOBS 20
