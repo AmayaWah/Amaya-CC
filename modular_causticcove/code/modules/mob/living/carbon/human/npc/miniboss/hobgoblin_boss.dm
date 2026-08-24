@@ -104,9 +104,9 @@
 			head = /obj/item/clothing/head/roguetown/helmet/hobgoblin
 			armor =	/obj/item/clothing/suit/roguetown/armor/plate/cuirass/iron/hobgoblin
 
-		//So they can store items on their hips and hold a single strong health vial.
-		belt = /obj/item/storage/belt/rogue/leather/cloth
-		beltr = /obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew
+	//So they can store items on their hips and hold a single strong health vial.
+	belt = /obj/item/storage/belt/rogue/leather/cloth
+	beltr = /obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew
 
-		//Backup sword. Also extra distinction from other hobgobs.
-		backr = /obj/item/rogueweapon/sword/short/iron
+	//Backup sword. Also extra distinction from other hobgobs.
+	backr = /obj/item/rogueweapon/sword/short/iron
