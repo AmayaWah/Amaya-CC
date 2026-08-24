@@ -22,6 +22,9 @@
 	if(mastermob?.get_num_arms(FALSE) < 2 || mastermob.get_inactive_held_item())
 		to_chat(mastermob, span_warning("I need a free hand to draw [masteritem]!"))
 		return FALSE
+	if(mastermob.resting) // Caustic Edit. No shooting bows while prone.
+		to_chat(mastermob, span_warning("I cannot draw [masteritem] while laying down!"))
+		return FALSE
 	if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
 		return FALSE
 
@@ -62,6 +65,9 @@
 /datum/intent/arc/bow/can_charge(atom/clicked_object)
 	if(mastermob?.get_num_arms(FALSE) < 2 || mastermob.get_inactive_held_item())
 		to_chat(mastermob, span_warning("I need a free hand to draw [masteritem]!"))
+		return FALSE
+	if(mastermob.resting) // Caustic Edit. No shooting bows while prone.
+		to_chat(mastermob, span_warning("I cannot draw [masteritem] while laying down!"))
 		return FALSE
 	if(istype(clicked_object, /obj/item/quiver) && istype(mastermob?.get_active_held_item(), /obj/item/gun/ballistic))
 		return FALSE
@@ -247,6 +253,9 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(user.get_inactive_held_item() || user.get_num_arms(FALSE) < 2)
 		to_chat(user, span_warning("I need a free hand to fire \the [src]!"))
+		return FALSE
+	if(user.resting) // Caustic Edit. No shooting bows while prone.
+		to_chat(user, span_warning("I cannot fire [src] while laying down!"))
 		return FALSE
 	if(user.client)
 		if(user.client.chargedprog >= 100)
