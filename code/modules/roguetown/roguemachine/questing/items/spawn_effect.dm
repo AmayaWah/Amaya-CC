@@ -106,9 +106,9 @@
 		//Now, to grant the mob special Traits and Skills to assist it in battle and roaming.
 		ADD_TRAIT(M, TRAIT_TEMPO, TRAIT_GENERIC)
 		M.adjust_skillrank(/datum/skill/misc/tracking, 6, TRUE) //You should be able to hunt your hunters back!
-		M.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
+		M.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE) //You should be able to go anywhere you'd like!
 		M.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE)
 		M.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE) //RP and reading or some shit.
-		M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/siphon_time) //So you can end PvP early or via winning if you don't want to wait.
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/siphon_time) //So you can siphon the scroll early and earn a TRIUMPH.
 		return
 //CC Edit End - PvP specific quest spawn range.

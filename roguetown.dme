@@ -3838,7 +3838,7 @@
 #include "modular_causticcove\code\modules\spells\animagus\zad.dm"
 #include "modular_causticcove\code\modules\spells\beam\void_beam.dm"
 #include "modular_causticcove\code\modules\spells\components\temper_clothing.dm"
-#include "modular_causticcove\code\modules\spells\contract_drain\contract_drain.dm"
+#include "modular_causticcove\code\modules\spells\contract_time_siphon\contract_time_siphon.dm"
 #include "modular_causticcove\code\modules\spells\conjure\conjure_tool.dm"
 #include "modular_causticcove\code\modules\spells\conjure\shape_wood.dm"
 #include "code\modules\spells\components\skill_bind.dm"

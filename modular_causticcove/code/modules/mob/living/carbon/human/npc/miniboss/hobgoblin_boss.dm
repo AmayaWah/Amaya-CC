@@ -3,11 +3,11 @@
 
 /datum/outfit/job/roguetown/npc/hobgoblin/boss/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.STASTR = 14
+	H.STASTR = 11
 	H.STAPER = 10
 	H.STAINT = 8
-	H.STACON = 15 //We are strong and sturdy, naturally tanky even due to our more primitive armor/gear.
-	H.STAWIL = 15
+	H.STACON = 14 //We are strong and sturdy, naturally tanky even due to our more primitive armor/gear.
+	H.STAWIL = 14
 	H.STASPD = 9
 	H.STALUC = 10
 
@@ -20,6 +20,16 @@
 	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
+
+	//Some pretty nice traits.
+	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 
 
 	var/loadout = rand(1,10)
@@ -76,3 +86,7 @@
 			r_hand = /obj/item/rogueweapon/greatsword/iron
 			head = /obj/item/clothing/head/roguetown/helmet/hobgoblin
 			armor =	/obj/item/clothing/suit/roguetown/armor/plate/cuirass/iron/hobgoblin
+
+		//So they can store items on their hips and hold a single strong health vial.
+		belt = /obj/item/storage/belt/rogue/leather/cloth
+		beltr = /obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew
