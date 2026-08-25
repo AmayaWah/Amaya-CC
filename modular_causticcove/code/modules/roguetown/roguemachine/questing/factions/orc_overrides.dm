@@ -4,5 +4,5 @@
 
 	boss_mob_types = list(
 		/mob/living/carbon/human/species/orc/npc/warlord = 100,
-		/mob/living/carbon/human/species/orc/npc/warlord/juggernaut = 50,
+		/mob/living/carbon/human/species/orc/npc/juggernaut = 50,
 	)

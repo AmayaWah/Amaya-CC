@@ -24,7 +24,7 @@
 	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/athletics, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 
 	//Some pretty nice traits.
 	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
