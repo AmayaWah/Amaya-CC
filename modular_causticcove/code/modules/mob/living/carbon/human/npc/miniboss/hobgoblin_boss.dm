@@ -1,10 +1,10 @@
 /mob/living/carbon/human/species/hobgoblin/boss
-	hobgob_outfit = /datum/outfit/job/roguetown/npc/hobgoblin/boss
+	hobgob_outfit = /datum/outfit/job/roguetown/npc/hobby_boss
 	threat_point = 65
 
 
 //Some slight RNG to keep things a little surprising and mixed up when loadouts are applied.
-/datum/outfit/job/roguetown/npc/hobgoblin/boss/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/npc/hobby_boss/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.STASTR = 12
 	H.STAPER = 8 //We're a little stupid and blind however.
@@ -24,6 +24,7 @@
 	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/athletics, 4, TRUE)
 
 	//Some pretty nice traits.
 	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
@@ -34,6 +35,7 @@
 	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_LONGSTRIDER, TRAIT_GENERIC)
 
 
 	var/loadout = rand(1,10)
@@ -50,17 +52,17 @@
 		if(2) //steel axe + leathers
 			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel
 			head = /obj/item/clothing/head/roguetown/helmet/leather/hobgoblin
-			armor = /obj/item/clothing/suit/roguetown/armor/leather/hobgoblin
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/iron/hobgoblin
 
 		if(3) //steel mace + leathers
 			r_hand = /obj/item/rogueweapon/mace/steel
 			head = /obj/item/clothing/head/roguetown/helmet/leather/hobgoblin
-			armor = /obj/item/clothing/suit/roguetown/armor/leather/hobgoblin
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/iron/hobgoblin
 
 		if(4) //steel messer + leathers
 			r_hand = /obj/item/rogueweapon/sword/short/messer
 			head = /obj/item/clothing/head/roguetown/helmet/leather/hobgoblin
-			armor = /obj/item/clothing/suit/roguetown/armor/leather/hobgoblin
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/iron/hobgoblin
 
 		if(5) //steel sword & shield
 			r_hand = /obj/item/rogueweapon/sword/short
@@ -111,3 +113,9 @@
 
 	//Backup sword. Also extra distinction from other hobgobs.
 	backr = /obj/item/rogueweapon/sword/short/iron
+
+	//Generic armor to cover the hands, neck, and feet as well so people can't cheese as easily.
+	//Still easy to puncture...
+	neck = /obj/item/clothing/neck/roguetown/leather
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	gloves = /obj/item/clothing/gloves/roguetown/leather

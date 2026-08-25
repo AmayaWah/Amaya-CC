@@ -93,3 +93,7 @@ GLOBAL_LIST_INIT(ranger_aggro, list(
 
 	H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/evil] //Aura
 	H.dna.species.soundpack_f = GLOB.voice_packs[/datum/voicepack/female/haughty]
+
+	//CC Edit - Potions for the big boys so they can heal mid-fight.
+	beltr = /obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew
+	//CC Edit End

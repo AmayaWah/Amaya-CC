@@ -128,3 +128,7 @@ GLOBAL_LIST_INIT(duelist_aggro, list(
 
 	H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/evil] //Its a dodge build w/battleready sire, I know what had to be done.
 	H.dna.species.soundpack_f = GLOB.voice_packs[/datum/voicepack/female/haughty]
+
+	//CC Edit - Potions for the big boys so they can heal mid-fight.
+	beltr = /obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew
+	//CC Edit End
