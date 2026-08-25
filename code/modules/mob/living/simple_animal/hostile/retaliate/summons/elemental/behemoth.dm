@@ -20,7 +20,7 @@
 	move_to_delay = 15
 	base_intents = list(/datum/intent/simple/elementalt2_unarmed)
 	butcher_results = list()
-	death_loot = list(/obj/item/magic/elemental/fragment = 1)
+	death_loot = list(/obj/item/magic/elemental/fragment = 2)
 	faction = list(FACTION_ELEMENTAL)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	health = 800

@@ -18,7 +18,7 @@
 	move_to_delay = 6
 	base_intents = list(/datum/intent/simple/bite)
 	butcher_results = list()
-	death_loot = list(/obj/item/magic/fae/iridescentscale = 2)
+	death_loot = list(/obj/item/magic/fae/iridescentscale = 3)
 	faction = list(FACTION_FAE)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	health = 220

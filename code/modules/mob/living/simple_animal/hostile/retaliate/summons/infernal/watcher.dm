@@ -19,7 +19,7 @@
 	move_to_delay = 5
 	base_intents = list(/datum/intent/simple/bite)
 	butcher_results = list()
-	death_loot = list(/obj/item/magic/infernal/core = 1)
+	death_loot = list(/obj/item/magic/infernal/core = 2)
 	faction = list(FACTION_INFERNAL)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	health = 600
