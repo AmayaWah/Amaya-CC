@@ -16,7 +16,6 @@
 	move_to_delay = 8
 	base_intents = list(/datum/intent/simple/elemental_unarmed)
 	butcher_results = list()
-	death_loot = list(/obj/item/magic/elemental/mote = 4)
 	faction = list(FACTION_ELEMENTAL)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	health = 120
@@ -58,6 +57,9 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/crawler/death(gibbed)
 	..()
+	var/turf/deathspot = get_turf(src) ///Caustic edit
+	for(var/i =1 to 6)
+		new /obj/item/magic/elemental/mote(deathspot) ///Caustic edit end
 	update_icon()
 	spawn(1)
 		qdel(src)

@@ -19,7 +19,6 @@
 	move_to_delay = 16
 	base_intents = list(/datum/intent/simple/elementalt2_unarmed)
 	butcher_results = list()
-	death_loot = list(/obj/item/magic/elemental/relic = 1)
 	faction = list(FACTION_ELEMENTAL)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	health = 2000
@@ -71,6 +70,14 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/colossus/death(gibbed)
 	..()
+	var/turf/deathspot = get_turf(src)
+	new /obj/item/magic/elemental/relic(deathspot) ///Caustic edit
+	for(var/i =1 to 2)
+		new /obj/item/magic/elemental/fragment(deathspot)
+	for(var/i =1 to 2)
+		new /obj/item/magic/elemental/shard(deathspot)
+	for(var/i =1 to 4)
+		new /obj/item/magic/elemental/mote(deathspot) ///Caustic edit end
 	update_icon()
 	spill_embedded_objects()
 	qdel(src)

@@ -20,7 +20,6 @@
 	move_to_delay = 3
 	base_intents = list(/datum/intent/simple/bite)
 	butcher_results = list()
-	death_loot = list(/obj/item/magic/infernal/fang = 3)
 	faction = list(FACTION_INFERNAL)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	health = 270
@@ -57,6 +56,11 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound/death(gibbed)
 	..()
+	var/turf/deathspot = get_turf(src) ///Caustic edit
+	for(var/i =1 to 6)
+		new /obj/item/magic/infernal/fang(deathspot)
+	for(var/i =1 to 4)
+		new /obj/item/magic/infernal/ash(deathspot) ///Caustic edit end
 	update_icon()
 	spill_embedded_objects()
 	qdel(src)
