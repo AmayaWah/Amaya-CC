@@ -901,7 +901,7 @@
 	owner.log_message("Digested [key_name(M)] in [lowertext(name)]", LOG_ATTACK)
 
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
-	if(is_vore_predator(M))
+	if(M.vore_organs.len > 0) //This check used to be is_vore_predator(M), but moving the only part that actually matters out here to account for having adjusted that check.
 		M.release_vore_contents(include_absorbed = TRUE, silent = TRUE)
 
 	//Drop all items into the belly.
