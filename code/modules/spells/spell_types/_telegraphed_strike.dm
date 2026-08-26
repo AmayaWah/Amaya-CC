@@ -158,7 +158,7 @@
 	for(var/b in 1 to length(bands))
 		if(QDELETED(H) || H.stat != CONSCIOUS)
 			break
-		var/turf/origin = get_turf(H)
+		var/turf/origin = get_pattern_origin(H)
 		for(var/list/off in bands[b])
 			var/list/r = rotate_offset(off[1], off[2], facing)
 			var/turf/T = origin ? locate(origin.x + r[1], origin.y + r[2], origin.z) : null
@@ -191,6 +191,29 @@
 
 /datum/action/cooldown/spell/telegraphed_strike/proc/on_impact(mob/living/carbon/human/H, facing, atom/movable/visual)
 	return
+
+/// Called once per band as it begins resolving, before any of its turfs are hit.
+/datum/action/cooldown/spell/telegraphed_strike/proc/on_band_start(mob/living/H, band)
+	return
+
+/// Called for every turf the pattern actually reaches, after its occupants are struck.
+/datum/action/cooldown/spell/telegraphed_strike/proc/on_pattern_turf(turf/T, mob/living/H, facing)
+	return
+
+/// The turfs this pattern reaches, with obstacles already filtered out.
+/datum/action/cooldown/spell/telegraphed_strike/proc/get_pattern_turfs(mob/living/H, facing, list/offs)
+	. = list()
+	var/turf/origin = get_pattern_origin(H)
+	if(!origin)
+		return
+	for(var/list/off in (offs || get_pattern_offsets()))
+		var/list/r = rotate_offset(off[1], off[2], facing)
+		var/turf/T = locate(origin.x + r[1], origin.y + r[2], origin.z)
+		if(!T || T.density)
+			continue
+		if(stop_at_dense && path_blocked(origin, T))
+			continue
+		. += T
 
 /datum/action/cooldown/spell/telegraphed_strike/proc/hit_turf(mob/living/carbon/human/H, turf/T, facing, deflected = FALSE)
 	if(QDELETED(H) || QDELETED(T))
@@ -285,6 +308,10 @@
 
 /datum/action/cooldown/spell/telegraphed_strike/proc/on_strike_complete(mob/living/carbon/human/H, hit_count, deflected)
 	return
+
+/// The turf the pattern offsets are measured from. Override to anchor a pattern somewhere other than the caster.
+/datum/action/cooldown/spell/telegraphed_strike/proc/get_pattern_origin(mob/living/H)
+	return get_turf(H)
 
 /datum/action/cooldown/spell/telegraphed_strike/proc/on_antimagic_block(mob/living/L)
 	L.visible_message(span_warning("The arcyne blades dispel as they near [L]!"))
