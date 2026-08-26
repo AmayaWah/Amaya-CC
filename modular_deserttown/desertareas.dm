@@ -104,6 +104,8 @@
 	name = "Ruined Colosseum"
 	first_time_text = "Decrepit Colosseum"
 	deathsight_message = "a decrepit arena in the dunes"
+	ambush_times = "null"
+	ambush_mobs = "null"
 
 /area/rogue/outdoors/desert/dunepassage
 	name = "Dunelords Pass"
