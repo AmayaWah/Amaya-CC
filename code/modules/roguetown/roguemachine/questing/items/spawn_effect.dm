@@ -104,7 +104,8 @@
 		M.add_filter("pvp_outline", 1, list("type" = "drop_shadow", "color" = "#ffee00", "size" = 0.1))
 
 		//Now, to grant the mob special Traits and Skills to assist it in battle and roaming.
-		ADD_TRAIT(M, TRAIT_TEMPO, TRAIT_GENERIC)
+		ADD_TRAIT(M, TRAIT_TEMPO, TRAIT_GENERIC) //To deal with bigger parties.
+		ADD_TRAIT(src, TRAIT_LONGSTRIDER, TRAIT_GENERIC) //So they can free roam on bad turfs and actually retreat to heal.
 		M.adjust_skillrank(/datum/skill/misc/tracking, 6, TRUE) //You should be able to hunt your hunters back!
 		M.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE) //You should be able to go anywhere you'd like!
 		M.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE)
