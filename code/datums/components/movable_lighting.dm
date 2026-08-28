@@ -46,6 +46,12 @@
 		"288" = 'icons/effects/light_overlays/light_288.dmi',
 		"320" = 'icons/effects/light_overlays/light_320.dmi',
 		"352" = 'icons/effects/light_overlays/light_352.dmi',
+		"384" = 'icons/effects/light_overlays/light_384.dmi',
+		"416" = 'icons/effects/light_overlays/light_416.dmi',
+		"448" = 'icons/effects/light_overlays/light_448.dmi',
+		"480" = 'icons/effects/light_overlays/light_480.dmi',
+		"512" = 'icons/effects/light_overlays/light_512.dmi',
+		"544" = 'icons/effects/light_overlays/light_544.dmi',
 		)
 
 	///Overlay effect to cut into the darkness and provide light.
@@ -272,7 +278,7 @@
 	make_luminosity_update()
 
 
-///Changes the range which the light reaches. 0 means no light, 6 is the maximum value.
+///Changes the range which the light reaches. 0 means no light, 9 is the maximum value.
 /datum/component/overlay_lighting/proc/set_range(atom/source, new_inner_range, new_outer_range)
 	SIGNAL_HANDLER
 	if(range == new_outer_range)
