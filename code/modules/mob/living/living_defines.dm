@@ -127,6 +127,8 @@
 
 	var/item_state // iconstate for when we get turned into an item
 
+	var/can_be_held = FALSE	//whether this can be picked up and held.
+
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
 	var/losebreath = 0
 
