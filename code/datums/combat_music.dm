@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	desc = ""
 	shortname = "Certain Bogman"
 	credits = "A Certain Sinclair's Theme | Limbus Company Canto 9 - Uploaded by SpearHead (https://www.youtube.com/watch?v=zUPqG9ghRco)"
-	musicpath = list('sound/music/cmode/towner/combat_sergeant.ogg')
+	musicpath = list('sound/music/cmode/garrison/combat_sergeant.ogg')
 //Caustic Edit End
 
 /datum/combat_music/conddottiero
