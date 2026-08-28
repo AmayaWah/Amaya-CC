@@ -313,7 +313,7 @@
 				qdel(src)
 				if (L.alpha == 0 && L.rogue_sneaking) // not anymore you're not
 					L.update_sneak_invis(TRUE)
-				if(!HAS_TRAIT(L, TRAIT_WOODWALKER))	
+				if(!HAS_TRAIT(L, TRAIT_WOODWALKER))
 					L.consider_ambush()
 
 /obj/item/grown/log/tree/stick/Initialize()
@@ -334,7 +334,7 @@
 		/datum/crafting_recipe/roguetown/survival/wickercloak,
 		/datum/crafting_recipe/roguetown/survival/torch,
 		// /datum/crafting_recipe/roguetown/survival/stonearrow, // Caustic edit
-		/datum/crafting_recipe/roguetown/survival/stonearrow_five,
+		/datum/crafting_recipe/roguetown/survival/stonearrow_six,
 		/datum/crafting_recipe/roguetown/survival/wood_stake
 		)
 
@@ -502,7 +502,7 @@
 	sellprice = 4
 	bundletype = /obj/item/natural/bundle/plank
 	smeltresult = /obj/item/ash
-	
+
 /obj/item/natural/wood/plank/attack_right(mob/living/user)
 	if(user.get_active_held_item())
 		return
