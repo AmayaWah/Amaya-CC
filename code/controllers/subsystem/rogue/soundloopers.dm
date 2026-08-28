@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(soundloopers)
 		if (!loop)
 			played_loops -= loop
 			continue
-		
+
 		if((istype(loop, /datum/looping_sound/instrument) || istype(loop, /datum/looping_sound/musloop) || istype(loop, /datum/looping_sound/dmusloop)) && !(prefs?.toggles & SOUND_INSTRUMENTS))
 			var/list/muted_loop = played_loops[loop]
 			var/sound/muted_sound = muted_loop?["SOUND"]
@@ -176,7 +176,7 @@ SUBSYSTEM_DEF(soundloopers)
 			new_volume = new_volume * (prefs.mastervol * 0.01) //Modify it at the end by the player's volume setting
 
 			if(old_volume != new_volume)
-				var/turf/T = get_turf(mob)
+				var/turf/T = mob_turf //cached at proc start
 				var/dx = source_turf.x - T.x
 				if(dx <= 1 && dx >= -1)
 					found_sound.x = 0
@@ -195,4 +195,3 @@ SUBSYSTEM_DEF(soundloopers)
 					mob.unmute_sound(found_sound)
 				found_loop["VOL"] = new_volume
 				mob.update_sound_volume(played_loops[loop]["SOUND"], new_volume)
-
