@@ -43,7 +43,8 @@
 						/obj/item/reagent_containers/glass/mortar = 1,
 						/obj/item/pestle = 1,
 						/obj/item/candle/yellow = 2,
-						/obj/item/chalk = 1
+						/obj/item/chalk = 1,
+						/obj/item/ritechalk = 1
 						)
 	var/classes = list("Old Magick", "Godsblood", "Mystagogue")
 	var/classchoice = input("How do your powers manifest?", "THE OLD WAYS") as anything in classes
