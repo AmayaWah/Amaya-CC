@@ -3775,6 +3775,7 @@
 #include "modular_causticcove\code\modules\harpies\_harpy_defines.dm"
 #include "modular_causticcove\code\modules\harpies\abberant_eater.dm"
 #include "modular_causticcove\code\modules\harpies\harpy_compat.dm"
+#include "modular_causticcove\code\modules\harpies\harpy_markings.dm"
 #include "modular_causticcove\code\modules\harpies\harpy_organs.dm"
 #include "modular_causticcove\code\modules\harpies\harpy_species.dm"
 #include "modular_causticcove\code\modules\harpies\wings.dm"
