@@ -25,12 +25,7 @@
 		STASPD = 13
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/saigahoofs)
-		//Caustic Edit - Name is based on the gender instead!
-		if(gender == "male")
-			real_name = "saiga buck"
-		else
-			real_name = "saiga doe" //So we don't get a random name
-		//Caustic Edit End
+		real_name = "saiga doe" //So we don't get a random name
 
 // SAIGA SPECIES DATUM //
 /datum/species/shapesaiga
@@ -75,12 +70,7 @@
 /datum/species/shapesaiga/regenerate_icons(mob/living/carbon/human/H)
 	H.icon = 'icons/roguetown/mob/monster/saiga.dmi'
 	H.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
-	//Caustic Edit - Tweak the Saiga to account for gender!
-	if(H.gender == "male")
-		H.icon_state = "buck"
-	else
-		H.icon_state = "saiga"
-	//Caustic Edit End
+	H.icon_state = "saiga"
 	H.update_damage_overlays()
 	return TRUE
 
@@ -114,7 +104,7 @@
 	candodge = TRUE
 	canparry = TRUE
 	miss_text = "kicks the air!"
-	miss_sound = "bluntswoosh"
+	miss_sound = "bluntwooshmed"
 	item_d_type = "blunt"
 	swingdelay = 8
 	clickcd = CLICK_CD_QUICK
@@ -153,7 +143,7 @@
 /obj/item/rogueweapon/saiga_hoof/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/saiga_hoof/Initialize()
+/obj/item/rogueweapon/saiga_hoof/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
