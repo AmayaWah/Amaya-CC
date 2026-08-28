@@ -47,7 +47,6 @@
 		TRAIT_PIERCEIMMUNE, //Prevents weapon dusting and caltrop effects due to them transforming when killed/stepping on shards.
 		TRAIT_LONGSTRIDER,
 		TRAIT_PERFECT_TRACKER,
-		TRAIT_NOPAINSTUN, //This bad boy ENDVRES
 		TRAIT_BIGGUY,
 	)
 	inherent_biotypes = MOB_HUMANOID
@@ -114,7 +113,7 @@
 	candodge = TRUE
 	canparry = TRUE
 	miss_text = "slashes the air!"
-	miss_sound = "bluntswoosh"
+	miss_sound = "bladewooshmed"
 	item_d_type = "slash"
 	demolition_mod = 2.5 //I'M A MOLE AND I'M DIGGING A HOLE
 
@@ -132,7 +131,7 @@
 	candodge = TRUE
 	canparry = TRUE
 	miss_text = "smashes the air!"
-	miss_sound = "bluntswoosh"
+	miss_sound = "bluntwooshlarge"
 	item_d_type = "blunt"
 
 /obj/item/rogueweapon/mole_claw //Like a less defense dagger
@@ -167,7 +166,7 @@
 /obj/item/rogueweapon/mole_claw/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/mole_claw/Initialize()
+/obj/item/rogueweapon/mole_claw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
