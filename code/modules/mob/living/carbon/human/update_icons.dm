@@ -1524,7 +1524,7 @@ There are several things that need to be remembered:
 		c_mask = taur?.clip_mask
 
 	if(isharpy(src)) //feathered legs clip clothing the same way a taur body does
-		var/static/icon/harpy_clip_mask = icon(icon = 'icons/roguetown/mob/bodies/f/harpy.dmi', icon_state = "harpy_clipmask")
+		var/static/icon/harpy_clip_mask = icon(icon = 'modular_causticcove/icons/roguetown/harpies/f/harpy.dmi', icon_state = "harpy_clipmask")
 		c_mask = harpy_clip_mask
 	//Caustic Edit End
 
