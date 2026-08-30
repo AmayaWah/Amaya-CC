@@ -205,6 +205,7 @@
 							/obj/structure/leyline/powerful = 0.1,
 							/obj/structure/leyline/normal/decap = 0.2,
 							/obj/structure/voidstoneobelisk = 0.1,
+							/obj/structure/flora/roguegrass/pyroclasticflowers = 0.3,
 							/obj/structure/zizo_bane = 1)
 	spawnableTurfs = list(/turf/open/water/swamp = 0.5)
 
@@ -216,6 +217,7 @@
 	spawnableAtoms = list(/obj/effect/spawner/lootdrop/rogueshroom/happy/random = 5,
 							/obj/structure/flora/mushroomcluster = 5,
 							/obj/structure/flora/tinymushrooms = 5,
+							/obj/structure/flora/roguegrass/pyroclasticflowers = 0.5,
 							/obj/structure/roguerock = 20,
 							/obj/item/natural/rock = 3,
 							/obj/item/natural/stone = 5,
