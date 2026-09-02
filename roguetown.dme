@@ -4019,7 +4019,6 @@
 //Mobs
 #include "modular_ratwood\modules\mob\living\carbon\human\npc\bum.dm"
 #include "modular_ratwood\modules\mob\living\carbon\human\npc\skeleton.dm"
-#include "modular_ratwood\modules\mob\living\simple_animal\rogue\creacher\honeyspider.dm"
 #include "modular_ratwood\modules\mob\living\simple_animal\hostile\retaliate\summons\void\voiddragon.dm"
 #include "modular_ratwood\modules\mob\living\simple_animal\friendly\cat.dm"
 
