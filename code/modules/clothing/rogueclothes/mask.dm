@@ -880,7 +880,7 @@
 	armor = ARMOR_PADDED
 	adjustable = CAN_CADJUST
 	sewrepair = TRUE
-	salvage_result = /obj/item/natural/fibers
+	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
 	smeltresult = /obj/item/ash
 
