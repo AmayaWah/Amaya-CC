@@ -1217,7 +1217,7 @@ There are several things that need to be remembered:
 				else
 					overlays_standing[TABARD_LAYER] = cloak_overlay
 				//OV EDIT END
-				overlays_standing[UNDER_ARMOR_LAYER] = cloak_overlay	
+				overlays_standing[UNDER_ARMOR_LAYER] = cloak_overlay
 			if(cloak.alternate_worn_layer == CLOAK_BEHIND_LAYER)
 				overlays_standing[CLOAK_BEHIND_LAYER] = cloak_overlay
 			if(!cloak.alternate_worn_layer)
@@ -1522,6 +1522,10 @@ There are several things that need to be remembered:
 	var/icon/c_mask = null
 	if(taur?.use_mask)
 		c_mask = taur?.clip_mask
+
+	if(isharpy(src)) //feathered legs clip clothing the same way a taur body does
+		var/static/icon/harpy_clip_mask = icon(icon = 'modular_causticcove/icons/roguetown/harpies/f/harpy.dmi', icon_state = "harpy_clipmask")
+		c_mask = harpy_clip_mask
 	//Caustic Edit End
 
 	if(client && hud_used)
@@ -1613,7 +1617,7 @@ There are several things that need to be remembered:
 				mouth_overlay.pixel_y += dna.species.offset_features[OFFSET_MOUTH_F][2]
 		overlays_standing[MOUTH_LAYER] = mouth_overlay
 		apply_overlay(MOUTH_LAYER)
-	
+
 	rebuild_obscured_flags()
 
 /mob/living/carbon/human/proc/update_inv_armor_special()
@@ -1628,7 +1632,7 @@ There are several things that need to be remembered:
 	var/armor_icon_state = skin_armor.icon_state
 	if(!(src.mobility_flags & MOBILITY_STAND))
 		armor_icon_state = "[skin_armor.icon_state]_down"
-	
+
 	var/mutable_appearance/armor_overlay = mutable_appearance(skin_armor.icon, armor_icon_state, layer = ARMOR_LAYER)
 
 	overlays_standing[ARMOR_LAYER] = armor_overlay

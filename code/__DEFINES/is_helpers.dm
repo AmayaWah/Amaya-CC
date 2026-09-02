@@ -107,6 +107,10 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 #define isgnoll(A) (is_species(A, /datum/species/gnoll))
 #define isfamiliar(A) (istype(A, /mob/living/carbon/human/species/familiar))
 
+//Caustic Edit - Add in isharpy
+#define isharpy(A) (is_species(A, /datum/species/harpy))
+//Caustic Edit End
+
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
