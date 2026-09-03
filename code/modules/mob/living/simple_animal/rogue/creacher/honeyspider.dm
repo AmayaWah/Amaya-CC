@@ -144,7 +144,7 @@
 /datum/intent/simple/bite/honeyspider
 	clickcd = HONEYSPIDER_ATTACK_SPEED
 
-/mob/living/simple_animal/hostile/retaliate/rogue/spider/rock
+/mob/living/simple_animal/hostile/retaliate/rogue/spider/rock // CC Edit - Removed the ratwood honeyspider file and placed rockspider code here
 	icon = 'modular_ratwood/icons/roguetown/mob/monster/spider.dmi'
 	icon_state = "spiderrock"
 	icon_living = "spiderrock"
