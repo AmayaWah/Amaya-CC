@@ -389,6 +389,8 @@ To avoid TOO much conflicts w/random char parts, consider a proc that checks if 
 	/datum/species/dwarf/gnome\
 )
 
+#define OLD_GOD_PATRON list(/datum/patron/old_god)
+
 #define ALL_CLERIC_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/necra, /datum/patron/divine/pestra, /datum/patron/divine/ravox, /datum/patron/divine/malum, /datum/patron/divine/eora, /datum/patron/divine/undivided) // Currently unused.
 
 #define ALL_PALADIN_PATRONS list(/datum/patron/divine/undivided, /datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/abyssor, /datum/patron/divine/dendor, /datum/patron/divine/necra, /datum/patron/divine/pestra, /datum/patron/divine/ravox, /datum/patron/divine/malum, /datum/patron/divine/eora, /datum/patron/divine/xylix, /datum/patron/old_god) // Currently unused.
@@ -515,10 +517,10 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_SQUIRE			"CAT_SQUIRE"		// Squire class - Handles Squire class selector
 #define CTAG_VETERAN		"CAT_VETERAN"		// Veteran class - Handles Veteran class selector
 #define CTAG_MARSHAL		"CAT_MARSHAL"		// Marshal class
-#define CTAG_SENESCHAL		"CAT_SENESCHAL"		// Seneschal's aesthetic choices. 
+#define CTAG_SENESCHAL		"CAT_SENESCHAL"		// Seneschal's aesthetic choices.
 #define CTAG_SERVANT		"CAT_SERVANT"		// Servant's aesthetic choices.
 #define CTAG_WAPPRENTICE	"CTAG_WAPPRENTICE"	// Mage Apprentice Classes - Handles Mage Apprentices class selector
-#define CTAG_GUILDSMASTER 	"CAT_GUILDSMASTER"	// Guildsmaster class - Handles Guildsmaster class selector 
+#define CTAG_GUILDSMASTER 	"CAT_GUILDSMASTER"	// Guildsmaster class - Handles Guildsmaster class selector
 #define CTAG_GUILDSMEN 		"CAT_GUILDSMEN"		// Guildsmen class - Handles Guildsmen class selector
 #define CTAG_BATHWORKER		"CAT_BATHWORKER"	// Bathhouse Attendant's aesthetic choices.
 
@@ -548,6 +550,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_ARCHIVIST		"CAT_ARCHIVIST"
 #define CTAG_TOWNCRIER		"CAT_TOWNCRIER"
 #define CTAG_KEEPER			"CAT_KEEPER"
+#define CTAG_PAINTER		"CAT_PAINTER"
 #define CTAG_TAILOR			"CAT_TAILOR"
 #define CTAG_SOILBRIDE		"CAT_SOILBRIDE"
 #define CTAG_INNKEEPER		"CAT_INNKEEPER"
@@ -571,29 +574,12 @@ GLOBAL_LIST_EMPTY(round_join_times)
 //CC BEGIN
 
 /*
-	Defines the ratios for armors when calculating layered integrity damage. Higher values means a stronger ratio.
-
-	Ratios work by combining the values of both items and spreading damage across evenly. 
-	If you have an armor with an AC of "none", it will only convert a small portion of the total depending on the other item's weight.
-	
-	Ex:
-	(individual_armor / total_ratio)
-	AC_NONE+AC_MEDIUM = 80 total_ratio
-	20/80 = 25%
-	60/80 = 75%
-
-	The Medium Armor takes 75% damage, where the NONE takes only 25% of integrity damage. 
-	If you have 2 ratio's of the same amount, 50/50. 
-	Lets look at Heavy and Light. 
-
-	40+80 = 120
-	40/120 = 33%
-	80/120 = 66% -> Your Heavy Armor takes 66% of the damage, and 33% transfers under to your underarmor.
+	Defines the ratio that armor REDUCES when integrity damage is taken to the piece of armor worn by multiplying the damage by the defined value.
 */
-#define AC_NONE_RATIO 20
-#define AC_LIGHT_RATIO 40
-#define AC_MEDIUM_RATIO 60
-#define AC_HEAVY_RATIO 80
+#define AC_NONE_RATIO 0
+#define AC_LIGHT_RATIO 0.1 //10%
+#define AC_MEDIUM_RATIO 0.3 //30% -- Reduced Integrity Damage
+#define AC_HEAVY_RATIO 0.6 //60%
 
 #define ARMOR_SHIELD TRUE //Used for armor types that are not meant to last permanently and act as an overshield across the entire body, I.E. Fateweaver/Dragonhide.
 

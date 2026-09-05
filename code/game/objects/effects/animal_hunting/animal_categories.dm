@@ -11,6 +11,7 @@
 	/// Amount of bonus animals group hunts can spawn
 	var/bonus_animal_amount = 1
 
+//CC Caustic Edit - Desert Areas added to hunting categories
 /datum/hunting_category/low_tier
 	name = "Small Game"
 	skill_weights = list(100, 80, 50, 20, 10, 5, 5) // Common for beginners, rare for experts
@@ -35,7 +36,10 @@
 		/area/rogue/outdoors/woods/south = 30,
 		/area/rogue/outdoors/woods/southwest = 30,
 		/area/rogue/outdoors/woods/northwest = 30,
-		/area/rogue/outdoors/rtfield = 50
+		/area/rogue/outdoors/rtfield = 50,
+		/area/rogue/outdoors/desert = 50,
+		/area/rogue/outdoors/desert/dunepassage = 30,
+		/area/rogue/outdoors/desert/river = 50
 	)
 
 /datum/hunting_category/mid_tier
@@ -58,7 +62,10 @@
 		/area/rogue/outdoors/woods/southeast = 50,
 		/area/rogue/outdoors/woods/south = 50,
 		/area/rogue/outdoors/woods/southwest = 50,
-		/area/rogue/outdoors/woods/northwest = 50
+		/area/rogue/outdoors/woods/northwest = 50,
+		/area/rogue/outdoors/desert = 40,
+		/area/rogue/outdoors/desert/dunepassage = 40,
+		/area/rogue/outdoors/desert/river = 45
 	)
 
 /datum/hunting_category/high_tier
@@ -87,7 +94,11 @@
 		/area/rogue/outdoors/woods/south = 20,
 		/area/rogue/outdoors/woods/southwest = 20,
 		/area/rogue/outdoors/woods/northwest = 20,
-		/area/rogue/outdoors/mountains/decap = 50
+		/area/rogue/outdoors/mountains/decap = 50,
+		/area/rogue/outdoors/desert = 10,
+		/area/rogue/outdoors/desert/dunepassage = 30,
+		/area/rogue/outdoors/desert/river = 5,
+		/area/rogue/outdoors/desertdeep = 50
 	)
 
 /datum/hunting_category/cursed
@@ -112,7 +123,8 @@
 	preferred_areas = list(
 		/area/rogue/outdoors/beach/forest = 1000,
 		/area/rogue/outdoors/beach/forest/north = 1000,
-		/area/rogue/outdoors/beach/forest/south = 1000
+		/area/rogue/outdoors/beach/forest/south = 1000,
+		/area/rogue/outdoors/desertdeep = 50
 	)
 
 /datum/hunting_category/spiders

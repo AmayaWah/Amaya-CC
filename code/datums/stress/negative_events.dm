@@ -381,7 +381,7 @@
 
 /datum/stressevent/necrarevive
 	stressadd = 15
-	desc = span_boldred("SO CLOSE TO BEING GRASPED, SO COLD!")
+	desc = span_boldred("Despite Necra bringing me back, it was still quite a harrowing experience to recall bits of...")
 	timer = 15 MINUTES
 
 /datum/stressevent/blessed_weapon
@@ -479,6 +479,11 @@
 /datum/stressevent/something_stirs/telescope
 	desc = span_boldred("That THING'S red eyes are still burning in my mind...")
 
+/datum/stressevent/orb_madness
+	stressadd = 4
+	timer = 15 MINUTES
+	desc = span_boldred("I gazed into the orb AND IT LOOKED BACK IT LOOKED BACK IT LOOKED BACK")
+
 /datum/stressevent/see_zuranus
 	timer = 5 MINUTES
 	stressadd = 4
@@ -498,6 +503,36 @@
 	timer = 2 MINUTES
 	stressadd = 3
 	desc = span_red("I long for the shelter of wall and roofs. The sun and moon are too bright for me to bear!")
+
+/datum/stressevent/sun_sensitivity_dark
+	timer = 2 MINUTES
+	stressadd = 3
+	desc = span_red("<b><i>The sunlight burns my eyes! It's too bright outside!</b></i>")
+
+/datum/stressevent/sun_sensitivity
+	timer = 2 MINUTES
+	stressadd = 10
+	desc = span_red("<b><i>The sunlight burns my eyes and skin! It's too bright outside!</b></i>")
+
+/datum/stressevent/lesser_sun_sensitivity
+	timer = 2 MINUTES
+	stressadd = 1
+	desc = span_red("I'm shielded from the the sunlight, but still! It's too bright outside!") // always a hater, aren't ya?! shame on u, astrata shames u
+
+/datum/stressevent/moon_sensitivity
+	timer = 2 MINUTES
+	stressadd = 10
+	desc = span_red("<b><i>The moonlight is driving me crazy! It's too dangerous outside!</b></i>")
+
+/datum/stressevent/lesser_moon_sensitivity
+	timer = 2 MINUTES
+	stressadd = 1
+	desc = span_red("I'm shielded from the the moonlight, but something still stirs...") // always a hater, aren't ya?! shame on u, astrata shames u
+
+/datum/stressevent/inq_trauma
+	timer = 3 MINUTES
+	stressadd = 4
+	desc = span_red("THE INQUISITION?! BY MY PATRON, NOT THEM!!")
 
 /datum/stressevent/water_splashed_noble
 	timer = 30 SECONDS

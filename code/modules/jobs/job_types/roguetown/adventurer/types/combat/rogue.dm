@@ -2,7 +2,7 @@
 	name = "Treasure Hunter"
 	tutorial = "You are a treasure hunter trained in hunting for valuables. Discern what is treasure or not, your fortune could be hidden anywhere."
 	allowed_sexes = list(MALE, FEMALE)
-	
+
 	outfit = /datum/outfit/job/roguetown/adventurer/rogue
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_SEEPRICES, TRAIT_GRAVEROBBER)
@@ -49,9 +49,8 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	backpack_contents = list(
-		/obj/item/lockpick = 1, 
-		/obj/item/rogueweapon/huntingknife = 1, 
-		/obj/item/recipe_book/survival = 1,
+		/obj/item/lockpick = 1,
+		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
@@ -97,9 +96,6 @@
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
 	)
-	///CC edit
-	maximum_possible_slots = 2
-	///CC edit end
 
 /datum/outfit/job/roguetown/adventurer/thief/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -121,7 +117,6 @@
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
 		/obj/item/lockpickring/mundane = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 
@@ -169,17 +164,16 @@
 	cloak = /obj/item/clothing/cloak/half/red
 	backpack_contents = list(
 		/obj/item/lockpick = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T2)
 	if(H.mind)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/vicious_mockery)
-		var/weapons = list("Harp","Lute","Accordion","Guitar","Hurdy-Gurdy","Viola","Vocal Talisman", "Psyaltery", "Flute")
-		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
+		var/instruments = list("Harp","Lute","Accordion","Guitar","Hurdy-Gurdy","Viola","Vocal Talisman", "Psyaltery", "Flute", "Drum", "Shamisen")
+		var/instrument_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", instruments)
 		H.set_blindness(0)
-		switch(weapon_choice)
+		switch(instrument_choice)
 			if("Harp")
 				backr = /obj/item/rogue/instrument/harp
 			if("Lute")
@@ -198,13 +192,20 @@
 				backr = /obj/item/rogue/instrument/psyaltery
 			if("Flute")
 				backr = /obj/item/rogue/instrument/flute
+			if("Drum")
+				backr = /obj/item/rogue/instrument/drum
+			if("Shamisen")
+				backr = /obj/item/rogue/instrument/shamisen
 
 /datum/advclass/rogue/swashbuckler
 	name = "Swashbuckler"
 	tutorial = "You are a daring rogue of the seas! Swashbucklers wield agile swordplay and acrobatic prowess - fighting dirty to outmaneuver foes with flair."
 	outfit = /datum/outfit/job/roguetown/adventurer/swashbuckler
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_NUTCRACKER, TRAIT_DECEIVING_MEEKNESS, TRAIT_LEAPER)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_NUTCRACKER, TRAIT_LEAPER)
+	subclass_virtues = list(
+		/datum/virtue/combat/guarded
+		)
 	subclass_stats = list(
 		STATKEY_SPD = 2,
 		STATKEY_STR = 1,
@@ -223,6 +224,7 @@
 		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/music = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/adventurer/swashbuckler/pre_equip(mob/living/carbon/human/H)
@@ -244,7 +246,6 @@
 		/obj/item/bomb = 1,
 		/obj/item/lockpick = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
-		/obj/item/recipe_book/survival = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 
@@ -254,6 +255,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/antiquarian
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	traits_applied = list(TRAIT_SEEPRICES, TRAIT_GRAVEROBBER, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT)
+	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	subclass_stats = list(
 		STATKEY_STR = -1,
 		STATKEY_INT = 2,
@@ -285,7 +287,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	backl = /obj/item/storage/backpack/rogue/backpack
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/flashlight/flare/torch/lantern
+	beltr = /obj/item/flashlight/flare/torch/lantern/censer
 	cloak = /obj/item/clothing/cloak/thief_cloak
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/light
 	shoes = /obj/item/clothing/shoes/roguetown/boots
@@ -293,16 +295,19 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	neck = /obj/item/clothing/neck/roguetown/leather
 	backpack_contents = list(
-		/obj/item/lockpick = 1, 
-		/obj/item/recipe_book/survival = 1,
+		/obj/item/lockpick = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/skillbook/unfinished = 1
+		/obj/item/skillbook/unfinished = 1,
+		/obj/item/herbmill = 1,
 		)
-		
+
 	if(H.mind)
 		var/weapons = list("Parrying Dagger","Whip", "Short Spear")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/matthios/barter_secular)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/fortifying_vapors)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/flashpowder)
 		switch(weapon_choice)
 			if("Parrying Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE, TRUE)
@@ -330,7 +335,7 @@
 					if("Vitality")
 						switch(H.patron?.type)
 							if(/datum/patron/inhumen/baotha)
-								var/baotharing = list("Ring of Vitality","Rosa Ring") 
+								var/baotharing = list("Ring of Vitality","Rosa Ring")
 								var/baotharing_choice = input(H, "A discrete ring, or one of your faith?", "A RARE GIFT") as anything in baotharing
 								H.set_blindness(0)
 								switch(baotharing_choice)
@@ -353,8 +358,3 @@
 				if(!LAZYLEN(H.mind.mage_aspect_config)) //ripped from arcyne potential virtue, not sure what it does
 					H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 4))
 				H.mind.check_learnspell()
-	
-		H.AddSpell(new /obj/effect/proc_holder/spell/invoked/secularbarter)
-		H.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortifyingvapors)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/flashpowder)
-		

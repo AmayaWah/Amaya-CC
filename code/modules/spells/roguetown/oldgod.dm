@@ -169,7 +169,16 @@
 
 		if(H.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD)) // YOU ARE NO LONGER MORTAL. NO LONGER OF HIM. PSYDON WEEPS.
 			// We do nothing to avoid meta checking for undead
-			target.visible_message(span_info("A strange stirring feeling pours from [target]!"), span_info("Sentimental thoughts drive away my pain..."))		
+			target.visible_message(span_info("A strange stirring feeling pours from [target]!"), span_info("Sentimental thoughts drive away my pain..."))
+			return TRUE
+		if(HAS_TRAIT(target, TRAIT_UNFORGIVABLE)) //ANCIENT ENEMY, I DO NOT FEAR YOU.
+			target.visible_message(span_info("[target] stirs for a moment, the miracle is reformed into unmaking flame!"), span_notice("A dull warmth passes through your hollow husk of a body, only to be corrupted and rebuked back at its caster!"))
+			playsound(target, 'sound/magic/magic_nulled.ogg', 100, FALSE, -1)
+			owner.playsound_local(owner, 'sound/magic/magic_nulled.ogg', 100, FALSE, -1)
+			H.adjust_fire_stacks(8, /datum/status_effect/fire_handler/fire_stacks/vheslyn) //Unique violet firestacks, ANCIENT ENEMY
+			H.ignite_mob()
+			H.adjustBruteLoss(25)
+			owner.visible_message(span_warning("[owner] shuddered. Something's very wrong."), span_userdanger("Cold shoots through my spine, yet my body catches aflame. a feeling of ominious dread washes over me."))
 			return TRUE
 
 		// Bonuses! Flavour! SOVL!
@@ -191,29 +200,29 @@
 					sleep(10)
 					owner.gib()
 					return FALSE
-				
+
 				switch(current_item.type) // Target-based worn Psicross Piety bonus. For fun.
 					if(/obj/item/clothing/neck/roguetown/psicross/wood)
-						psicross_bonus = 0.1				
+						psicross_bonus = 0.1
 					if(/obj/item/clothing/neck/roguetown/psicross/aalloy)
-						psicross_bonus = 0.2	
+						psicross_bonus = 0.2
 					if(/obj/item/clothing/neck/roguetown/psicross)
 						psicross_bonus = 0.3
 					if(/obj/item/clothing/neck/roguetown/psicross/silver)
-						psicross_bonus = 0.4	
+						psicross_bonus = 0.4
 					if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 						psicross_bonus = 0.5
 					if(/obj/item/clothing/neck/roguetown/psicross/weeping)
 						psicross_bonus = 0.7
 					if(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy)
-						zcross_trigger = TRUE	
+						zcross_trigger = TRUE
 
 		if(damtotal >= 300) // ARE THEY ENDURING MUCH, IN ONE WAY OR ANOTHER?
 			situational_bonus += 0.3
 
-		if(wAmount.len > 5)	
-			situational_bonus += 0.3		
-	
+		if(wAmount.len > 5)
+			situational_bonus += 0.3
+
 		if (situational_bonus > 0)
 			conditional_buff = TRUE
 
@@ -223,11 +232,11 @@
 		if (conditional_buff & !zcross_trigger)
 			to_chat(owner, "In <b>ENDURING</b> so much, become <b>EMBOLDENED</b>!")
 			psyhealing += situational_bonus
-	
+
 		if (zcross_trigger)
 			owner.visible_message(span_warning("[owner] shuddered. Something's very wrong."), span_userdanger("Cold shoots through my spine. Something laughs at me for trying."))
 			owner.playsound_local(owner, 'sound/misc/zizo.ogg', 25, FALSE)
-			H.adjustBruteLoss(25)		
+			H.adjustBruteLoss(25)
 			return FALSE
 
 		target.apply_status_effect(/datum/status_effect/buff/psyhealing, psyhealing)
@@ -396,7 +405,7 @@
 			H.devotion.update_devotion(-25)
 			to_chat(H, span_info("My worries gives way to a sense of furthered clarity before returning again, eased."))
 		to_chat(H, span_warning("My thoughts and sense of quiet escape me."))
-		playsound(H, 'sound/misc/machineyes.ogg', 25)		
+		playsound(H, 'sound/misc/machineyes.ogg', 25)
 		return
 
 	to_chat(H, span_info("I take a moment to collect myself..."))
@@ -528,7 +537,7 @@
 		to_chat(H, span_warning("My thoughts and sense of quiet escape me."))
 		playsound(H, 'sound/misc/machineyes.ogg', 25)
 		return
-	
+
 	to_chat(H, span_info("I take a moment to collect myself..."))
 
 	for(var/i in 1 to 10)
@@ -648,7 +657,21 @@
 		to_chat(user, span_warning("[H] is irreversibly gone... There's nothing we can do to bring them back anymore!"))
 		user.emote("cry")
 		revert_cast()
-		return FALSE
+
+	if(HAS_TRAIT(H, TRAIT_UNFORGIVABLE)) //ANCIENT ENEMY, I DO NOT FEAR YOU.
+		H.visible_message(span_info("[H] stirs for a moment, the miracle is reformed into unmaking flame!"), span_notice("A dull warmth passes through your hollow husk of a body, only to be corrupted and rebuked back at its caster!"))
+		playsound(H, 'sound/magic/magic_nulled.ogg', 100, FALSE, -1)
+		user.playsound_local(user, 'sound/magic/magic_nulled.ogg', 100, FALSE, -1)
+		user.adjust_fire_stacks(15, /datum/status_effect/fire_handler/fire_stacks/vheslyn) //Unique violet firestacks, ANCIENT ENEMY
+		user.Knockdown(10)
+		user.Jitter(30)
+		user.ignite_mob()
+		if(!HAS_TRAIT(user, TRAIT_NOPAIN))
+			user.emote("agony")
+		if(!HAS_TRAIT(user, TRAIT_NOMOOD))
+			user.freak_out()
+		to_chat(user, span_userdanger("I recoil as I'm violently SMITED by profane flame as I attempt to purify their lux by the merging of-.. wait, where's THEIR LUX?!"))
+		return
 
 	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_DEADITE))
 		to_chat(user, span_warning("[H]'s Lux is extinguished... What can I do?!"))
@@ -666,6 +689,11 @@
 	var/list/BPs_to_check = list()
 
 	H.visible_message(span_blue("[user] connects their Lux with [H]'s own."))
+	if(HAS_TRAIT(H, TRAIT_NOHEAL))
+		H.visible_message(span_artery("--But their Lux is forcefully repelled for some reason!"))
+		H.playsound_local(H, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+		return
+
 	if(user.cmode)
 		user.say(pick("RESPITE FOR THY WOUNDS!", "BLEED STANDING!", "I BLEED SO YOU MAY ENDURE!", "PERSIST AGAINST THE PAIN!","LET YOUR WOUNDS WEEP NO MORE!","THIS IS OUR TRIAL!"))
 		if(HAS_TRAIT(user, TRAIT_IRONMAN))
@@ -796,7 +824,7 @@
 
 //
 
-/obj/effect/proc_holder/spell/invoked/psydonabsolve	
+/obj/effect/proc_holder/spell/invoked/psydonabsolve
 	name = "ABSOLVE"
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
@@ -877,6 +905,11 @@
 		return FALSE
 
 	H.visible_message(span_red("[user] <i>dangerously</i> connects their Lux with [H]'s own."))
+
+	if(HAS_TRAIT(H, TRAIT_NOHEAL))
+		H.visible_message(span_artery("--But their Lux is forcefully repelled for some reason!"))
+		H.playsound_local(H, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+		return FALSE
 
 	// REVIVE PATH
 	if(H.stat >= DEAD)

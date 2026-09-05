@@ -761,7 +761,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return string
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
-	var/macro = lowertext(copytext(string, next_backslash + 1, next_space))
+	var/macro = LOWER_TEXT(copytext(string, next_backslash + 1, next_space))
 	var/rest = next_backslash > leng ? "" : copytext(string, next_space + 1)
 
 	//See https://secure.byond.com/docs/ref/info.html#/DM/text/macros
@@ -969,3 +969,15 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return "minus [trim(result)]"
 
 	return trim(result)
+
+/// Converts a semver string into a list of numbers
+/proc/semver_to_list(semver_string)
+	var/static/regex/semver_regex = regex(@"(\d+)\.(\d+)\.(\d+)", "")
+	if(!semver_regex.Find(semver_string))
+		return null
+
+	return list(
+		text2num(semver_regex.group[1]),
+		text2num(semver_regex.group[2]),
+		text2num(semver_regex.group[3]),
+	)

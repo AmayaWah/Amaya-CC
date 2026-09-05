@@ -15,6 +15,7 @@
 #define TRAIT_VAMPBITE "Vampire Bite"
 #define TRAIT_STRONGBITE "Strong Bite"
 #define TRAIT_STRONGKICK "Strong Kick"
+#define TRAIT_ARMOR_NOSPDCAP "Armour Unburdened" //Armor slowdowns do not apply.
 #define TRAIT_NOBLE "Noble Blooded"
 #define TRAIT_MANORHOLDERBIG "Great Estate Holder"
 #define TRAIT_MANORHOLDERMEDIUM "Minor Estate Holder"
@@ -46,6 +47,7 @@
 #define TRAIT_DNR "Bane of Existence"
 #define TRAIT_MANIAC_AWOKEN "Awoken"
 #define TRAIT_INFINITE_STAMINA "Indefatigable" //for ai
+#define TRAIT_HALLOWED "Hallowed" //No need of psicross req for miracles.
 #define TRAIT_NUDIST "Nudist" //you can't wear most clothes
 #define TRAIT_CYCLOPS_LEFT "Cyclops (Left)" //poked left eye
 #define TRAIT_CYCLOPS_RIGHT "Cyclops (Right)" //poked right eye
@@ -121,6 +123,9 @@
 #define TRAIT_ROOT_WALKER "Root Walker"
 #define TRAIT_WYRD_LABOURER "Wyrd Labourer" // Hag boon
 #define TRAIT_CURSE_SCAR "Curse Scar"
+#define TRAIT_NOHEAL "Laden Soul" // Only affects magic healing, such as miracle or supernatural heals.
+#define TRAIT_NOREGEN "Laden Body" // Only affects natural healing, such as resting, campfires, potions, etc.
+#define TRAIT_HALFHEAL "Laden Lux" // -50% Magic Heal.
 
 //Hearthstone port (Tracking)
 #define TRAIT_PERFECT_TRACKER "Huntmaster" //Will always find any tracks and analyzes them perfectly.
@@ -144,6 +149,7 @@
 #define TRAIT_XYLIX "Blessing of Xylix" // secret thieves cant language
 #define TRAIT_XYLIX_DEVOTEE "Xylixian Fateweaver" // fate-weaving and luck-based bonuses
 #define TRAIT_FORGEBLESSED "Blessing of Malum" //Reduces the fatigue cost of smithing a bit.
+#define TRAIT_MALUMCHOSEN "Chosen of Malum" //Massively increase chance to craft items.
 #define TRAIT_APRICITY	"Apricity" //Decreased stamina regen time during "day" and less so during night
 #define TRAIT_SHARPER_BLADES "Sharper Blades" //Weapons lose less blade integrity
 #define TRAIT_BATTLEMASTER "Battlemaster" //You can use weapon specials no matter what
@@ -160,6 +166,7 @@
 #define TRAIT_PSYDONITE "Psydonic Devotion" // Passively heals wounds at a slow rate, but doesn't restore lost blood. Negates the effects of all non-Psydonian miracles, save for Anastasis and Cure Rot.
 #define TRAIT_BLACKBAGGER "Skilled Apprehender" // Allows the effective usage of garrotes and blackbags.
 #define TRAIT_LYCANRESILENCE "Werewolf Resilence"
+#define TRAIT_UNFORGIVABLE "Unforgivable" //Handles Vheslynite gibbing, miracle backfires, confession/conversion killing, etc.
 
 // PATRON GOD CURSES
 
@@ -176,7 +183,7 @@
 #define TRAIT_CURSE_EORA "Curse of Eora" //world is ugly
 #define TRAIT_CURSE_RESIST "Curse Resistance" //Some folk with a tendency to get cursed are resistant
 
-// ASCENDANT CULTIST TRAITS (all of them recognize each other)
+// ASCENDANT CULTIST TRAITS (cursed-gear related) -> Matthiosians recognise eachother.
 #define TRAIT_FREEMAN "Blessing of Matthios" //recognized by bandits as an ally
 #define TRAIT_CABAL "Of the Cabal" //Zizo cultists recognize each other too
 #define TRAIT_HORDE "Anointed" //Graggarites also recognize each other
@@ -199,6 +206,7 @@
 // Generic
 #define TRAIT_BASHDOORS "Door Basher"
 #define TRAIT_NOMOOD "Moodless"
+#define TRAIT_DETACHED "Detached"
 #define TRAIT_BAD_MOOD "Bad Mood"
 #define TRAIT_NIGHT_OWL "Night Owl"
 #define TRAIT_BEAUTIFUL "Beautiful"
@@ -220,6 +228,7 @@
 #define TRAIT_NUDE_SLEEPER "Nude Sleeper"
 #define TRAIT_SILVER_BLESSED "Silverblessed"
 #define TRAIT_UNLYCKERABLE "Lycker Immunity"
+#define TRAIT_NOWW "Werevolf Immunity"
 #define TRAIT_OUTLAW "Outlaw"
 #define TRAIT_ALDERMAN "Alderman of the Assembly"
 #define TRAIT_ALDERMAN_CENSURED "Assembly Censure"
@@ -284,10 +293,15 @@
 #define TRAIT_TEMPO	"Tempo Capable"
 #define TRAIT_SILVER_WEAK "Silver Weakness"
 #define TRAIT_PALLID "Pallid"
+#define TRAIT_BLACKBLOOD "Blackblooded"
 #define TRAIT_ASSASSIN	"Assassin"
 #define TRAIT_EQUESTRIAN "Equestrian"
 #define TRAIT_REGROW_LIMBS "Regrow Limbs"
 #define TRAIT_LEVY "Azurean Militia"
+#define TRAIT_MUSES_GRACE	"Muses Grace"
+#define TRAIT_SUNLIGHT_SENSITIVE "Sunlight Sensitivity"
+#define TRAIT_MOON_AVERSE "Night Averse"
+#define TRAIT_SUN_AVERSE "Day Averse"
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
 #define TRAIT_BLACKOAK "Heritage Vision"
@@ -301,6 +315,7 @@
 #define TRAIT_VAMPIRE_SPAWN_PROTECTION "Vampire Spawn Protection"
 #define TRAIT_WHITE_STAG "Stag Protection"
 #define TRAIT_EDIT_DESCRIPTORS "Edit Descriptors"
+#define TRAIT_INK_AFFINITY "Paint Affinity"
 
 //Caustic edit
 #define TRAIT_NECRAS_ABATEMENT "Necra's Abatement" //keeps deadites from doing much of anything in town
@@ -376,8 +391,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NUTCRACKER = "I love kicking idiots on the nuts!",
 	TRAIT_SEEPRICES = "I can tell the prices of things down to the zenny.",
 	TRAIT_SEEPRICES_SHITTY = "I can tell the prices of things... <i>Kind of</i>.",
-	TRAIT_STRONGBITE = span_info("Stronger bites, critical bite attacks."),
-	TRAIT_VAMPBITE = span_info("Victims of your bite will feel immense pleasure."),
+	TRAIT_STRONGBITE = span_info("Your bite is unnaturally powerful, dealing twice the damage of an ordinary bite."),
+	TRAIT_VAMPBITE = span_info("Your bite floods the victim with an overwhelming, paralyzing pleasure, leaving them helpless to resist if they are sufficiently weak of will."),
 	TRAIT_STRONGKICK = span_info("My kicks knock people down and back a step, consistently. There's no need for obstacles."),
 	TRAIT_IGNORESLOWDOWN = span_info("Nothing stops this carriage!"),
 	TRAIT_IGNOREDAMAGESLOWDOWN = span_info("Hits slow me down no longer."),
@@ -401,6 +416,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SABRIST = span_info("I've learned all there is to know about the Southern curve. When using a szöréndnížine sabre, I fight like a Master. My swings are innately more accurate when targetting hands and arms."),
 	TRAIT_MEDIUMARMOR = span_info("I can move freely in medium armor."),
 	TRAIT_HEAVYARMOR = span_info("I can move freely in heavy armor."),
+	TRAIT_ARMOR_NOSPDCAP = span_info("I am the armour - and the armour is free. I move lyke water, and it moves with me."),
 	TRAIT_DODGEEXPERT = span_info("I am much better at dodging incoming strikes, when dressed in either light armor or nothing at all. Heavier armor, such as maille or plate, is too burdensome for me to quickly maneuver in."),
 	TRAIT_DECEIVING_MEEKNESS = span_info("People look at me and think I am a weakling. They are mistaken. I've learned how to hide my vices and true beliefs from others."),
 	TRAIT_CRITICAL_RESISTANCE = span_info("My constitution is iron-clad. My lifeblood flows slowly, I can resist the first few critical wounds that would fell others, but repeated punishment will overwhelm my defenses."),
@@ -455,6 +471,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CAUTIOUS_FISHER = span_info("I know my way around the dangers of fishing, and know how to avoid unwanted attention from the depths."),
 	TRAIT_DEATHSIGHT = span_info("I can feel when someone nearby draws the Undermaiden's attention."),
 	TRAIT_FORGEBLESSED = span_info("Countless long nights spent forging metal have honed my endurance, allowing me to work an anvil far longer than most without tiring."),
+	TRAIT_MALUMCHOSEN = span_info("He guides my hands in my crafts, allowing for feats I'd normally not be able to achieve."),
 	TRAIT_XYLIX = span_info("I know how to speak in code that only fellow tricksters can understand."),
 	TRAIT_XYLIX_DEVOTEE = span_info("Xylix smiles upon me. When there's a juncture in fate, I will be pulled toward the better outcome."),
 	TRAIT_APRICITY = span_info("Astrata's light blesses and rejuvenates me, allowing me to regain my stamina quicker."),
@@ -470,6 +487,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DEPRAVED = span_info("The languid scent of Her debauchery is known to me."),
 	TRAIT_SILVER_BLESSED = span_info("I have been baptized in fire. Blessed silverdust flows through my blood, protecting me from both vampyrism and lycanthropy."),
 	TRAIT_UNLYCKERABLE = span_info("My kind cannot bear the Sun curse for it already has another."),
+	TRAIT_NOWW = span_info("Dendor's madness shall find no hold in me."),
 	TRAIT_GOODTRAINER = span_info("I am a good teacher, and when it comes to weaponry I can train others to be just as skilled as I am."),
 	TRAIT_BADTRAINER = span_info("I've spent yils studying the art of a single weapon, but unfortunately I've no patience to train anyone else. Everyone learning from me will only learn up to two skill levels below mine."),
 	TRAIT_SEA_DRINKER = span_info("As a denizen of the deep, I can drink salty ocean water safely."),
@@ -507,6 +525,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NOHUNGER = span_info("I do not hunger, or thirst."),
 	TRAIT_DARKVISION = span_info("I can see better in the dark."),
 	TRAIT_NITEVISION = span_info("I can see perfectly in the dark."),
+	TRAIT_UNFORGIVABLE = span_smallred("THE NEEDLE IN MY EYE OPENS MY MYND TO THE TRUTH! HELL IS REAL, REALITY SUFFERS, THE GARDEN BURNS AND I AM HOLDING THE TORCH, ALL WHOM ATTEMPT TO DIVERGE ME FROM THIS PATH TO BE UNMADE SHALL JOIN ME."),
 	TRAIT_NOCSHADES = span_info("The lens I look through allows me to see in the dark clear as dae, at the cost of greater vision."),
 	TRAIT_RESIDENT = span_info("I've been granted a Meister account, and the ownership of a house in Azure Peak."),
 	TRAIT_DEBTOR = span_danger("I have defaulted on a loan. My name is writ red in the ledger until the debt is cleared."),
@@ -520,6 +539,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_ARREARS = span_smallred("I am behind on my poll tax. The Stewardry keeps the tally; the garrison may mark my destitution."),
 	TRAIT_LIGHT_STEP = span_info("My steps are light and swift. I make less noise while sneaking and wearing armor, and can sneak much quicker."),
 	TRAIT_NOMOOD = span_info("I feel no sorrow, no joy, and no stress."),
+	TRAIT_DETACHED = span_info("Nothing could move me. Any emotion I show is a facade."),
 	TRAIT_AZURENATIVE = span_info("I've grown up and lived all my lyfe in these lands. I can only trigger ambushes if I sprint through them."),
 	TRAIT_BOGWALKER = span_info("The bog's blessing graces me. Kneestingers and leeches will not harm me, and I cannot trigger ambushes within the bog unless sprinting."),
 	TRAIT_SLEUTH = span_info("I can spot my tracked Mark's trail without needing to approach it, and can spot them at a distance. I can track more frequently, and the act is not impaired by movement. I can examine tracks right away."),
@@ -537,6 +557,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NECRAS_VOW = span_warning("I've pledged myself to Necra. If I fall, I am Hers."),
 	TRAIT_PESTRAS_BLESSING = span_infection("The sacred black rot of Pestra burns within me. Should intelligent foes try to harm me, they will feel her greatest plague."),
 	TRAIT_HERESIARCH = span_warning("I've been touched by the truth of Psydonia. Lyfe as we understand cannot persist under the Ten or the pretense of Psydon. Something must change."),
+	TRAIT_HALLOWED = span_notice("I'm closer to the gods than most. I can utilize my miracles, regardless of if I bear an amulet or not."),
 	TRAIT_ZURCH = span_warning("I know of sacred sites of worship where followers of the Ascendants convene, and the path to the nearest conclave is etched into my memory."),
 	TRAIT_CAVEDWELLER = span_info("The mountains are my home. I prefer to live beneath the surface away from the sun's gaze and know the caves of this land like the back of my hand."),
 	TRAIT_CURSE_ASTRATA = span_warning("I am forsaken by the Sun. I will find no rest under Her unwavering gaze."),
@@ -571,6 +592,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SELF_RELIANCE = span_greentext("I've spent enough time standing on my own that I've learned to either adapt or die young. All crafting and labor skills can progress to Journeyman levels."),
 	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
 	TRAIT_PALLID = span_warning("I was once a creature of the night. The open sky fills me with unease, but my eyes pierce the darkness and my lungs need no air."),
+	TRAIT_BLACKBLOOD = span_artery("I was once a creature of the night, but cured by the Otavan Inquisition at a heavy cost. My blood, tainted with tinctures, rites and concoctions, endures infection and holds an odd regenerative factor to it. Unfortunately, most healing miracles do not affect me at all."),
 	TRAIT_COMBAT_AWARE = span_notice("My honed senses and intuition allow me to spot notable things in the midst of battle with ease."),
 	TRAIT_TEMPO	= span_greentext("I can keep up with multiple opponents at once."),
 	TRAIT_BLACKOAK = span_warning("The Black Oaks can spot <b>any</b> foreigners and outsiders, no matter how long they've lived in Azuria. I can spot an invader at a glance."),
@@ -614,7 +636,15 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_WHITE_STAG = span_info("The power of the white stag lives on inside of me!"),
 	TRAIT_EDIT_DESCRIPTORS = span_info("I can change my appearance at a magic mirror in a thorough manner."),
 	TRAIT_DUSTRUNNER = span_info("I run dust for the Thieves' Guild. Those in the trade know how to spot one of their own."),
+	TRAIT_INK_AFFINITY = span_info("I can thread sacred abyssorite paint splotches safely, and benefit from them."),
 	TRAIT_REGROW_LIMBS = span_info("I can regrow my limbs in my sleep, but doing so will make me hungry."),
+	TRAIT_MUSES_GRACE = span_info("I feel a sudden and powerful urge to break out into song."),
+	TRAIT_NOHEAL = span_artery("I cannot be healed by supernatural means. Healing magic has no effect."),
+	TRAIT_NOREGEN = span_artery("I cannot be healed by natural means. Rest and potions have no effect."),
+	TRAIT_HALFHEAL = span_artery("I have some spiritual oddity to my Lux. Healing magic effectiveness is halved."),
+	TRAIT_SUNLIGHT_SENSITIVE = span_danger("Put on those shades and wave to yesterday, 'cause the sunlight hurts my eyes!"),
+	TRAIT_SUN_AVERSE = span_danger("The sunlight still burns at something deep within me. I may be cured, but I was not made whole."),
+	TRAIT_MOON_AVERSE = span_danger("The moonlight stirs something deep within me. Whatever I was, some part of it still remembers."),
 	TRAIT_OUTLANDER = span_info("The locals see me as not of their land."),
 	TRAIT_PARRYEXPERT = span_info("I am much better at parrying incoming strikes, having a more high probability of deflecting a blow with my weapon."),
 ))
@@ -878,6 +908,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
 #define POULTICE_TRAIT "poultice"
+#define TRAIT_INFUSION "infusion"
 
 // unique trait sources, still defines
 #define TRAIT_FORTITUDE "Fortitude"

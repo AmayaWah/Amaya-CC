@@ -344,7 +344,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		. = GOAL_COLOR_ACHIEVED
 	else if(goal_value > 125) //Not the true "max maximum" but you went well and beyond 125 which is great in anyone's books.
 		. = GOAL_COLOR_MAXIMUM
-	
+
 //CC Edit End
 
 /datum/mind/proc/get_language_holder()
@@ -625,6 +625,11 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 				if(A.type == datum_type)
 					return A
 
+/datum/mind/proc/has_spellmiracle_block_antag()
+	for(var/antag_type in SPELLMIRACLE_BLOCK_ANTAGS)
+		if(has_antag_datum(antag_type))
+			return TRUE
+	return FALSE
 
 /datum/mind/proc/remove_traitor()
 	remove_antag_datum(/datum/antagonist/traitor)
@@ -706,10 +711,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		var/challenger_heart_location
 
 		if(target_heart)
-			target_heart_location = target_heart.owner ? target_heart.owner.prepare_deathsight_message() : lowertext(get_area_name(target_heart))
+			target_heart_location = target_heart.owner ? target_heart.owner.prepare_deathsight_message() : LOWER_TEXT(get_area_name(target_heart))
 
 		if(challenger_heart)
-			challenger_heart_location = challenger_heart.owner ? challenger_heart.owner.prepare_deathsight_message() : lowertext(get_area_name(challenger_heart))
+			challenger_heart_location = challenger_heart.owner ? challenger_heart.owner.prepare_deathsight_message() : LOWER_TEXT(get_area_name(challenger_heart))
 
 		if(recipient == challenger)
 			if(target)
@@ -962,6 +967,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 				return
 		spell_list += new_spell
 		new_spell.Grant(current)
+		if(bump_trailing_spells())
+			rebuild_action_order()
 		if(length(spell_list) == 1 && current)
 			addtimer(CALLBACK(src, PROC_REF(show_spell_tip)), 3 SECONDS)
 		return
@@ -975,6 +982,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 			return
 	spell_list += S
 	S.action.Grant(current)
+	if(bump_trailing_spells())
+		rebuild_action_order()
 	if(user)
 		S.on_gain(user)
 	if(length(spell_list) == 1 && current)
@@ -1176,6 +1185,31 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	for(var/datum/S in spell_list)
 		RemoveSpell(S)
 
+/// Keep prestidigitation and learnspell at the end of the spell list when new spells are granted.
+/datum/mind/proc/bump_trailing_spells()
+	var/static/list/trailing_types = list(
+		/datum/action/cooldown/spell/touch/prestidigitation,
+		/datum/action/cooldown/spell/learnspell,
+	)
+	var/list/trailing = list()
+	for(var/path in trailing_types)
+		for(var/datum/S in spell_list)
+			if(S.type == path)
+				trailing += S
+	if(!length(trailing))
+		return FALSE
+	var/offset = length(spell_list) - length(trailing)
+	var/already_ordered = TRUE
+	for(var/i in 1 to length(trailing))
+		if(spell_list[offset + i] != trailing[i])
+			already_ordered = FALSE
+			break
+	if(already_ordered)
+		return FALSE
+	spell_list -= trailing
+	spell_list += trailing
+	return TRUE
+
 /datum/mind/proc/rebuild_action_order()
 	if(!current)
 		return
@@ -1203,6 +1237,12 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		result += ordered_spell_actions[next_spell]
 		next_spell++
 	current.actions = result
+	current.update_action_buttons()
+
+/datum/mind/proc/refresh_spell_buttons()
+	if(!current?.client)
+		return
+	current.update_mob_action_buttons(ALL, TRUE)
 	current.update_action_buttons()
 
 /datum/mind/proc/spell_list_entry_for_action(datum/action/A)
@@ -1427,7 +1467,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 							if(metadata["altdetail_color"] && I.altdetail_tag)
 								I.altdetail_color = metadata["altdetail_color"]
 							if(metadata["custom_name"])
-								I.name = metadata["custom_name"]
+								I.name = sanitize(metadata["custom_name"])
 							if(metadata["custom_desc"])
-								I.desc = metadata["custom_desc"]
+								I.desc = html_encode(metadata["custom_desc"])
 							I.update_icon()

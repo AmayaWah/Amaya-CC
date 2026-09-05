@@ -8,8 +8,8 @@
 	spawn_positions = 5
 	forbidden_races = list(RACES_CONSTRUCT)
 	tutorial = "You've never been one for the comforts of society. Whether born and raised in the wild, or having eschewed the comforts of the city after some incident, you've learned to survive on your own within Dendor's realm. You still need to live carefully, though; you're part of an ecosystem you're not above, and for every creature you hunt, another will make you its hunted."
-	outfit = null 
-	outfit_female = null 
+	outfit = null
+	outfit_female = null
 
 	obsfuscated_job = TRUE
 
@@ -18,7 +18,7 @@
 	max_pq = null
 	announce_latejoin = FALSE
 	wanderer_examine = TRUE
-	advjob_examine = FALSE //not sure if leaving them unmarked as wild souls is a good idea? it might be worth adding an examine text message for a wild soul with the "in town" debuff later, but we'll see 
+	advjob_examine = FALSE //not sure if leaving them unmarked as wild souls is a good idea? it might be worth adding an examine text message for a wild soul with the "in town" debuff later, but we'll see
 	always_show_on_latechoices = TRUE
 	same_job_respawn_delay = 2 MINUTES
 	//job_reopens_slots_on_death = TRUE
@@ -29,7 +29,7 @@
 
 	round_contrib_points = 1 //just in case we start using PQ at some point, equal to mercenary
 	advclass_cat_rolls = list(CTAG_WILDSOUL = 20)//I don't understand how this works and it scares me
-	display_order = JDO_WILDSOUL 
+	display_order = JDO_WILDSOUL
 	cmode_music = 'modular_causticcove/sound/music/combat_wildsoul.ogg'
 	virtue_restrictions = list(/datum/virtue/utility/noble, /datum/virtue/utility/hollow, /datum/virtue/utility/notable) // Wildman McCryptidson shouldnt be anything that contradicts such. Also no deathless, cause natural armor on direbear.
 	job_subclasses = list(
@@ -169,7 +169,7 @@
 /datum/outfit/job/roguetown/wildsoul/lampternfly/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	mouth = /obj/item/roguegem/amethyst	
+	mouth = /obj/item/roguegem/amethyst
 	head = /obj/item/clothing/head/roguetown/roguehood
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	pants = /obj/item/clothing/under/roguetown/loincloth/brown
@@ -177,16 +177,10 @@
 	give_feral_eyes(H)
 	if(H.mind)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/nondetection) // Makes sense for them to have the tools to be hidden.
-		H.mind.AddSpell(new /datum/action/cooldown/spell/noc/blindness/wildsoul)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 		H.mind.mage_aspect_config["utilities"] += 2
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
-
-/datum/action/cooldown/spell/noc/blindness/wildsoul
-	primary_resource_type = SPELL_COST_STAMINA
-
-	secondary_resource_cost = 0
 
 /datum/advclass/wildsoul/zad
 	name = "Soul of the Zad"
@@ -195,7 +189,7 @@
 	category_tags = list(CTAG_WILDSOUL)
 	subclass_stats = list(
 		STATKEY_STR = -1, // 9 stats weighted, with a focus on their intelligence and stamina for crafting.
-		STATKEY_INT = 4, 
+		STATKEY_INT = 4,
 		STATKEY_WIL = 2,
 		STATKEY_SPD = 2,
 		STATKEY_LCK = 1

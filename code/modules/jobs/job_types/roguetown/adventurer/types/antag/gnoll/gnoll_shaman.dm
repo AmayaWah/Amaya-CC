@@ -2,9 +2,9 @@
 	name = "Gnoll Shaman"
 	tutorial = "Leader in faith, often the main source of wisdom within a gnoll pack. Few are closer to Graggar himself as you are. You may chose to waylay the hunt, in order to nurture fallen oppponents back to health, so they may grow stronger, providing a true challenge in a future fight."
 	outfit = /datum/outfit/job/roguetown/gnoll/shaman
-	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT) // Surely this won't be broken.
+	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_HALLOWED) // Surely this won't be broken.
 	reset_stats = TRUE
-	subclass_stats = list( //Caustic Edit start. 
+	subclass_stats = list( //Caustic Edit start.
 		STATKEY_STR = 2,
 		STATKEY_PER = 2,
 		STATKEY_WIL = 2,
@@ -25,9 +25,10 @@
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/hunting = SKILL_LEVEL_EXPERT,
@@ -42,11 +43,12 @@
 		var/obj/item/ritechalk/chalk = new /obj/item/ritechalk(H.loc)
 		H.put_in_r_hand(chalk)
 		neck = /obj/item/storage/belt/rogue/pouch/alchemy
+		backr = /obj/item/storage/backpack/rogue/satchel/gnoll
 		wrists = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
 		don_pelt(H)
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
 		C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_2, start_maxed = TRUE)
-		H.mind?.AddSpell(new /datum/action/cooldown/spell/convert_heretic/free)//Caustic Edit start. 
+		H.mind?.AddSpell(new /datum/action/cooldown/spell/convert_heretic/free)//Caustic Edit start.
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/extract_heart)//Caustic Edit end.
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/shaman

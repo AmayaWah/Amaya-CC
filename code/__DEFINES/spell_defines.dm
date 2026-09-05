@@ -19,7 +19,9 @@
 //Gods - Tennite
 #define GLOW_COLOR_UNDIVIDED "#28908C" //Undivided Cyan
 #define GLOW_COLOR_ASTRATA "#F9B362" //Astratan Yellow/Orange
+#define GLOW_COLOR_NOC "#9acdff" //Noc's lightbulb
 #define GLOW_COLOR_RAVOX "#7A1E30" //Ravox Crimson
+#define GLOW_COLOR_MALUM "#884610" //Malum Orange
 
 // Constants for spell glow intensity. These are literally 1 2 3 4 but it is for documenting design purposes
 #define GLOW_INTENSITY_LOW 1 // For spam projectiles or generic buffs
@@ -52,24 +54,24 @@
 #define HEAVY_ARMOR_CD_PENALTY 0.3 // Cooldown multiplier for wearing heavy armor
 #define UNTRAINED_ARMOR_CD_PENALTY 0.8 // Cooldown multiplier for wearing armor you're not trained in
 
-// Standardized spell stamina costs
+// Standardized spell stamina costs //Caustic Edit - Adjusting these costs! Defaults listed in a comment the same line as the entry, if it got changed.
 #define SPELLCOST_CANTRIP            5
-#define SPELLCOST_MINOR_PROJECTILE   10 // Should feels good to spam and not stamcrit you
-#define SPELLCOST_MAJOR_PROJECTILE   20 // 20 seems decent
-#define SPELLCOST_SUPER_PROJECTILE   45 // Only used for GFB for now as an intermediary
-#define SPELLCOST_ULTIMATE           70
-#define SPELLCOST_MINOR_AOE          15
-#define SPELLCOST_MAJOR_AOE          30
-#define SPELLCOST_SINGLE_CC          30
+#define SPELLCOST_MINOR_PROJECTILE   2 // Should feels good to spam and not stamcrit you //Default: 10 - 2 is more in line with a regular melee swing
+#define SPELLCOST_MAJOR_PROJECTILE   10 // 20 seems decent //Default: 20 - 10 is a strong attack, so, this feels fitting?
+#define SPELLCOST_SUPER_PROJECTILE   45 // Only used for GFB for now as an intermediary //Not currently used actually?
+#define SPELLCOST_ULTIMATE           40 //Default: 70 - 10 is a strong attack, so, this feels fitting?
+#define SPELLCOST_MINOR_AOE          10 //Default: 15
+#define SPELLCOST_MAJOR_AOE          20 //Default: 30
+#define SPELLCOST_SINGLE_CC          15 //Default: 30 - A bit higher then a stronger attack, because CC is added
 #define SPELLCOST_UTILITY_BUFF       5 // See below
 #define SPELLCOST_STAT_BUFF          5 // With new Augmentation design we don't really need to gate this hard anymore
-#define SPELLCOST_BRUSH 			 50 // For blood rush spells, which I don't want to become an overly easy trade for stamina
-#define SPELLCOST_SURGE 			 65 // For surge spells, which is pretty damn powerful
-#define SPELLCOST_AUGURY             10 // Augury card is cheap
-#define SPELLCOST_CONJURE            20	
-#define SPELLCOST_TELEPORT           15
-#define SPELLCOST_MINOR_SUMMON       30
-#define SPELLCOST_MAJOR_SUMMON       50
+#define SPELLCOST_BRUSH 			 50 // For blood rush spells, which I don't want to become an overly easy trade for stamina //Not currently used actually?
+#define SPELLCOST_SURGE 			 40 // For surge spells, which is pretty damn powerful //Default: 65 - This IS pretty powerful, so at LEAST should be equal to an ult.
+#define SPELLCOST_AUGURY             10 // Augury card is cheap //Not currently used actually?
+#define SPELLCOST_CONJURE            10 //Default: 20
+#define SPELLCOST_TELEPORT           15 //Default: 15 - Same as the (adjusted) CC spells seems fair?
+#define SPELLCOST_MINOR_SUMMON       10 //Default: 30 - Only used for 'blade of psydon'
+#define SPELLCOST_MAJOR_SUMMON       40 //Default: 50 - Only used for Raise Deadite right now?
 // Buff duration tiers
 #define STAT_BUFF_SELF_DURATION      1 MINUTES
 #define STAT_BUFF_ALLY_DURATION      1 MINUTES
@@ -91,15 +93,16 @@
 #define SPELLCOST_MIRACLE_LEGENDARY  100 //Highest tiers of miracles should have this.
 
 
-#define SPELLCOST_MINOR_SKILL        30
-#define SPELLCOST_MAJOR_SKILL        50
+#define SPELLCOST_MINOR_SKILL        20 //Default 30 - Only used for two spells, an undivided one and a special luminary one, they seem somewhat hefty.
+#define SPELLCOST_MAJOR_SKILL        50 //Not currently used actually?
 
 // Spellblade specific cost
-#define SPELLCOST_SB_POKE 12 // Roughly 3 attacks worth
-#define SPELLCOST_SB_MOBILITY 12 // Dashes / Teleports / Anchor
-#define SPELLCOST_SB_ULT 50 // Their ult
+#define SPELLCOST_SB_POKE 2 // Roughly 3 attacks worth //Default 12 - Same for other pokes above.
+#define SPELLCOST_SB_MOBILITY 12 // Dashes / Teleports / Anchor //Default 12 - Actually seems solid here.
+#define SPELLCOST_SB_ULT 40 // Their ult //Default 50 - Why was this cheaper then the other ults originally? Now in line with the others.
 
-#define SPELLCOST_FORM_BLADE 30
+#define SPELLCOST_FORM_BLADE 10 //Default 30 - In line with the other Conjures above
+//Caustic Edit End
 
 // Standardized charge times — keeps poke/major/heavy spells consistent for balance passes
 #define CHARGETIME_POKE          0.5 SECONDS  // Staple poke spells
@@ -157,6 +160,7 @@
 #define MAX_MINOR_ASPECTS 2
 #define ASPECT_MAJOR "major"
 #define ASPECT_MINOR "minor"
+#define ASPECT_PSEUDO "pseudo"
 
 // Telegraph delay tiers (in ticks)
 #define TELEGRAPH_SKILLSHOT 4   // Fast - requires prediction to dodge
@@ -217,7 +221,7 @@
 #define COMSIG_MOB_KICKED_SUCCESSFUL "mob_kicked_successful" //from /mob/living/proc/try_kick(). Sent to target after a kick lands (past dodge/parry).
 
 // Aspect
-#define ASPECT_RESET_BUDGET 12
+#define ASPECT_RESET_BUDGET 6
 #define ASPECT_RESET_COST_MAJOR 4
 #define ASPECT_RESET_COST_MINOR 2
 #define ASPECT_RESET_COST_UTILITY 1

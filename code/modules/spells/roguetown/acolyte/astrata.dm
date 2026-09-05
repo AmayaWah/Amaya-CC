@@ -172,7 +172,6 @@
 /datum/action/cooldown/spell/projectile/sacred_flame
 	name = "Sacred Flame"
 	desc = "Emit a bolt of holy fire that sunders a target, setting them on fire and slowing them down for 6 seconds. \
-	Damage is increased by 100% versus simple-minded creechurs. \
 	The CC effects cannot be reapplied to the same target within 15 seconds."
 	fluff_desc = "The fourth gift to men, sliver of Astrata's fury against the horrors of Psydonia, bringing evyl to its knees at hands of Her devoted."
 	background_icon = 'icons/mob/actions/astratamiracles.dmi'
@@ -222,17 +221,16 @@
 	hitscan = TRUE
 	movement_type = UNSTOPPABLE
 	guard_deflectable = TRUE
+	expose_caster_on_deflect = TRUE
 	light_color = "#a98107"
 	damage = 50
-	npc_simple_damage_mult = 2
 	damage_type = BURN
-	accuracy = 50 //Astrata show me true or something?
 	nodamage = FALSE
 	speed = 0.3
 	flag = "fire"
 	light_outer_range = 7
 
-/obj/projectile/magic/sacred_flame/on_hit(target)
+/obj/projectile/magic/sacred_flame/on_hit(target, blocked = FALSE)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
@@ -245,15 +243,16 @@
 			var/mob/living/L = target
 			if(out_of_effective_range())
 				return
-			L.electrocute_act(1, src, 1, SHOCK_NOSTUN)
-			if(HAS_TRAIT(L, TRAIT_SILVER_WEAK))
-				L.adjust_fire_stacks(4, /datum/status_effect/fire_handler/fire_stacks/sunder)
-				L.Immobilize(0.5 SECONDS)
-				L.ignite_mob()
-			else
-				L.adjust_fire_stacks(4)
-				L.Immobilize(0.5 SECONDS)
-				L.ignite_mob()
+			if(blocked < 100)
+				L.electrocute_act(1, src, 1, SHOCK_NOSTUN)
+				if(HAS_TRAIT(L, TRAIT_SILVER_WEAK))
+					L.adjust_fire_stacks(4, /datum/status_effect/fire_handler/fire_stacks/sunder)
+					L.Immobilize(0.5 SECONDS)
+					L.ignite_mob()
+				else
+					L.adjust_fire_stacks(4)
+					L.Immobilize(0.5 SECONDS)
+					L.ignite_mob()
 	else if(isatom(target))
 		var/atom/A = target
 		A.fire_act()
@@ -673,7 +672,7 @@
 		var/list/hearers_in_range = get_hearers_in_LOS(healing_range, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		for(var/mob/living/carbon/human/human in hearers_in_range)
 			var/distance = get_dist(src, human)
-			if(distance > healing_range || HAS_TRAIT(human, TRAIT_IRONMAN))
+			if(distance > healing_range || HAS_TRAIT(human, TRAIT_IRONMAN) || HAS_TRAIT(human, TRAIT_NOREGEN))
 				continue
 			if(istype(human.patron, /datum/patron/divine))
 				if(!human.has_status_effect(/datum/status_effect/buff/pyre))

@@ -47,13 +47,54 @@
 		heal_wounds(1)
 
 	/// ENDVRE AS HE DOES.
-	if(!stat && HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
+	if(!stat && (HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS)))
 		handle_wounds()
 		//passively heal wounds, when you're in trouble..
 		if(blood_volume > BLOOD_VOLUME_SURVIVE)
 			for(var/datum/wound/wound as anything in get_wounds())
 				if(wound?.severity <= WOUND_SEVERITY_MODERATE)
-					wound.heal_wound(0.4)
+					if(!istype(wound, /datum/wound/slash/incision))
+						wound.heal_wound(0.4)
+
+	/// Blackblood regeneration. Being in combat and being under aversion halve all passive effects to a min of 25% the normal amount.
+	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
+		if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+			return
+		if(!getBruteLoss() && !get_wounds() && blood_volume >= BLOOD_VOLUME_NORMAL) // so we don't starve 2 death 4 no reisins
+			return
+
+		var/sun_averse = HAS_TRAIT(src, TRAIT_SUN_AVERSE) && has_stress_event(/datum/stressevent/sun_sensitivity)
+		var/moon_averse = HAS_TRAIT(src, TRAIT_MOON_AVERSE) && has_stress_event(/datum/stressevent/moon_sensitivity)
+		// Each active penalty halves regeneration, with a minimum of 15% effectiveness, square roots baybee
+		var/healing_multiplier = max(0.5 ** ((in_combat_until > world.time) + cmode + (sun_averse || moon_averse) + has_stress_event(/datum/stressevent/inq_trauma)), 0.15)
+
+		for(var/datum/wound/wound as anything in get_wounds())
+			if(wound.bleed_rate > 0)
+				var/bleed_heal = max(wound.bleed_rate * 0.2, 0.1) * healing_multiplier
+				wound.set_bleed_rate(max(wound.bleed_rate - bleed_heal, 0.025))
+				if(wound.bleed_rate <= 0 && wound.sew_threshold)
+					wound.sew_progress = wound.sew_threshold
+					wound.sew_wound()
+		// drains both, but only needs one to be filled in particular to let me regen
+		var/can_regen = FALSE
+		if(sun_averse)
+			can_regen = hydration > HYDRATION_LEVEL_DEHYDRATED
+			if(can_regen)
+				hydration = max(0, hydration - (NUTRITION_LEVEL_FULL * 0.00375 * healing_multiplier))
+				nutrition = max(0, nutrition - (NUTRITION_LEVEL_FULL * 0.00125 * healing_multiplier))
+		else if(moon_averse)
+			can_regen = nutrition > NUTRITION_LEVEL_STARVING
+			if(can_regen)
+				nutrition = max(0, nutrition - (NUTRITION_LEVEL_FULL * 0.00375 * healing_multiplier))
+				hydration = max(0, hydration - (NUTRITION_LEVEL_FULL * 0.00125 * healing_multiplier))
+
+		if(can_regen)
+			heal_overall_damage(2 * healing_multiplier, 0, 0)
+			blood_volume = min(blood_volume + (2 * healing_multiplier), BLOOD_VOLUME_MAXIMUM)
+			handle_wounds()
+			for(var/datum/wound/wound as anything in get_wounds())
+				if(!istype(wound, /datum/wound/slash/incision))
+					wound.heal_wound(healing_multiplier)
 
 	if(!stat && HAS_TRAIT(src, TRAIT_LYCANRESILENCE) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
 		if(src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
@@ -61,7 +102,8 @@
 		handle_wounds()
 		if(blood_volume > BLOOD_VOLUME_SURVIVE)
 			for(var/datum/wound/wound as anything in get_wounds())
-				wound.heal_wound(3)		
+				if(!istype(wound, /datum/wound/slash/incision))
+					wound.heal_wound(3)
 
 	if(!stat && HAS_TRAIT(src, TRAIT_DEADITE)) //Deadites are always regenerating unless under the effects of ANY KIND OF firestacks. Finish them off or restrain them.
 		if(src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks) || src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
@@ -78,7 +120,7 @@
 		return
 
 	handle_environment()
-	
+
 	//Random events (vomiting etc)
 	handle_random_events()
 
@@ -144,7 +186,7 @@
 				return
 			if(istype(drownrelay.loc, /turf/open/water))
 				handle_inwater(drownrelay.loc, extinguish = FALSE, force_drown = TRUE)
-			if(istype(loc, /turf/open/water)) // Extinguish ourselves if our body is in water.	
+			if(istype(loc, /turf/open/water)) // Extinguish ourselves if our body is in water.
 				extinguish_mob()
 			return
 	. =..()
@@ -164,26 +206,9 @@
 		handle_inwater(loc)
 
 /mob/living/proc/handle_random_events()
-	//random painstun
-	if(!stat && !HAS_TRAIT(src, TRAIT_NOPAINSTUN))
-		if(world.time > mob_timers["painstun"] + 600)
-			if(getBruteLoss() + getFireLoss() >= (STAWIL * 10))
-				var/probby = 53 - (STAWIL * 2)
-				if(!(mobility_flags & MOBILITY_STAND))
-					probby = probby - 20
-				if(prob(probby))
-					mob_timers["painstun"] = world.time
-					Immobilize(10)
-					emote("painscream")
-					visible_message(span_warning("[src] freezes in pain!"),
-								span_warning("I'm frozen in pain!"))
-					sleep(10)
-					Stun(110)
-					Knockdown(110)
-					drop_all_held_items()
+	return
 
 /mob/living/proc/handle_environment()
-	
 	return
 
 /mob/living/proc/handle_wounds()

@@ -96,8 +96,8 @@ GLOBAL_LIST_EMPTY(leyline_activations)
 
 /obj/structure/leyline/examine(mob/living/user)
 	. = ..()
-	if(istype(user, /mob/living/simple_animal/pet/familiar))
-		var/mob/living/simple_animal/pet/familiar/fam = user
+	if(istype(user, /mob/living/carbon/human/species/familiar))
+		var/mob/living/carbon/human/species/familiar/fam = user
 		if(istype(src, /obj/structure/leyline/powerful))
 			. += span_info("A leyline convergence of singular power! I could efficiently heal this body by resting within.")
 		else
@@ -117,6 +117,8 @@ GLOBAL_LIST_EMPTY(leyline_activations)
 	var/counts = list(0,0,0,0)
 	var/list/candidates = list()
 	for(var/mob/dead/observer/G in GLOB.player_list)
+		if(isscryeye(G))
+			continue
 		candidates += G
 
 	for(var/mob/living/carbon/spirit/bigchungus in GLOB.player_list)

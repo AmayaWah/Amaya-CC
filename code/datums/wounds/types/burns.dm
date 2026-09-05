@@ -12,14 +12,15 @@
 	can_sew = TRUE
 	can_cauterize = FALSE
 	passive_healing = 0.1
+	bypass_bloody_wound_check = TRUE
 	severity_type = SEVERITY_TYPE_BURN // name off the limb's actual burnt fraction, not the whp heal-pool
 	sound_effect = list('sound/combat/hits/burn (1).ogg', 'sound/combat/hits/burn (2).ogg')
 	severity_stages = list( // burn_dam as a percent of the limb's max_damage
 		"reddened" = 5,
 		"blistering" = 20,
-		"scalded" = 40,
-		"charred" = 60,
-		"cindered" = 80,
+		"raw" = 40,
+		"blackened" = 60,
+		"necrotic" = 80,
 	)
 
 #define BURN_UPG_WHPRATE 1.2
@@ -32,14 +33,20 @@
 #define BURN_ARMORED_BLEED_CLAMP (ARTERY_LIMB_BLEEDRATE * 0.33)
 #define BURN_MAX_BLEED (ARTERY_LIMB_BLEEDRATE * 0.75)
 
+/datum/wound/dynamic/burn/on_bodypart_gain(obj/item/bodypart/affected)
+	if(!affected.can_bloody_wound())
+		set_bleed_rate(0)
+	return ..()
+
 /datum/wound/dynamic/burn/upgrade(dam, armor, exposed)
 	whp += (dam * BURN_UPG_WHPRATE)
 	woundpain += (dam * BURN_UPG_PAINRATE)
-	set_bleed_rate(bleed_rate + BURN_UPG_BLEED_FLAT + clamp(dam * BURN_UPG_BLEED_SCALE, 0, BURN_UPG_BLEED_SCALE_CAP))
-	if(bleed_rate > BURN_MAX_BLEED)
-		set_bleed_rate(BURN_MAX_BLEED)
-	if(armor && !exposed)
-		armor_check(armor, BURN_ARMORED_BLEED_CLAMP)
+	if(bodypart_owner?.can_bloody_wound())
+		set_bleed_rate(bleed_rate + BURN_UPG_BLEED_FLAT + clamp(dam * BURN_UPG_BLEED_SCALE, 0, BURN_UPG_BLEED_SCALE_CAP))
+		if(bleed_rate > BURN_MAX_BLEED)
+			set_bleed_rate(BURN_MAX_BLEED)
+		if(armor && !exposed)
+			armor_check(armor, BURN_ARMORED_BLEED_CLAMP)
 	if(whp >= BURN_CHAR_THRESHOLD && !disabling)
 		disabling = TRUE
 		passive_healing = 0
@@ -63,17 +70,17 @@
 	check_name = span_warning("<B>CHARRED</B>")
 	severity = WOUND_SEVERITY_SEVERE
 	crit_message = list(
-		"The flesh is seared to the bone!",
-		"The %BODYPART is charred black!",
+		"The flesh is destroyed down to the bone!",
+		"The %BODYPART is blackened and dead!",
 		"The skin blisters and splits open!",
-		"The flesh crackles and chars!",
+		"The flesh crackles and sloughs away!",
 	)
 	sound_effect = 'sound/combat/crit.ogg'
 	whp = 60
 	sewn_whp = 25
 	woundpain = 80
 	sewn_woundpain = 30
-	bleed_rate = 5
+	bleed_rate = 10 // Let's make it actually do something ok
 	sewn_bleed_rate = 0.5
 	sew_threshold = 120
 	mob_overlay = ""
@@ -100,22 +107,6 @@
 	affected.Paralyze(15)
 	shake_camera(affected, 2, 2)
 	playsound(affected, 'sound/health/burning.ogg', 60, TRUE)
-	var/noblood = FALSE
-	if(iscarbon(affected))
-		var/mob/living/carbon/charred_carbon = affected
-		if(charred_carbon.dna?.species)
-			noblood = (NOBLOOD in charred_carbon.dna.species.species_traits)
-	if(HAS_TRAIT(affected, TRAIT_NOBREATH) || noblood)
-		var/burn_crit_count = 0
-		for(var/datum/wound/charring/char_wound in affected.get_wounds())
-			burn_crit_count++
-		if(burn_crit_count >= 2)
-			affected.visible_message(span_boldwarning("[affected]'s body is consumed by searing burns!"))
-			to_chat(affected, span_boldwarning("The searing heat overwhelms my body!"))
-			affected.emote("deathgasp", TRUE)
-			affected.death()
-		else
-			to_chat(affected, span_userdanger("Searing heat scorches through me - another burn like this will be fatal!"))
 
 /datum/wound/charring/sew_wound()
 	. = ..()
@@ -125,17 +116,17 @@
 /datum/wound/charring/chest
 	name = "torso charring"
 	crit_message = list(
-		"The torso is seared!",
-		"The chest is charred black!",
-		"The ribcage crackles with heat!",
+		"The torso is ruined to the bone!",
+		"The chest blackens and splits!",
+		"The ribcage crackles beneath dead flesh!",
 	)
 	mortal = TRUE
 
 /datum/wound/charring/head
 	name = "head charring"
 	crit_message = list(
-		"The skull is seared!",
-		"The face is charred beyond recognition!",
-		"The head is engulfed in searing heat!",
+		"The skull is laid bare!",
+		"The face is ruined beyond recognition!",
+		"The scalp blackens and peels away!",
 	)
 	mortal = TRUE

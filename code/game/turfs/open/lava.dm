@@ -165,11 +165,8 @@
 		if(do_after(L, 25, target = src))
 			var/mob/living/carbon/C = user
 			to_chat(C, span_userdanger("OH SWEET PSYDON, WHY DID I THINK THIS WAS A GOOD IDEA???"))
-			//Caustic Edit
-			if(C.show_redflash())
-				C.flash_fullscreen("redflash3")
-			//Caustic Edit End
-			C.emote("agony", forced = TRUE)
+			C.flash_fullscreen("redflash3")
+			C.emote("superagony", forced = TRUE)
 			C.adjust_fire_stacks(500) //you deserve this.
 			C.ignite_mob()
 			C.adjustFireLoss(1000) //you, literally, deserve this.
@@ -211,7 +208,7 @@
 				continue
 			O.obj_integrity -= O.max_integrity * 0.1
 			if(O.obj_integrity <= 0)
-				qdel(O)	
+				qdel(O)
 			. = 1
 
 		else if (isliving(thing))
@@ -236,7 +233,7 @@
 				C.obj_integrity -= C.max_integrity * 0.1
 				if(C.obj_integrity <= 0)
 					to_chat(L, span_danger("Your [C.name] is destroyed by the acid!"))
-					qdel(C)	
+					qdel(C)
 
 			L.adjustFireLoss(100)
 			to_chat(L, span_userdanger("THE ACID BURNS!"))
@@ -255,9 +252,6 @@
 		if(do_after(L, 25, target = src))
 			var/mob/living/carbon/C = user
 			to_chat(C, span_userdanger("OH SWEET PSYDON, WHY DID I THINK THIS WAS A GOOD IDEA???"))
-			//Caustic Edit
-			if(C.show_redflash())
-				C.flash_fullscreen("redflash3")
-			//Caustic Edit End
-			C.emote("agony", forced = TRUE)
+			C.flash_fullscreen("redflash3")
+			C.emote("superagony", forced = TRUE)
 			C.gib() //YOU. LITERALLY. DESERVE THIS.

@@ -104,7 +104,7 @@ LICH SKELETONS
 			beltl = /obj/item/quiver/sling/aalloy //Decrepit vs ballistaires, weak but good for harrassment
 		if("An Ancient Dagger")
 			beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
-	var/tabards = list("Black Jupon", "Black Tabard", "Black Cloak + Greathood", "Black Toga")
+	var/tabards = list("Black Jupon", "Black Tabard", "Black Cloak + Greathood", "Black Toga", "Zizite Tabard") //Caustic Edit
 	var/tabard_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in tabards
 	switch(tabard_choice)
 		if("Black Jupon")
@@ -116,6 +116,10 @@ LICH SKELETONS
 			mask = /obj/item/clothing/cloak/tabard/stabard/hoodlich
 		if("Black Toga")
 			cloak = /obj/item/clothing/cloak/tabard/toga/lich
+		//Caustic Edit
+		if("Zizite Tabard")
+			cloak = /obj/item/clothing/cloak/tabard/zizo
+		//Caustic Edit end
 
 	H.energy = H.max_energy
 
@@ -170,23 +174,23 @@ LICH SKELETONS
 		/obj/item/storage/belt/rogue/pouch/coins/aalloy = 1 //Hilarious
 	)
 	H.adjust_blindness(-3)
-	var/weapons = list("Bow & 20 Arrows", "Bow & 20 Broadheads", "Longbow & 20 Arrows", "Longbow & 20 Broadheads", "Crossbow & 16 Bolts", "Sling")
+	var/weapons = list("Bow & 24 Arrows", "Bow & 24 Broadheads", "Longbow & 24 Arrows", "Longbow & 24 Broadheads", "Crossbow & 16 Bolts", "Sling + Ancient Shield")
 	var/weapon_choice = input(H, "Choose your MISSILE.", "CONDEMN THE LYVING FROM AFAR.") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
-		if("Bow & 20 Arrows")
+		if("Bow & 24 Arrows")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			beltl = /obj/item/quiver/paalloy
 			H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
-		if("Bow & 20 Broadheads")
+		if("Bow & 24 Broadheads")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			beltl = /obj/item/quiver/broadhead_aalloy
 			H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
-		if("Longbow & 20 Arrows")
+		if("Longbow & 24 Arrows")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 			beltl = /obj/item/quiver/paalloy
 			H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
-		if("Longbow & 20 Broadheads")
+		if("Longbow & 24 Broadheads")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 			beltl = /obj/item/quiver/broadhead_aalloy
 			H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
@@ -198,7 +202,7 @@ LICH SKELETONS
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 			beltl = /obj/item/quiver/sling/paalloy
 			H.adjust_skillrank(/datum/skill/combat/slings, 1, TRUE)
-	var/tabards = list("Black Cloak + Greathood", "Black Jupon", "Black Tabard", "Black Toga")
+	var/tabards = list("Black Cloak + Greathood", "Black Jupon", "Black Tabard", "Black Toga", "Zizite Tabard") //Caustic Edit
 	var/tabard_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in tabards
 	switch(tabard_choice)
 		if("Black Jupon")
@@ -210,6 +214,10 @@ LICH SKELETONS
 			mask = /obj/item/clothing/cloak/tabard/stabard/hoodlich
 		if("Black Toga")
 			cloak = /obj/item/clothing/cloak/tabard/toga/lich
+		//Caustic Edit
+		if("Zizite Tabard")
+			cloak = /obj/item/clothing/cloak/tabard/zizo
+		//Caustic Edit end
 
 	H.energy = H.max_energy
 
@@ -314,7 +322,7 @@ LICH SKELETONS
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/paalloy
 			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/light
 			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/paalloy/heavy
-	var/tabards = list("Black Tabard", "Black Jupon", "Black Cloak + Greathood", "Black Toga")
+	var/tabards = list("Black Tabard", "Black Jupon", "Black Cloak + Greathood", "Black Toga", "Zizite Tabard") //Caustic Edit
 	var/tabard_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in tabards
 	switch(tabard_choice)
 		if("Black Jupon")
@@ -326,11 +334,15 @@ LICH SKELETONS
 			mask = /obj/item/clothing/cloak/tabard/stabard/hoodlich
 		if("Black Toga")
 			cloak = /obj/item/clothing/cloak/tabard/toga/lich
+		//Caustic Edit
+		if("Zizite Tabard")
+			cloak = /obj/item/clothing/cloak/tabard/zizo
+		//Caustic Edit end
 
 	H.energy = H.max_energy
 
 // Fragile Non-Combat crafter/demolishing artificer goon with a seige-use cavet. Worse weapons + very little armor but does base-building. Fortnite.
-// Has a unique extra varient calcic outburst choice that destroys walls and does a huge amount of damage on exploding but takes 8 seconds to prime, on top of their regular varient. 
+// Has a unique extra varient calcic outburst choice that destroys walls and does a huge amount of damage on exploding but takes 8 seconds to prime, on top of their regular varient.
 /datum/advclass/greater_skeleton/lich/sapper
 	name = "Ancient 'Broken Bone' Sapper"
 	tutorial = "Simple. Obedient. Like an ant in a colony. Toil, fortify, smelt, labor and destroy to the tune of your master's whims. After all; what good is an army if it hasn't a sword-nor-shield to wield?"
@@ -354,7 +366,7 @@ LICH SKELETONS
 	ADD_TRAIT(H, TRAIT_TRAINED_SMITH, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
 
-	H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 4))
+	H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 5))
 	//For summoning rocks or whatever, or utility like mending/mindlink
 
 	// Sapper-exclusive self-exploding spell
@@ -407,7 +419,7 @@ LICH SKELETONS
 	beltl = /obj/item/rogueweapon/pick/paalloy
 
 	H.adjust_blindness(-3)
-	var/tabards = list("Black Cloak", "Black Jupon", "Black Tabard", "Black Toga")
+	var/tabards = list("Black Cloak", "Black Jupon", "Black Tabard", "Black Toga", "Zizite Tabard") //Caustic Edit
 	var/tabard_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in tabards
 	H.set_blindness(0)
 	switch(tabard_choice)
@@ -419,6 +431,10 @@ LICH SKELETONS
 			cloak = /obj/item/clothing/cloak/half/lich
 		if("Black Toga")
 			cloak = /obj/item/clothing/cloak/tabard/toga/lich
+		//Caustic Edit
+		if("Zizite Tabard")
+			cloak = /obj/item/clothing/cloak/tabard/zizo
+		//Caustic Edit end
 
 	H.energy = H.max_energy
 
@@ -490,7 +506,7 @@ LICH SKELETONS
 		if("Dagger")
 			beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
 			H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-	var/tabards = list("Black Cloak + Greathood", "Black Jupon", "Black Toga")
+	var/tabards = list("Black Cloak + Greathood", "Black Jupon", "Black Toga", "Zizite Tabard") //Caustic Edit
 	var/tabard_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in tabards
 	switch(tabard_choice)
 		if("Black Jupon")
@@ -500,6 +516,10 @@ LICH SKELETONS
 			mask = /obj/item/clothing/cloak/tabard/stabard/hoodlich
 		if("Black Toga")
 			cloak = /obj/item/clothing/cloak/tabard/toga/lich
+		//Caustic Edit
+		if("Zizite Tabard")
+			cloak = /obj/item/clothing/cloak/tabard/zizo
+		//Caustic Edit end
 
 	H.energy = H.max_energy
 
@@ -571,7 +591,7 @@ LICH SKELETONS
 			l_hand = /obj/item/rogueweapon/shield/bronze/great/paalloy //study, range resistance vs range to tradeoff for no reach + sweep.
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
-	var/tabards = list("Black Tabard", "Black Jupon", "Black Toga")
+	var/tabards = list("Black Tabard", "Black Jupon", "Black Toga", "Zizite Tabard") //Caustic Edit
 	var/tabard_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in tabards
 	switch(tabard_choice)
 		if("Black Jupon")
@@ -580,6 +600,10 @@ LICH SKELETONS
 			cloak = /obj/item/clothing/cloak/tabard/lich
 		if("Black Toga")
 			cloak = /obj/item/clothing/cloak/tabard/toga/lich
+		//Caustic Edit
+		if("Zizite Tabard")
+			cloak = /obj/item/clothing/cloak/tabard/zizo
+		//Caustic Edit end
 
 	H.energy = H.max_energy
 
@@ -671,7 +695,7 @@ LICH SKELETONS
 				H.mind.AddSpell(new /datum/action/cooldown/spell/caedo)
 				H.mind.AddSpell(new /datum/action/cooldown/spell/air_strike)
 				H.mind.AddSpell(new /datum/action/cooldown/spell/leyline_anchor)
-				H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/blade_storm)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/blade_storm)
 			if("phalangite")
 				H.mind.AddSpell(new /datum/action/cooldown/spell/azurean_phalanx)
 				H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/azurean_pilum)
@@ -686,9 +710,9 @@ LICH SKELETONS
 		H.mind.AddSpell(new /datum/action/cooldown/spell/recall_weapon)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/empower_weapon)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/bind_weapon)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/mending)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/touch/conjure_repairkit)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/bonemend) //So you don't die from damaging yourself by your own gameplay loop.
-		H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 4))
+		H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 5))
 
 	H.adjust_blindness(-3)
 	switch(subclass_selected)
@@ -749,7 +773,7 @@ LICH SKELETONS
 		existing_eyes.Remove(H, TRUE)
 		existing_eyes.Insert(H)
 
-	var/tabards = list("Black Tabard", "Black Jupon", "Black Toga")
+	var/tabards = list("Black Tabard", "Black Jupon", "Black Toga", "Zizite Tabard") //Caustic Edit
 	var/tabard_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in tabards
 	switch(tabard_choice)
 		if("Black Jupon")
@@ -758,6 +782,10 @@ LICH SKELETONS
 			cloak = /obj/item/clothing/cloak/tabard/lich
 		if("Black Toga")
 			cloak = /obj/item/clothing/cloak/tabard/toga/lich
+		//Caustic Edit
+		if("Zizite Tabard")
+			cloak = /obj/item/clothing/cloak/tabard/zizo
+		//Caustic Edit end
 
 	H.energy = H.max_energy
 

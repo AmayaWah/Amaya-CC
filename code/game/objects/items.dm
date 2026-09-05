@@ -102,6 +102,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/embedding_behavior/embedding
 	var/is_embedded = FALSE
+	var/atom/embedded_host = null
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
@@ -158,7 +159,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	/// Original values for vars overridden by the active alt grip state.
 	var/list/alt_grip_restore_vars
 	///intents while gripped, replacing main intents. if list != null, will allow the weapon to be wielded. set to null to remove wielding.
-	var/list/gripped_intents 
+	var/list/gripped_intents
 	var/force_wielded = 0
 	var/gripsprite = FALSE //use alternate grip sprite for inhand
 	var/wieldsound = FALSE
@@ -284,6 +285,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	/// "Lesser" silver items still count as silver, but their bite against the silver-weak is muted: no pickup ignition,
 	/// no force-undisguise on hit, and only a slow accumulation of (non-igniting) sunder stacks while held/worn.
 	var/is_lesser_silver = FALSE
+	/// PVE-only effects - for stuff like the cleric longsword, which is lorewise just blessed, not actual silver.
+	var/is_even_lesser_silver = FALSE
 	var/last_used = 0
 	var/override_state = null
 	var/icon_x_offset = 0
@@ -297,6 +300,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/is_carved = FALSE
 	/// does this item/weapon circumvent two-stage death during dismemberment? (do not add this to anything but ultra rare shit)
 	var/vorpal = FALSE
+	var/list/stacked_aura_colors = null
 
 /obj/item/Initialize(mapload)
 	. = ..()
@@ -448,11 +452,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	for(var/X in actions)
 		qdel(X)
 	if(is_embedded)
-		if(isbodypart(loc))
-			var/obj/item/bodypart/embedded_part = loc
+		var/atom/host = embedded_host || loc
+		if(isbodypart(host))
+			var/obj/item/bodypart/embedded_part = host
 			embedded_part.remove_embedded_object(src)
-		else if(isliving(loc))
-			var/mob/living/embedded_mob = loc
+		else if(isliving(host))
+			var/mob/living/embedded_mob = host
 			embedded_mob.simple_remove_embedded_object(src)
 	return ..()
 
@@ -587,7 +592,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(usr, output)
 
 	if(href_list["explaindemolitionmod"])
-		var/output = span_info("Multiplies the damage done to objects when hitting them.\nAlso multiplies durability damage dealt to shields on parry (if higher than Integrity Damage).")
+		var/output = span_info("Multiplies the damage done to objects when hitting them.\nAlso multiplies durability damage dealt to shields on parry (if higher than Integrity Damage).\nIntegrity Damage below 100% applies the same multiplier to simple animal part damage.")
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
 		to_chat(usr, output)
@@ -726,16 +731,21 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(istype(src, /obj/item/clothing))	//awful
 			var/obj/item/clothing/C = src
 			var/str
+			var/spdcap
 			switch(C.armor_class)
 				if(ARMOR_CLASS_NONE)
 					str = "None"
 				if(ARMOR_CLASS_LIGHT)
 					str = "Light"
+					spdcap = AC_LIGHT_SPDCAP
 				if(ARMOR_CLASS_MEDIUM)
 					str = "Medium"
+					spdcap = AC_MEDIUM_SPDCAP
 				if(ARMOR_CLASS_HEAVY)
 					str = "Heavy"
+					spdcap = AC_HEAVY_SPDCAP
 			inspec += "\n<b>ARMOR CLASS:</b> [str]"
+			inspec += "\n<b>MOVEMENT SPD CAP:</b> [spdcap ? spdcap : "None"]"
 
 		var/output = inspec.Join()
 		if(!usr.client.prefs.no_examine_blocks)
@@ -836,7 +846,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		if(twohands_required)
 			wield(user)
-	
+
 	//Caustic Edit - Ported over from Chompers/Virgo! This handles possessed items.
 	if(src.possessed_voice && src.possessed_voice.len > 1 && !(user.ckey in warned_of_possession)) // CHOMPEdit Is this item possessed?
 		warned_of_possession |= user.ckey
@@ -1629,6 +1639,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/on_embed(obj/item/bodypart/bp)
 	return
 
+/obj/item/proc/has_armor_value()
+	if(istype(src, /obj/item/clothing))
+		var/obj/item/clothing/C = src
+		if(C.armor)
+			var/datum/armor/def_armor = C.armor
+			return def_armor.blunt || def_armor.slash || def_armor.stab || def_armor.piercing
+
+	return FALSE
+
 /obj/item/proc/defense_examine()
 	var/list/str = list()
 	if(istype(src, /obj/item/clothing))
@@ -1839,3 +1858,158 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/ai_withdraw_item(obj/item/it, mob/living/user)
 	return FALSE
+
+/** Does this item have an important, immediately notable quality (such as being heretical)?
+*	If it is, this should to return a list containing:
+* - First: A highlight status (see `code\__DEFINES\highlight_examine_defines.dm`).
+* - Second: A short description explaining in-character why this item has that status.
+*
+* When set, highlights the item's mob examine name/tooltip with obvious heretical flavor when worn/held.
+*
+* If this returns null, the item will not be shown as heretical.*/
+/obj/item/proc/get_examine_highlight_status()
+	return null
+
+/** Returns an HTML-formatted string explaining how/why this item has the highlight status it does.
+* - `examine_highlight_status`: This item's examine highlight status (see `proc/get_examine_highlight_status()`).
+* - `itis`: Determines if the string will start with "It is".
+* - `allcaps`: Determines if the returned string will be in allcaps.
+*/
+/obj/item/proc/get_examine_highlight_description(list/examine_highlight_status, itis = FALSE, allcaps = TRUE)
+	if(examine_highlight_status)
+		var/severity = examine_highlight_status[1]
+		var/heresy_desc = examine_highlight_status[2]
+		if(!severity || !heresy_desc)
+			return null
+		var/highlight_itis = "[itis ? "It is " : ""]<b>[get_examine_highlight_adjective(severity)]</b>"
+		return get_examine_highlight_labeled_string(severity, "[allcaps ? uppertext(highlight_itis) : highlight_itis]: [allcaps ? uppertext(heresy_desc) : heresy_desc]")
+	return null
+
+/// Returns `label_string` HTML formatted depending on the provided highlight status (see `code\__DEFINES\highlight_examine_defines.dm`).
+/obj/item/proc/get_examine_highlight_labeled_string(examine_highlight_type, label_string)
+	if(!examine_highlight_type || !label_string)
+		return null
+	var/highlight_color = get_examine_highlight_color(examine_highlight_type)
+	var/highlight_symbol = get_examine_highlight_symbol(examine_highlight_type)
+	return "<font color = '[highlight_color]'>[highlight_symbol] [label_string] [highlight_symbol]</font>"
+
+/// Returns a full HTML-formatted tooltip string whose contents depend on the given highlight status type (See `proc/get_examine_highlight_status()` and `code\__DEFINES\highlight_examine_defines.dm`).
+/obj/item/proc/get_examine_highlight_tooltip_string(list/examine_highlight_status)
+	if(!examine_highlight_status)
+		return null
+	var/highlight_reason = get_examine_highlight_description(examine_highlight_status)
+	var/highlight_explanation = get_examine_highlight_explanation(examine_highlight_status[1])
+
+	return "[highlight_reason]<br>[highlight_explanation]"
+
+/// See `proc/get_examine_highlight_status()` and `code\__DEFINES\highlight_examine_defines.dm`.
+/obj/item/proc/get_examine_highlight_adjective(highlight_type)
+	switch(highlight_type)
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING)
+			return "HERETICAL"
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_SUSPICIOUS)
+			return "SUSPICIOUS"
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_ODD)
+			return "Odd"
+		if(EXAMINEHIGHLIGHT_VIBE_FRIEND)
+			return "Sworn Ally"
+		if(EXAMINEHIGHLIGHT_VIBE_FOE)
+			return "Sworn Enemy"
+		if(EXAMINEHIGHLIGHT_VIBE_CROWN)
+			return "Divine"
+		if(EXAMINEHIGHLIGHT_VIBE_GOLGATHA)
+			return "Blessed"
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_VERYODD)
+			return "ALARMINGLY ODD"
+	return null
+
+/// See `proc/get_examine_highlight_status()` and `code\__DEFINES\highlight_examine_defines.dm`.
+/obj/item/proc/get_examine_highlight_explanation(highlight_type)
+	switch(highlight_type)
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING)
+			return EXAMINEHIGHLIGHT_TOOLTIP_HERESYSEVERITY_ALARMING
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_SUSPICIOUS)
+			return EXAMINEHIGHLIGHT_TOOLTIP_HERESYSEVERITY_SUSPICIOUS
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_ODD)
+			return EXAMINEHIGHLIGHT_TOOLTIP_HERESYSEVERITY_ODD
+		if(EXAMINEHIGHLIGHT_VIBE_FRIEND)
+			return EXAMINEHIGHLIGHT_TOOLTIP_VIBE_FRIEND
+		if(EXAMINEHIGHLIGHT_VIBE_FOE)
+			return EXAMINEHIGHLIGHT_TOOLTIP_VIBE_FOE
+		if(EXAMINEHIGHLIGHT_VIBE_CROWN)
+			return EXAMINEHIGHLIGHT_TOOLTIP_VIBE_CROWN
+		if(EXAMINEHIGHLIGHT_VIBE_GOLGATHA)
+			return EXAMINEHIGHLIGHT_TOOLTIP_VIBE_GOLGATHA
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_VERYODD)
+			return EXAMINEHIGHLIGHT_TOOLTIP_HERESYSEVERITY_VERYODD
+	return null
+
+/// See `proc/get_examine_highlight_status()` and `code\__DEFINES\highlight_examine_defines.dm`.
+/obj/item/proc/get_examine_highlight_color(highlight_type)
+	switch(highlight_type)
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING)
+			return COLOR_HERESYSEVERITY_ALARMING
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_SUSPICIOUS)
+			return COLOR_HERESYSEVERITY_SUSPICIOUS
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_ODD)
+			return COLOR_HERESYSEVERITY_ODD
+		if(EXAMINEHIGHLIGHT_VIBE_FRIEND)
+			return COLOR_VIBE_FRIEND
+		if(EXAMINEHIGHLIGHT_VIBE_FOE)
+			return COLOR_VIBE_FOE
+		if(EXAMINEHIGHLIGHT_VIBE_CROWN)
+			return COLOR_VIBE_CROWN
+		if(EXAMINEHIGHLIGHT_VIBE_GOLGATHA)
+			return COLOR_VIBE_GOLGATHA
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_VERYODD)
+			return COLOR_HERESYSEVERITY_VERYODD //Its meant to be a double-take. Intentional.
+	return null
+
+/// See `proc/get_examine_highlight_status()` and `code\__DEFINES\highlight_examine_defines.dm`.
+/obj/item/proc/get_examine_highlight_symbol(highlight_type)
+	switch(highlight_type)
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING)
+			return EXAMINEHIGHLIGHT_SYMBOL_HERESYSEVERITY_ALARMING
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_SUSPICIOUS)
+			return EXAMINEHIGHLIGHT_SYMBOL_HERESYSEVERITY_SUSPICIOUS
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_ODD)
+			return EXAMINEHIGHLIGHT_SYMBOL_HERESYSEVERITY_ODD
+		if(EXAMINEHIGHLIGHT_VIBE_FRIEND)
+			return SYMBOL_VIBE_FRIEND
+		if(EXAMINEHIGHLIGHT_VIBE_FOE)
+			return SYMBOL_VIBE_FOE
+		if(EXAMINEHIGHLIGHT_VIBE_CROWN)
+			return SYMBOL_VIBE_CROWN
+		if(EXAMINEHIGHLIGHT_VIBE_GOLGATHA)
+			return SYMBOL_VIBE_GOLGATHA
+		if(EXAMINEHIGHLIGHT_HERESYSEVERITY_VERYODD)
+			return EXAMINEHIGHLIGHT_SYMBOL_HERESYSEVERITY_VERYODD //Its meant to be a double-take. Intentional.
+	return null
+
+/obj/item/proc/apply_stacked_auras()
+	remove_stacked_auras()
+	if(!stacked_aura_colors || !length(stacked_aura_colors))
+		return
+	if(!filters)
+		filters = list()
+	for(var/C in stacked_aura_colors)
+		filters += filter(type = "outline",	color = "[C]", size = 1)
+
+/obj/item/proc/remove_stacked_auras()
+	if(!filters)
+		return
+	for(var/F in filters.Copy())
+		if(islist(F) && F["type"] == "outline")
+			filters -= F
+
+/obj/item/proc/refresh_stacked_auras()
+	remove_stacked_auras()
+	apply_stacked_auras()
+
+/obj/item/can_zFall(turf/source, levels, turf/target, direction)
+	if(item_flags & FLOATING_ITEM)
+		return FALSE
+	. = ..()
+
+/obj/item/proc/remove_floating() // needed for timers
+	item_flags &= ~FLOATING_ITEM

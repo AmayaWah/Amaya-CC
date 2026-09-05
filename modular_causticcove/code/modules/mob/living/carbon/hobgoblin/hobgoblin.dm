@@ -68,7 +68,7 @@
 		if(prob(5)) //WE ARE FEARSOME!!!
 			if(prob(50))
 				emote("laugh")
-			else 
+			else
 				emote("warcry")
 	. = ..()*/
 
@@ -140,7 +140,7 @@
 		QDEL_NULL(eyes)
 	eyes = new /obj/item/organ/eyes/night_vision/nightmare
 	eyes.Insert(src)
-	src.underwear = "Nude"
+	src.underwear = null // "Nude" is runtiming qdels for goblins!
 	for(var/datum/charflaw/cf in src.charflaws)
 		QDEL_NULL(cf)
 	update_body()
@@ -165,7 +165,7 @@
 	var/chance_zjumper = 25 //We are REALLY smart compared to goblins; Let us chase after these puny adventurers!!!
 	//var/chance_treeclimber = 50
 
-	H.STASTR = 9 
+	H.STASTR = 9
 	H.STAINT = 5 //Somewhat smart buggers!
 	H.STACON = 12
 	H.STAWIL = 14
@@ -180,7 +180,7 @@
 
 	var/loadout = rand(1,10)
 	//If they can make metal/plate armor, they 100% can make metal / iron weapons.
-	//Most hoblins will always be wearing armor when encountering. Hoblin armor is relatively weak due to there only being one layer. 
+	//Most hoblins will always be wearing armor when encountering. Hoblin armor is relatively weak due to there only being one layer.
 	switch(loadout)
 		if(1) //Spear and Leathers
 			r_hand = /obj/item/rogueweapon/spear

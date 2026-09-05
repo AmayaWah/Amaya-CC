@@ -47,7 +47,7 @@
 	var/can_be_afk_prey = FALSE
 	var/can_be_afk_pred = FALSE
 	var/allow_spontaneous_tf = FALSE
-	//var/digest_leave_remains = FALSE
+	var/digest_leave_remains = FALSE
 	var/allowmobvore = FALSE
 	var/permit_healbelly = FALSE
 	var/noisy = FALSE
@@ -149,6 +149,10 @@
 //
 /proc/is_vore_predator(mob/living/O)
 	if(isliving(O))
+		if(O.client && (O.client.prefs.directory_tag == "Non-Vore" || O.client.prefs.directory_tag == "Unset" /*|| !O.client.prefs_vr.can_pred*/)) //Lets add in a hook to just, check if they are set to Non-Vore in the Directory settings or Unset, and you cannot be an accidental pred.
+			if(O.client.prefs.directory_tag == "Unset")
+				to_chat(O, span_warning("A vore attempt with you as Pred happened! To turn off this warning in chat, just navigate to the Character Directory and set your Vore Preferences to anything but 'Unset'. If you set it to Non-Vore, it will prevent you from ever being a pred when it comes to vore, and without this message."))
+			return FALSE
 		/*if(isanimal(O)) //On-demand belly loading.
 			var/mob/living/simple_animal/SM = O
 			if(SM.vore_active && !SM.voremob_loaded)
@@ -202,6 +206,7 @@
 	resizable = json_from_file["resizable"]
 	feeding = json_from_file["feeding"]
 	absorbable = json_from_file["absorbable"]
+	digest_leave_remains = json_from_file["digest_leave_remains"]
 	allowmobvore = json_from_file["allowmobvore"]
 	allowtemp = json_from_file["allowtemp"]
 	vore_taste = json_from_file["vore_taste"]
@@ -277,6 +282,8 @@
 		feeding = FALSE
 	if(isnull(absorbable))
 		absorbable = FALSE
+	if(isnull(digest_leave_remains))
+		digest_leave_remains = FALSE
 	if(isnull(allowmobvore))
 		allowmobvore = FALSE
 	if(isnull(allowtemp))
@@ -421,6 +428,7 @@
 			"resizable"				= resizable,
 			"absorbable"			= absorbable,
 			"feeding"				= feeding,
+			"digest_leave_remains"	= digest_leave_remains,
 			"allowmobvore"			= allowmobvore,
 			"allowtemp"				= allowtemp,
 			"vore_taste"			= vore_taste,

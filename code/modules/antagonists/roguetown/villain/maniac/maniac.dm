@@ -25,6 +25,7 @@
 		TRAIT_NOPAINSTUN,
 		TRAIT_STEELHEARTED,
 		TRAIT_NOMOOD,
+		TRAIT_DETACHED,
 		TRAIT_HARDDISMEMBER,
 		TRAIT_NOSLEEP,
 		TRAIT_SHOCKIMMUNE,
@@ -274,7 +275,7 @@
 				traitorwin = FALSE
 			count += objective.triumph_count
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(!considered_alive(owner))
 		traitorwin = FALSE

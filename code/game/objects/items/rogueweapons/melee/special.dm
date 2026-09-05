@@ -148,7 +148,7 @@
 			var/mob/living/carbon/human/H = target
 			//CCedit: The Duke WILL have order in his lands!
 			//var/area/target_area = get_area(H)
-			
+
 			//if(!istype(target_area, /area/rogue/indoors/town/manor))
 				//to_chat(user, span_danger("The rod cannot be used on targets outside of the manor!"))
 				//return
@@ -483,6 +483,9 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "GAUNTLET", "RENDERED ASUNDER")
 
+/obj/item/rogueweapon/handclaw/steel/graggaredged/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_GRAGGAR_WEAPON)
+
 /obj/item/rogueweapon/handclaw/steel/graggarblunt
 	name = "vicious mantlebreaker"
 	desc = "A tainted mimicry of Astrata's staff, studded with the remains of divine bone and gristle. By His command, the Apotheosis rose; and with His \
@@ -500,6 +503,9 @@
 /obj/item/rogueweapon/handclaw/steel/graggarblunt/Initialize()
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "GAUNTLET", "RENDERED ASUNDER")
+
+/obj/item/rogueweapon/handclaw/steel/graggarblunt/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_GRAGGAR_WEAPON)
 
 ///Peasantry / Militia Weapon Pack///
 
@@ -658,7 +664,7 @@
 	use_light = FALSE
 	spread_flame = FALSE
 	icon_state_ignited = "sci_firetongue_on"
-	
+
 /datum/component/ignitable/fluff/sci_sand
 	use_light = FALSE
 	spread_flame = FALSE
@@ -667,7 +673,7 @@
 /datum/component/ignitable/Initialize(...)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	RegisterSignal(parent, COMSIG_STRUCTURE_ATTACKBY, PROC_REF(item_afterattack))
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
@@ -728,8 +734,7 @@
 					ignited = TRUE
 			if(isliving(target))
 				var/mob/living/M = target
-				M.adjust_fire_stacks(5)
-				M.ignite_mob()
+				apply_scorch_stack(M, 3, BODY_ZONE_CHEST)
 				ignited = TRUE
 			if(ignited && single_use)
 				is_active = FALSE
@@ -867,9 +872,9 @@
 	desc = "A hardy repurposed dwarven mining warpick. Made to handle the dwellers above and below, both clad in rock and forged rock."
 	icon_state = "dwarpick"
 	possible_item_intents = list(/datum/intent/pick/heavy, /datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/pick/heavy, /datum/intent/mace/strike, /datum/intent/stab/militia)	
+	gripped_intents = list(/datum/intent/pick/heavy, /datum/intent/mace/strike, /datum/intent/stab/militia)
 	max_blade_int = 200 //10% increase over the steel pick
-	max_integrity = 660 
+	max_integrity = 660
 
 /obj/item/rogueweapon/sword/falchion/militia
 	name = "maciejowski"

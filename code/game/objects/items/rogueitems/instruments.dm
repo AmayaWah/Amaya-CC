@@ -63,7 +63,7 @@
 		user.remove_status_effect(/datum/status_effect/buff/playing_music)
 
 /obj/item/rogue/instrument/proc/check_file(infile, filename, user)
-	var/file_ext = lowertext(copytext(filename, -4))
+	var/file_ext = LOWER_TEXT(copytext(filename, -4))
 	var/file_size = length(infile)
 
 	if(file_ext != ".ogg")
@@ -171,8 +171,7 @@
 				return
 			if(curfile)
 				playing = TRUE
-				soundloop.mid_sounds = list(curfile)
-				soundloop.cursound = null
+				soundloop.set_mid_sounds(list(curfile))
 				soundloop.start()
 				user.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
 				record_round_statistic(STATS_SONGS_PLAYED)
@@ -208,8 +207,7 @@
 						return
 					bandinstrumentsband.playing = TRUE
 					bandinstrumentsband.groupplaying = TRUE
-					bandinstrumentsband.soundloop.mid_sounds = bandinstrumentsband.curfile
-					bandinstrumentsband.soundloop.cursound = null
+					bandinstrumentsband.soundloop.set_mid_sounds(list(bandinstrumentsband.curfile))
 					bandinstrumentsband.soundloop.start()
 					for(var/mob/living/carbon/human/A in bandmates)
 						A.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)

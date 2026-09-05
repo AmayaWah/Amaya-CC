@@ -2,9 +2,12 @@
 
 // T1: Avert End (channel on an adjacent target to slowly spend devotion to grant them NODEATH and ticks of oxyloss healing)
 
+//Caustic Edit - Slight changes to some of the fluff texts to fit with our view of Necra as a Compassionate Death God instead.
 /obj/effect/proc_holder/spell/invoked/avert
 	name = "Borrowed Time"
-	desc = "Shield your fellow man from the Undermaiden's gaze, preventing them from slipping into death for as long as your faith and fatigue may muster."
+	desc = "Request Necra's aid to buy your fellow man time, preventing them from slipping into death for as long as your faith and fatigue may muster."
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "borrowtime"
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
@@ -14,7 +17,7 @@
 		"A haze begins to envelop me, but then suddenly recedes, as if warded back by some great light...",
 		"A terrible weight bears down upon me, as if the wyrld itself were crushing me with its heft...",
 		"The sound of a placid river drifts into hearing, followed by the ominous toll of a ferryman's bell...",
-		"Some vast, immeasurably distant figure looms beyond my perception - I feel it, more than I see. It waits. It watches.",
+		"Some vast, immeasurably distant figure looms beyond my perception - It seems to be trying to stop me from slipping further...",
 	)
 
 /obj/effect/proc_holder/spell/invoked/avert/cast(list/targets, mob/living/carbon/human/user)
@@ -26,12 +29,12 @@
 
 	var/mob/living/living_target = target
 	if (!user.Adjacent(target))
-		to_chat(user, span_warning("I must be beside [living_target] to avert Her gaze from [living_target.p_them()]!"))
+		to_chat(user, span_warning("I must be beside [living_target] to request Her aid for [living_target.p_them()]!"))
 		revert_cast()
 		return FALSE
 
 	// add the no-death trait to them....
-	user.visible_message(span_notice("Whispering motes gently bead from [user]'s fingers as [user.p_they()] place a hand near [living_target], scriptures of the Undermaiden spilling from their lips..."), span_notice("I stand beside [living_target] and utter the hallowed words of Aeon's Intercession, staying Her grasp for just a little while longer..."))
+	user.visible_message(span_notice("Whispering motes gently bead from [user]'s fingers as [user.p_they()] place a hand near [living_target], scriptures of the Undermaiden spilling from their lips..."), span_notice("I stand beside [living_target] and utter the hallowed words of Aeon's Intercession, letting her grasp flow through me... It is not yet their time..."))
 	to_chat(user, span_small("I must remain still and at [living_target]'s side..."))
 	to_chat(living_target, span_warning("An odd sensation blossoms in my chest, cold and unknown..."))
 
@@ -59,11 +62,14 @@
 	REMOVE_TRAIT(living_target, TRAIT_NODEATH, "avert_spell")
 
 	user.visible_message(span_danger("[user]'s concentration breaks, the motes receding from [living_target] and into [user.p_their()] hand once more."), span_danger("My concentration breaks, and the Intercession falls silent."))
+//Caustic Edit End
 
 /obj/effect/proc_holder/spell/targeted/abrogation
 	name = "Abrogation"
 	desc = "Debuffs targeted undead as long as they remain near you, slowly getting set on fire if they stay."
 	range = 8
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "necra"
 	releasedrain = 30
 	chargedloop = /datum/looping_sound/invokeholy
@@ -186,15 +192,17 @@
 
 #undef CHURN_FILTER
 
-#define NECRA_HATES        1
-#define NECRA_DISAPPROVES  2
-#define NECRA_NEUTRAL      3
-#define NECRA_APPROVES     4
+#define NECRA_HATES        1 //Caustic Edit - This is more that it's difficult to find the soul, as it only recently entered.
+#define NECRA_DISAPPROVES  2 //
+#define NECRA_NEUTRAL      3 //
+#define NECRA_APPROVES     4 // Up until she has no problem finding them, they are with her now.
 
 /obj/effect/proc_holder/spell/self/locate_dead
 	name = "Locate Corpse"
-	desc = "Invoke the Undermaiden's guidance to sense the direction of those within her domain who lack proper burial. She may also reveal the earthbound, though seeking those newly claimed risks her displeasure.<br><br>Costs 20 Devotion to use, and the sustain cost varies on corpse freshness."
-	overlay_state = "necraeye"
+	desc = "Invoke the Undermaiden's guidance to sense the direction of those within her domain who lack proper burial. She may also reveal the earthbound, though seeking those newly claimed is more difficult for her to locate as they have only recently entered her realm.<br><br>Costs 20 Devotion to use, and the sustain cost varies on corpse freshness." //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_state = "locatecorpse"
 	sound = 'sound/magic/whiteflame.ogg'
 	cast_without_targets = TRUE
 	miracle = TRUE
@@ -305,8 +313,8 @@ var/global/mob/_corpse_sort_ref = null
 		return
 
 	user.visible_message(
-		span_purple("<i>A ghastly fog embraces [user] momentarily as they focus...</i>"),
-		span_purple("<i>You plead for the Undermaiden to offer you insight on the restless.</i>")
+		span_purple("<i>A ghostly fog embraces [user] momentarily as they focus...</i>"), //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
+		span_purple("<i>You request for the Undermaiden to offer you direction to the restless.</i>") //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 	)
 
 	var/list/earthbound = list()
@@ -433,7 +441,7 @@ var/global/mob/_corpse_sort_ref = null
 	if(length(forsaken)) type_options += "Forsaken"
 
 	if(!length(type_options))
-		to_chat(user, span_purple("You reach out. Nothing answers. The Undermaiden is silent..."))
+		to_chat(user, span_purple("You reach out. The Undermaiden smiles back. There appears to be no lost souls currently in the area.")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 		return
 
 	var/type_choice = tgui_input_list(user, "What doth thy seek?", "Corpse Type", type_options)
@@ -457,7 +465,7 @@ var/global/mob/_corpse_sort_ref = null
 	if(!target || QDELETED(target))
 		return
 
-	user.say("#Undermaiden, guide my hand to those who have lost their way...", language = /datum/language/common)
+	user.say("#Undermaiden, please guide my hand to those who have lost their way...", language = /datum/language/common) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 
 	var/score = get_necra_score(target)
 	var/judgement = get_necra_judgement(target)
@@ -469,21 +477,21 @@ var/global/mob/_corpse_sort_ref = null
 
 	switch(judgement)
 		if(NECRA_HATES)
-			to_chat(user, span_purple("<i>You feel utterly scorned as your breath is nearly completely taken away.</i>"))
+			to_chat(user, span_purple("<i>You feel her confusion as she grips a bit too hard on your being, this one must be hard to locate. You feel yourself drawn close to her realm...</i>")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 			user.Jitter(10)
 			user.emote("breathgasp")
 			user.adjustOxyLoss(40)
 
 		if(NECRA_DISAPPROVES)
-			to_chat(user, span_purple("<i>The Undermaiden answers your pleas with exhaustion.</i>")) //CCedit
+			to_chat(user, span_purple("<i>The Undermaiden seems to need to pull a little more on your being to anchor her presense. This one is known to her, but only recently.</i>")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 			user.emote("whimper")
 			user.Jitter(5)
 
 		if(NECRA_NEUTRAL)
-			to_chat(user, span_purple("<i>A cold, indifferent presence answers to your pleas. You feel her hand.</i>"))
+			to_chat(user, span_purple("<i>You feel her hand guiding you after just a moment of searching.</i>")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 
 		if(NECRA_APPROVES)
-			to_chat(user, span_purple("<i>The Undermaiden guides your hand. You can almost feel a smile.</i>"))
+			to_chat(user, span_purple("<i>The Undermaiden smiles back as you perform your duty to Her. She seems to have been expecting this, and already seems to know the way.</i>")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 
 	if(H.devotion?.check_devotion(src))
 		H.devotion?.update_devotion(-20)
@@ -520,13 +528,13 @@ var/global/mob/_corpse_sort_ref = null
 		return
 
 	if(necra_tracked_corpse.burialrited)
-		to_chat(src, span_purple("<i>The Undermaiden is seemingly content, you briefly sense your bounty being buried and consecrated.</i>"))
+		to_chat(src, span_purple("<i>The Undermaiden is content, you briefly sense your bounty being buried and consecrated.</i>")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 		src.necra_tracked_corpse = null
 		STOP_PROCESSING(SSprocessing, src)
 		return
-	
+
 	if(necra_tracked_corpse?.mind && !necra_tracked_corpse.mind.has_antag_datum(/datum/antagonist/zombie) && necra_tracked_corpse.stat != DEAD)
-		to_chat(src, span_purple("<i>The Undermaiden's interest grows discontent, you briefly sense your bounty back from undeath, alive once more.</i>")) //CCedit
+		to_chat(src, span_purple("<i>The Undermaiden grows annoyed at the state of your target, you briefly sense your bounty back from death, but corrupted and filled with undeath.</i>")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 		src.necra_tracked_corpse = null
 		STOP_PROCESSING(SSprocessing, src)
 		return
@@ -551,7 +559,7 @@ var/global/mob/_corpse_sort_ref = null
 
 	src.necra_score = score
 	src.necra_judgement = judgement
-	
+
 	// --- Devotion cost ---
 	var/devotion_cost = 2
 	switch(judgement)
@@ -582,9 +590,9 @@ var/global/mob/_corpse_sort_ref = null
 
 	if(judgement_changed)
 		if(judgement > old_judgement)
-			to_chat(src, span_blue("<i>The Undermaiden's grip softens and her voice calms… her favor for your choice grows.</i>"))
+			to_chat(src, span_blue("<i>The Undermaiden's presense softens and she even seems to smile... She seems to have a clearer sense of where they are.</i>")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 		else
-			to_chat(src, span_red("<i>A sudden chill runs through you. Her judgment worsens for some reason...</i>"))
+			to_chat(src, span_red("<i>Her presense on your being strengthens. She appears to need to anchor herself to you more to find this target...</i>")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 
 	var/turf/user_turf = get_turf(src)
 	var/turf/target_turf = get_turf(necra_tracked_corpse)
@@ -649,7 +657,7 @@ var/global/mob/_corpse_sort_ref = null
 		output = shuffle(output)
 
 		// THEN build message with noise
-		var/msg = "Ghastly whispers painfully claw at your mind: <br><i>"
+		var/msg = "Ghastly whispers from Her realm loudly intermingle with Her voice in your mind: <br><i>" //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 
 		for(var/word in output)
 			var/prefix = ""
@@ -667,40 +675,40 @@ var/global/mob/_corpse_sort_ref = null
 		to_chat(src, span_warning(msg))
 		src.adjustOxyLoss(20)
 		if(src.hallucination < 200)
-			src.hallucination += 50	
+			src.hallucination += 50
 		if(prob(20))
 			switch(rand(1,5))
 				if(1) // CRITICAL HIIIIT!!!
 					H.adjust_fire_stacks(10, /datum/status_effect/fire_handler/fire_stacks/divine)
 					H.ignite_mob()
 					H.add_stress(/datum/stressevent/psycurse)
-					var/list/fire_reactions = list(
-						"THIS ISN'T FIRE- WHAT IS THIS?!",
-						"IT BURNS THROUGH MY VERY SOUL!",
-						"THE FLAME WON'T LET GO!",
+					var/list/fire_reactions = list( //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
+						"TOO CLOSE! FAR TOO CLOSE!",
+						"I FEEL SPIRITS GRABBING AT MY LUX!",
+						"NECRA! ITS TOO MUCH STRAIN!",
 						"I CAN'T PUT IT OUT!"
 					)
 					to_chat(src, span_red(pick(fire_reactions)))
-					src.emote("agony")
+					src.emote("superagony")
 				if(2)
 					src.adjustToxLoss(rand(1, 20))
 
-					var/list/tox_reactions = list(
-						"I CAN TASTE IT- SOMETHING IS WRONG!",
-						"IT'S IN MY BLOOD!",
-						"I'M ROTTING- CAN'T YOU SEE?!",
-						"SOMETHING IS EATING ME FROM INSIDE!"
+					var/list/tox_reactions = list( //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
+						"I CAN TASTE IT - UNFILTERED ESSENSE!",
+						"IT'S SO COLD!",
+						"WHO IS THAT - THAT'S NOT HER!",
+						"IS SOMETHING WITHERING ME?"
 					)
 					to_chat(src, span_red(pick(tox_reactions)))
 					src.emote("breathgasp")
 				if(3)
 					src.adjustBruteLoss(rand(10, 20))
 
-					var/list/brute_reactions = list(
-						"IT'S TEARING ME APART!",
-						"MY BONES- THEY'RE BREAKING!",
-						"I CAN FEEL IT RIPPING THROUGH ME!",
-						"STOP- YOU'RE PULLING ME TO PIECES!"
+					var/list/brute_reactions = list( //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
+						"IT'S TOO MUCH TO BEAR!",
+						"MY BONES - I HEARD A CRACK!",
+						"I CAN FEEL SOMETHING CLAWING AT ME!",
+						"WHO SCREAMED? NO - YOU HAD YOUR TIME!"
 					)
 					to_chat(src, span_red(pick(brute_reactions)))
 					H.add_stress(/datum/stressevent/psycurse)
@@ -716,22 +724,22 @@ var/global/mob/_corpse_sort_ref = null
 							var/obj/item/bodypart/BP = pick(valid_parts)
 							BP.manage_dynamic_wound(BCLASS_LASHING, rand(10, 20), 0)
 
-							var/list/wound_reactions = list(
-								"SOMETHING JUST TORE OPEN!",
-								"I'M BLEEDING- AM I BLEEDING?!",
-								"SHE CUT ME WITHOUT TOUCHING ME!",
-								"I'M SORRY, UNDERMAIDEN, I'M SORRY!"
+							var/list/wound_reactions = list( //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
+								"SOMETHING JUST CUT ME?!",
+								"AM I BLEEDING?! I'M BLEEDING!",
+								"A VENGEFUL SPIRIT! IT LASHED AT ME!",
+								"THEY ARE GRIPPING AT ME, NECRA!"
 							)
 							to_chat(src, span_red(pick(wound_reactions)))
-							src.emote("agony")
+							src.emote("superagony")
 					else
 						src.adjustBruteLoss(rand(15, 25))
 
-						var/list/fallback_reactions = list(
-							"MY BODY'S BREAKING APART!",
-							"SOMETHING IS WRONG- DEEPLY WRONG!",
-							"I CAN'T HOLD MYSELF TOGETHER!",
-							"IT HURTS- EVERYWHERE!"
+						var/list/fallback_reactions = list( //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
+							"MY BODY'S BREAKING UNDER THE STRAIN!",
+							"SOMETHING IS WRONG - DEEPLY WRONG!",
+							"I CAN'T HOLD ON FOR TOO MUCH LONGER!",
+							"IT HURTS - EVERYWHERE!"
 						)
 						to_chat(src, span_red(pick(fallback_reactions)))
 						src.emote("painscream")
@@ -739,11 +747,11 @@ var/global/mob/_corpse_sort_ref = null
 					src.adjustBruteLoss(10)
 					src.adjustToxLoss(10)
 
-					var/list/mixed_reactions = list(
-						"IT'S EVERYWHERE—IT HURTS EVERYWHERE!",
-						"I CAN'T TELL WHERE IT'S COMING FROM!",
-						"MAKE IT STOP- PLEASE!",
-						"I'M FALLING APART!"
+					var/list/mixed_reactions = list( //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
+						"THEY ARE EVERYWHERE — IT HURTS EVERYWHERE!",
+						"I CAN'T TELL WHERE THEY ARE COMING FROM!",
+						"NECRA, IT'S TOO MUCH! PULL BACK!",
+						"I ALMOST SLIPPED IN!"
 					)
 					src.emote("painscream")
 					to_chat(src, span_red(pick(mixed_reactions)))
@@ -765,14 +773,14 @@ var/global/mob/_corpse_sort_ref = null
 			"are they alone?","what was that?","did you see that?","are you afraid?",
 			"why is it hard to find them?","is that them?","what if they aren't?","do you feel it?",
 			"why are you hesitating?","what's behind you?","who's there?","are you listening?",
-			"do I remember?","have I forgotten?","why keep going this way?","what are We chasing?", 
+			"do I remember?","have I forgotten?","why keep going this way?","what are We chasing?",
 			"who is holding My hand?","what if it's a trap?","are you sure about that?","do you doubt Me?",
 			"why this path?","why not another way?","what are you missing?","can you feel her?",
 			"does she approve?","are they being judged?","what does she see?","why are you still here?",
 			"do you see them?","should We stop?","are you going the wrong way?","what lies ahead?",
 			"what lies behind?","are We too late?","are We too early?","are they watching you?",
 			"do you hear the whispers?","are they getting louder?","can you ignore them?",
-			"what do they want?","what do you want?","who are they?","who are you?", 
+			"what do they want?","what do you want?","who are they?","who are you?",
 			"are you close?","are you far?","does it matter?","are you sure it's not here?",
 			"why not turn around?","what if We're mistaken?","is this your choice?",
 			"are you being guided?","or misled?","do you understand?","are you certain you do?",
@@ -791,7 +799,7 @@ var/global/mob/_corpse_sort_ref = null
 		output += true_dir
 		output = shuffle(output)
 
-		var/msg = "An exhausted whisper reaches you: <i><br>" //CCedit
+		var/msg = "Some errant whispers mix with Her voice as it reaches you: <i><br>" //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 		for(var/word in output)
 			msg += "[word]… "
 		msg += "</i>"
@@ -812,7 +820,7 @@ var/global/mob/_corpse_sort_ref = null
 
 	if(judgement == NECRA_APPROVES)
 		msg += " - <b>[dist]</b> meters"
-	
+
 	msg += "."
 
 	to_chat(src, span_warning(msg))
@@ -856,7 +864,7 @@ var/global/mob/_corpse_sort_ref = null
 			to_chat(user, span_notice("They declined."))
 			return TRUE
 		user.visible_message(span_warning("[user] grants [H] the blessing of their promise."))
-		to_chat(H, span_warning("I have committed. There is no going back."))
+		to_chat(H, span_warning("I have committed. I will be at Her side when things are done.")) //Caustic Edit - Changing the fluff texts to make Necra more of a Compassionate Death God!
 		H.apply_status_effect(/datum/status_effect/buff/necras_vow)
 		H.apply_status_effect(/datum/status_effect/buff/healing/necras_vow)
 
@@ -900,6 +908,8 @@ var/global/mob/_corpse_sort_ref = null
 	invocation_type = "whisper"
 	invocations = list("Undermaiden guide my gaze...")
 	associated_skill = /datum/skill/magic/holy
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "necraeye"
 	miracle = TRUE
 	devotion_cost = 30
@@ -1032,7 +1042,7 @@ var/global/mob/_corpse_sort_ref = null
 	no_early_release = TRUE
 	charging_slowdown = 1
 	chargedloop = /datum/looping_sound/invokeholy
-	gesture_required = TRUE 
+	gesture_required = TRUE
 	associated_skill = /datum/skill/magic/holy
 	recharge_time = 90 SECONDS
 	hide_charge_effect = TRUE
@@ -1066,7 +1076,7 @@ var/global/mob/_corpse_sort_ref = null
 			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, NORTH),user)
 			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, SOUTH),user)
 		for(var/mob/living/simple_animal/hostile/rogue/spirit_vengeance/swarm in view(2, user))
-			swarm.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target) 
+			swarm.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
 		return TRUE
 	revert_cast()
 	return FALSE

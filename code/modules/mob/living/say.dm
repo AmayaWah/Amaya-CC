@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(ic_blocked)
 		//The filter warning message shows the sanitized message though.
 		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span>"))
-		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
+		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, LOWER_TEXT(config.ic_filter_regex.match))
 		return
 
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
@@ -111,7 +111,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/in_critical = InCritical()
 
 	if(one_character_prefix[message_mode])
-		message = copytext(message, 2)
+		//Caustic Edit - Account for forced-muffled here! Only remove the first character if they are not force-muffled. Could make it actually check _if_ the first character is # or not but. EEEH. This is good enough.
+		if(!muffled)
+			message = copytext(message, 2)
+		//Caustic Edit End
 	else if(message_mode || saymode)
 		message = copytext(message, 3)
 	if(findtext_char(message, " ", 1, 2))
@@ -127,14 +130,18 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			client.dsay(message)
 		return
 
-	if(message_mode == MODE_SING)
+	// autopunctuation
+	if(!client?.prefs?.no_autopunctuate)
+		message = autopunct_bare(message)
+
+	if(message_mode == MODE_SING || HAS_TRAIT(src, TRAIT_MUSES_GRACE))
 	#if DM_VERSION < 513
 		var/randomnote = "~"
 	#else
 		var/randomnote = pick("&#9835;", "&#9834;", "&#9836;")
 	#endif
 		spans |= SPAN_SINGING
-		message = "[randomnote] [message] [randomnote]"
+		message = "[randomnote] [capitalize(message)] [randomnote]"
 
 	if(stat == DEAD)
 		say_dead(original_message)
@@ -280,7 +287,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		pred = bloc.owner
 	else
 		pred = src
-	
+
 	if(pred.client)
 		listening |= pred
 
@@ -472,7 +479,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(H.devotion || (H.job in GLOB.church_positions))
 				if(H.has_status_effect(/datum/status_effect/thaumaturgical_silence))
 					continue
-				
+
 				//Check for channel types.
 				if(channel_type == SPEAKING_TO_CHURCH_ONLY) //Don't send this message to folk who aren't in the church clergy.
 				//These are messages directly from the church itself, thus they have more governing power compared to other voices that may NOT be from the church.
@@ -482,13 +489,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 					continue
 				else if(channel_type == SPEAKING_TO_ASCENDANTS_ONLY) //Don't send this message to folk who aren't ascendant followers.
 					if(!istype(H.patron, /datum/patron/inhumen))
-						continue 
+						continue
 					to_chat(H, span_cult("A wretched voice echoes, ''[message]''"))
 					continue
 				else if(channel_type == SPEAKING_TO_SAME_PATRONS_ONLY) //Don't send this message to folk who aren't the same patron.
 					if(H.patron != patron)
-						continue 
-					to_chat(H, span_resonate("A familiar voice echoes, ''[message]''"))
+						continue
+					to_chat(H, span_abductor("A familiar voice echoes, ''[message]''"))
 					continue
 				else
 					if(job in GLOB.church_positions)
@@ -555,7 +562,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				listener_has_ceiling = FALSE
 		if(!hearall)
 			if((!Zs_too && !isobserver(AM)) || message_mode == MODE_WHISPER)
-				if(listener_turf.z != speaker_turf.z) //Caustic Edit - This should fix whispers not comparing the actual TILES. 
+				if(listener_turf.z != speaker_turf.z) //Caustic Edit - This should fix whispers not comparing the actual TILES.
 					continue
 		if(Zs_too && listener_turf.z != speaker_turf.z && !Zs_all)
 			if(!Zs_yell && !HAS_TRAIT(AM, TRAIT_KEENEARS) && !hearall)
@@ -575,13 +582,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 					var/mob/living/M = AM
 					for(var/mob/living/MH in viewers(world.view, speaker_ceiling))
 						var/turf/MH_turf = get_turf(MH)
-						if(M == MH && MH_turf.z == speaker_ceiling?.z) //Caustic Edit - This should fix whispers not comparing the actual TILES. 
+						if(M == MH && MH_turf.z == speaker_ceiling?.z) //Caustic Edit - This should fix whispers not comparing the actual TILES.
 							speaker_obstructed = FALSE
 
 				if(!listener_has_ceiling)
 					for(var/mob/living/ML in viewers(world.view, listener_ceiling))
 						var/turf/ML_turf = get_turf(ML)
-						if(ML == src && ML_turf.z == listener_ceiling?.z) //Caustic Edit - This should fix whispers not comparing the actual TILES. 
+						if(ML == src && ML_turf.z == listener_ceiling?.z) //Caustic Edit - This should fix whispers not comparing the actual TILES.
 							listener_obstructed = FALSE
 				if(listener_obstructed && speaker_obstructed)
 					continue
@@ -611,7 +618,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode, original_message)
 		else
 			AM.Hear(rendered, src, message_language, (highlighted_message ? highlighted_message : message), , spans, message_mode, original_message)
-			
+
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
@@ -675,11 +682,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/proc/get_key(message)
 	var/key = copytext(message, 1, 2)
 	if(key in GLOB.department_radio_prefixes)
-		return lowertext(copytext(message, 2, 3))
+		return LOWER_TEXT(copytext(message, 2, 3))
 
 /mob/living/proc/get_message_language(message)
 	if(copytext(message, 1, 2) == ",")
-		var/key = copytext(message, 2, 3)
+		var/key = LOWER_TEXT(copytext(message, 2, 3))
 		for(var/ld in GLOB.all_languages)
 			var/datum/language/LD = ld
 			if(initial(LD.key) == key)
@@ -747,7 +754,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		. = "stammers"
 	else if(derpspeech)
 		. = "gibbers"
-	else if(message_mode == MODE_SING)
+	else if(message_mode == MODE_SING || HAS_TRAIT(src, TRAIT_MUSES_GRACE))
 		. = verb_sing
 	else
 		. = ..()

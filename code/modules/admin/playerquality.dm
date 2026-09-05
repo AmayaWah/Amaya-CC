@@ -107,7 +107,7 @@
 		log_admin("[admin] adjusted [key]'s PQ by [amt] for reason: [reason]")
 
 /client/proc/check_pq()
-	set category = "⚡︎ ADMIN.Info"
+	set category = "ADMIN.Info"
 	set name = "PQ - Check"
 	if(!holder)
 		return
@@ -167,7 +167,7 @@
 	popup.open()
 
 /client/proc/adjust_pq()
-	set category = "⚡︎ ADMIN.Assistance"
+	set category = "ADMIN.Assistance"
 	set name = "PQ - Adjust"
 	if(!holder)
 		return
@@ -211,7 +211,7 @@
 		return
 	adjust_playerquality(amt2change, theykey, src.ckey, raisin)
 	for(var/client/C in GLOB.clients) // I hate this, but I'm not refactoring the cancer above this point.
-		if(lowertext(C.key) == lowertext(theykey))
+		if(LOWER_TEXT(C.key) == LOWER_TEXT(theykey))
 			to_chat(C, "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">Your PQ has been adjusted by [amt2change] by [key] for reason: [raisin]</span></span>", MESSAGE_TYPE_ADMINLOG)
 			return
 
@@ -327,7 +327,7 @@
 				addme = 2.1
 			else
 				addme = 2.3
-		
+
 		if(count > 5)
 			bonus += addme + (0.1 * (count - 5))
 		else
@@ -341,7 +341,7 @@
 	return bonus
 
 /client/proc/recalc_pq_bulk()
-	set category = "🖳︎ SERVER.Management"
+	set category = "SERVER.Management"
 	set name = "PQ - Recalc From Commends (Bulk)"
 	set waitfor = FALSE
 	if(!holder || !check_rights(R_ADMIN, 0))
@@ -372,7 +372,7 @@
 	log_admin(bulk_msg)
 
 /client/proc/recalc_pq_single()
-	set category = "🖳︎ SERVER.Management"
+	set category = "SERVER.Management"
 	set name = "PQ - Recalc From Commends (Single)"
 	if(!holder || !check_rights(R_ADMIN, 0))
 		return

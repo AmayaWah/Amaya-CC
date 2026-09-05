@@ -1,0 +1,4 @@
+author: "kaylexis"
+delete-after: True
+changes:
+  - bugfix: "fixed wild soul lampternfly broken spell"

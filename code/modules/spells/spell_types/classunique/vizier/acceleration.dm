@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/vizier/acceleration
 	name = "Acceleration"
 	desc = "Displace a target slightly ahead of local time, dramatically increasing their speed and reactions. When reality catches up, the resulting temporal strain leaves them sluggish and exhausted."
-	fluff_desc = "One of the earliest applications of Origin Magick, Acceleration was first devised to hasten crop growth and shorten agricultural cycles. The experiment revealed a fundamental limitation of the art: while a subject's personal timeline can be advanced, the debt incurred cannot be avoided. Reality inevitably reconciles the discrepancy, repaying every stolen moment in equal measure. Though unsuitable for cultivation, the technique found lasting use among Naledi Viziers as a potent, if taxing, combat tool."	
+	fluff_desc = "One of the earliest applications of Origin Magick, Acceleration was first devised to hasten crop growth and shorten agricultural cycles. The experiment revealed a fundamental limitation of the art: while a subject's personal timeline can be advanced, the debt incurred cannot be avoided. Reality inevitably reconciles the discrepancy, repaying every stolen moment in equal measure. Though unsuitable for cultivation, the technique found lasting use among Naledi Viziers as a potent, if taxing, combat tool."
 	button_icon_state = "accel"
 	sound = list('sound/magic/haste.ogg')
 	cast_range = 6
@@ -67,11 +67,7 @@
 	if(!afterimage_active)
 		owner.AddComponent(/datum/component/after_image)
 		afterimage_active = TRUE
-
 	to_chat(owner, span_green("My timeline races ahead of the present. I am unbound by time!"))
-
-/datum/status_effect/buff/accel/tick()
-	owner.stamina_add(-69)
 
 /datum/status_effect/buff/accel/on_remove()
 	. = ..()
@@ -106,7 +102,6 @@
 	. = ..()
 
 	ADD_TRAIT(owner, TRAIT_NODEF, "naledi_cat_nonsense")
-	owner.stamina_add(125)
 	to_chat(owner, span_red("Everything feels unbearably slow. I am defenseless!"))
 
 /datum/status_effect/debuff/decel/on_remove()
@@ -118,7 +113,6 @@
 
 /datum/status_effect/debuff/decel/nextmove_modifier()
 	return 2
-
 
 /obj/effect/temp_visual/origin_haste
 	icon = 'icons/effects/effects.dmi'

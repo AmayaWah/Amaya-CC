@@ -35,6 +35,8 @@
 /obj/projectile/energy/divineblast
 	name = "Divine Blast"
 	icon_state = "divine_blast"
+	guard_deflectable = TRUE
+	expose_caster_on_deflect = TRUE
 	damage = 20 // wont do much to a divine worshipper
 	woundclass = BCLASS_STAB // divine blade!
 	nodamage = FALSE
@@ -47,8 +49,10 @@
 	damage = 15 // Slightly lower base damage and barely matter due to low to hit but not a problem on acolyte / cleric.
 	arcshot = TRUE
 
-/obj/projectile/energy/divineblast/on_hit(target)
+/obj/projectile/energy/divineblast/on_hit(target, blocked = FALSE)
 	. = ..()
+	if(blocked >= 100)
+		return
 	if(isliving(target))
 		var/mob/living/H = target
 		if(H.job in GLOB.church_positions) // TRAIT_CLERGY could work here but is unmaintained and druids, sextons, etc. all lack it.
@@ -105,11 +109,7 @@
 					H.blur_eyes(10)
 				if(/datum/patron/divine/noc)
 					H.visible_message(span_warning("Moonlight engulfs [H]"), span_warning("Moonlight engulfs me!"))
-					for(var/obj/O in range(0, H))	
-						O.extinguish()
-					for(var/mob/M in range(0, H)) // extinguish lights of target(zizo snuff pretty much but range 0 always)
-						for(var/obj/O in M.contents)
-							O.extinguish()
+					damage += (caster.get_stat(STATKEY_INT) * 2)
 				if(/datum/patron/divine/ravox)
 					H.Slowdown(2)
 				if(/datum/patron/divine/malum)

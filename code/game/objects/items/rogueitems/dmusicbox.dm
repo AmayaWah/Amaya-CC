@@ -98,7 +98,7 @@
 		return
 
 	var/filename = "[infile]"
-	var/file_ext = lowertext(copytext(filename, -4))
+	var/file_ext = LOWER_TEXT(copytext(filename, -4))
 	var/file_size = length(infile)
 
 	if(file_ext != ".ogg")
@@ -124,8 +124,7 @@
 	if(!playing)
 		if(curfile)
 			playing = TRUE
-			soundloop.mid_sounds = list(curfile)
-			soundloop.cursound = null
+			soundloop.set_mid_sounds(list(curfile))
 			soundloop.start()
 	else
 		playing = FALSE

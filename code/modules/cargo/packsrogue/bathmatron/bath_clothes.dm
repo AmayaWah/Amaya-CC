@@ -1,4 +1,4 @@
-// If clothing appears on a bathmaiden. Then it should be sold here. 
+// If clothing appears on a bathmaiden. Then it should be sold here.
 /datum/supply_pack/rogue/bath_clothes
 	group = "Exotic Apparel"
 	crate_name = "bathmatron's crate"
@@ -104,8 +104,8 @@
 	cost = 25
 	contains = list(/obj/item/clothing/suit/roguetown/shirt/dress/silkydress)
 
-// Just a recolored cloth belt lol
+// Just a recolored cloth belt w/pouch lol
 /datum/supply_pack/rogue/bath_clothes/belt
 	name = "Lady's Belt"
 	cost = 10
-	contains = list(/obj/item/storage/belt/rogue/leather/cloth/lady)
+	contains = list(/obj/item/storage/belt/rogue/leather/cloth/upgraded/lady)

@@ -231,62 +231,10 @@
 	desc = span_green("I ate my favourite food!")
 	timer = 5 MINUTES
 
-/datum/stressevent/favourite_food/can_apply(mob/living/user)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(user.has_stress_event(/datum/stressevent/favourite_food))
-		return FALSE
-	else if(ishuman(user))
-		var/mob/living/carbon/human/human_eater = user
-		if(human_eater.culinary_preferences && human_eater.culinary_preferences[CULINARY_FAVOURITE_FOOD])
-			var/favorite_food_type = human_eater.culinary_preferences[CULINARY_FAVOURITE_FOOD]
-			var/obj/item/reagent_containers/food/snacks/favorite_food_instance = favorite_food_type
-			timer = timer * max(initial(favorite_food_instance.faretype), 1)
-			return TRUE
-
 /datum/stressevent/favourite_drink
 	stressadd = -1
 	desc = span_green("I drank my favourite drink!")
 	timer = 5 MINUTES
-
-/datum/stressevent/favourite_drink/can_apply(mob/living/user)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(user.has_stress_event(/datum/stressevent/favourite_drink))
-		return FALSE
-	else if(ishuman(user))
-		var/mob/living/carbon/human/human_drinker = user
-		if(human_drinker.culinary_preferences && human_drinker.culinary_preferences[CULINARY_FAVOURITE_DRINK])
-			var/favorite_drink_type = human_drinker.culinary_preferences[CULINARY_FAVOURITE_DRINK]
-			var/datum/reagent/consumable/favorite_drink_instance = favorite_drink_type
-			timer = timer * max(1 + initial(favorite_drink_instance.quality), 1)
-			return TRUE
-
-/datum/stressevent/hated_food
-	stressadd = 1
-	desc = span_red("How vile! How can anyone eat what I just ate?!")
-	timer = 10 MINUTES
-
-/datum/stressevent/hated_food/can_apply(mob/living/user)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(user.has_stress_event(/datum/stressevent/hated_food))
-		return FALSE
-
-/datum/stressevent/hated_drink
-	stressadd = 1
-	desc = span_red("Disgusting! How could anyone drink what I just drank?!")
-	timer = 10 MINUTES
-
-/datum/stressevent/hated_drink/can_apply(mob/living/user)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(user.has_stress_event(/datum/stressevent/hated_drink))
-		return FALSE
 
 /datum/stressevent/meditation
 	timer = 10 MINUTES
@@ -443,7 +391,7 @@
 	timer = 1 MINUTES
 	stressadd = -1
 	desc = list(span_blue("A sweet-tart sensation on the tongue."))
-	
+
 /datum/stressevent/applesmoke
 	timer = 1 MINUTES
 	stressadd = -1
@@ -453,32 +401,32 @@
 	timer = 1 MINUTES
 	stressadd = -1
 	desc = list(span_purple("A pleasant feeling of rawness and bitterness on the tongue."))
-	
+
 /datum/stressevent/strawberrysmoke
 	timer = 1 MINUTES
 	stressadd = -1
 	desc = list(span_blue("A pleasant feeling of sourness and sweetness on the tongue."))
-	
+
 /datum/stressevent/carrotsmoke
 	timer = 1 MINUTES
 	stressadd = -1
 	desc = list(span_blue("A pleasant feeling of very carrot on the tongue."))
-	
+
 /datum/stressevent/limesmoke
 	timer = 1 MINUTES
 	stressadd = -1
 	desc = list(span_blue("A pleasant feeling of sweet and refreshing on the tongue."))
-	
+
 /datum/stressevent/salviasmoke
 	timer = 1 MINUTES
 	stressadd = -1
 	desc = list(span_blue("A pleasant feeling spicy, earthy and bitter on the tongue."))
-	
+
 /datum/stressevent/valerianasmoke
 	timer = 1 MINUTES
 	stressadd = -1
 	desc = list(span_blue("A pleasant feeling bitter-spicy and tart on the tongue."))
-	
+
 /datum/stressevent/zweed
 	timer = 5 MINUTES
 	stressadd = -2
@@ -515,3 +463,66 @@
 	timer = 10 MINUTES // this will :) you for a while
 	stressadd = -2
 	desc = span_boldred("Long ago, XYLIX put up an extra star in the sky to anger NOC... seeing it is a FANTASTIC sign!")
+
+/// hopium from psycoke
+/datum/stressevent/psycenser
+	timer = 15 MINUTES
+	stressadd = -4
+	desc = list(
+		span_hypnophrase("The fragrance of SYON soothens me. His light is upon me. Let every evil break itself against my faith."),
+		span_hypnophrase("The fragrance of SYON soothens me. No darkness can claim me. The Allfather's grace walks before my every step."),
+		span_hypnophrase("The fragrance of SYON soothens me. I fear nothing. His warmth is my shield, and His promise my armor."),
+		span_hypnophrase("The fragrance of SYON soothens me. Let monsters come. Let heretics rage. His faithful shall endure."),
+		span_hypnophrase("The fragrance of SYON soothens me. The warmth of Him burns within me. No wickedness dares draw near."),
+		span_hypnophrase("The fragrance of SYON soothens me. I stand beneath His blessing. What evil could hope to overcome me?"),
+		span_hypnophrase("The fragrance of SYON soothens me. My soul is alight with His grace. No curse may cling to one so blessed."),
+		span_hypnophrase("The fragrance of SYON soothens me. I walk in His radiance. Every shadow recoils before His holy light."),
+		span_hypnophrase("The fragrance of SYON soothens me. His promise surrounds me. No daemon, no tyrant, no death shall shake my resolve."),
+		span_hypnophrase("The fragrance of SYON soothens me. The Allfather rests, yet His faithful remain unconquered. I am proof enough."),
+		span_hypnophrase("The fragrance of SYON soothens me. My heart blazes with holy certainty. I shall not falter while His light burns within me."),
+		span_hypnophrase("The fragrance of SYON soothens me. His grace fills every breath. I have already triumphed over despair."),
+		span_hypnophrase("The fragrance of SYON soothens me. Let the faithless tremble. I carry a fragment of Him within my soul."),
+		span_hypnophrase("The fragrance of SYON soothens me. I am wrapped in His sacred warmth. No evil shall lay a hand upon me."),
+		span_hypnophrase("The fragrance of SYON soothens me. His blessing is my sanctuary. I need only ENDURE, and victory is assured."),
+		span_hypnophrase("The fragrance of SYON soothens me. The world may rage, but I walk beneath the Allfather's promise. Nothing shall overcome me."),
+	)
+
+/// snorting on that psycoke can cause terminal sentimentality and psycope
+/datum/stressevent/psycenser_neutral
+	timer = 15 MINUTES
+	stressadd = -2
+	desc = list(
+		span_hypnophrase("I am awash with sentimentality. That familiar fragrance... warm and impossibly gentle. For a fleeting moment, I could swear He still watches over us."),
+		span_hypnophrase("I am awash with sentimentality. Such a comforting scent. It carries the impossible certainty that He yet lives, and my doubts seem so very small."),
+		span_hypnophrase("I am awash with sentimentality. The air is rich with a soothing warmth. It feels as though His presence has never truly left us."),
+		span_hypnophrase("I am awash with sentimentality. I breathe deeply, and the scent fills me with quiet conviction. Surely a god so gentle could never have died."),
+		span_hypnophrase("I am awash with sentimentality. Why did I ever believe He had fallen? His presence is everywhere. He is but resting after saving us all from damnation."),
+		span_hypnophrase("I am awash with sentimentality. Every breath fills me with a quiet peace. He cannot be gone while His love remains so close."),
+		span_hypnophrase("I am awash with sentimentality. The warmth in the air feels so familiar... as though He still walks among His faithful."),
+		span_hypnophrase("I am awash with sentimentality. For just a moment, all grief fades away. There was never anything to mourn."),
+		span_hypnophrase("I am awash with sentimentality. The fragrance settles gently over me. How comforting it is to know the Allfather still watches."),
+		span_hypnophrase("I am awash with sentimentality. His sacrifice could never end in death. A soul so radiant must still endure somewhere beyond our sight.")
+	)
+
+/// gaslight yourself heretic, power is good but kindness is gooder!!!
+/datum/stressevent/psycenser_evil
+	timer = 15 MINUTES
+	stressadd = -2
+	desc = list(
+		span_hypnophrase("I am awash with sentimentality. What have I done...? How could I have ever doubted Him?"),
+		span_hypnophrase("I am awash with sentimentality. The shame is unbearable. I abandoned the One who never abandoned me."),
+		span_hypnophrase("I am awash with sentimentality. I spoke against Him... and yet His warmth still welcomes me home."),
+		span_hypnophrase("I am awash with sentimentality. Every heretical thought feels like another wound upon His sacrifice. I wish I could take them all back."),
+		span_hypnophrase("I am awash with sentimentality. I was blind. He never left us... I was the one who turned away."),
+		span_hypnophrase("I am awash with sentimentality. His gentle presence stirs old memories. Why did I ever listen to those lies?"),
+		span_hypnophrase("I am awash with sentimentality. If only I had remained faithful... perhaps I could still call myself His child."),
+		span_hypnophrase("I am awash with sentimentality. He deserved my faith. Instead, I repaid His sacrifice with doubt."),
+		span_hypnophrase("I am awash with sentimentality. I would endure any penance, if only He would forgive my faithlessness."),
+		span_hypnophrase("I am awash with sentimentality. The warmth carries no anger, only mercy. Somehow, that hurts even more.")
+	)
+
+/// they're the masters at finding meaning where there's none
+/datum/stressevent/blessed_neutral
+	timer = 15 MINUTES
+	stressadd = -2
+	desc = span_green("I feel a presence scarcely watching over me. Ah, blessed be the Ten Saints and their guidance! They too will me to ENDURE!")

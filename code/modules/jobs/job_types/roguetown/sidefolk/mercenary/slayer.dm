@@ -10,9 +10,9 @@
 	cmode_music = 'sound/music/combat_dwarf.ogg'
 	extra_context = "Only those warriors who swore an Oath to the God of Craft or the God of Justice may become Trollslayers." //Caustic Edit - changing it to be non-dwarf specific, and clear on the dieties // dwarf exclusive and will force Ravox
 
-	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_SHIRTLESS) //TRAIT_SHIRTLESS prevents equip on the head, armor and shirt slots and enables class-specific weapons
-	subclass_stats = list( 
-		STATKEY_STR = 2, 
+	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_SHIRTLESS, TRAIT_NOPAINSTUN) //TRAIT_SHIRTLESS blocks equip in armor, shirt, and head slots.
+	subclass_stats = list(
+		STATKEY_STR = 2,
 		STATKEY_CON = 5,
 		STATKEY_WIL = 2,
 		STATKEY_INT = -3, // Brain dented in an accident involving 2 squirrels and a drunk zizite.
@@ -29,6 +29,7 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN, // Butcher trolls
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE, // Sew up the countless holes you will be receiving
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE, //bare minimum so they can use silverfaces and the like
 	)
 	adv_stat_ceiling = list(STAT_STRENGTH = 12) // I'm sorry but you're not grabbing muscular and aiming chest with 12 speed 17 strength swift intent spam.
 
@@ -133,7 +134,7 @@
 		/datum/species/dwarf,
 		/datum/species/dwarf/mountain
 		)
-	surgery_cover = FALSE 
+	surgery_cover = FALSE
 	max_integrity = 135
 	sewrepair = FALSE
 	repairmsg_begin = "The thick skin cover starts to bulge and repair tears"

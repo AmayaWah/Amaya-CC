@@ -35,6 +35,7 @@
 		TRAIT_SEEPRICES,
 		TRAIT_CRITICAL_RESISTANCE,
 		TRAIT_HEAVYARMOR,
+		TRAIT_ARMOR_NOSPDCAP, //Ancient dread; their armor never weighs on their stride.
 		TRAIT_CABAL,
 		TRAIT_DEATHSIGHT,
 		TRAIT_COUNTERCOUNTERSPELL,
@@ -42,6 +43,7 @@
 		TRAIT_ARCYNE,
 		TRAIT_SELF_SUSTENANCE,
 		TRAIT_SILVER_WEAK,
+		TRAIT_NOWW,
 		TRAIT_BADTRAINER
 		)
 
@@ -137,7 +139,7 @@
 	H.adjust_skillrank_up_to(/datum/skill/combat/arcyne, 5, TRUE) //Master, so conjured summons reach their top tier.
 	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
-	H?.mind.setup_mage_aspects(list("mastery" = TRUE, "major" = 2, "minor" = 3, "utilities" = 9, "ward" = TRUE))
+	H?.mind.setup_mage_aspects(list("mastery" = TRUE, "major" = 2, "minor" = 3, "utilities" = 13, "ward" = TRUE))
 	// Give it decent combat stats to make up for loss of 2 extra lives
 	H.change_stat(STATKEY_STR, 3)
 	H.change_stat(STATKEY_INT, 5)
@@ -150,23 +152,31 @@
 	new /obj/item/rogueweapon/spellbook/grand(get_turf(H))
 
 	if(H.mind)
-		// Lich-specific spells (not from aspects)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/bonechill)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/bonemend)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/raise_undead_formation)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/blood_bolt())
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/minion_order)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/gravemark)
+		// Our outburst version, its unique and a means to avoid softlocks
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb)
+		// Lich-specific spells (not from aspects)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/blood_bolt())
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/remotebomb)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/lich_announce)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/convert_heretic)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/zizo/bestowcant/lich)
+		// Other role required spells.
+		H.mind.AddSpell(new /datum/action/cooldown/spell/conjure_summon/raise_undead_guard) //Caustic Edit - Add in the Undead Guard here as well!
+		H.mind.AddSpell(new /datum/action/cooldown/spell/raise_undead_formation)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/bonechill)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/bonemend)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/tame_undead)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/raise_deadite)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/minion_order)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/gravemark)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/raise_deadite) //Zombifies dead people
+		// Our Utility Spells
+		H.mind.AddSpell(new /datum/action/cooldown/spell/convert_heretic)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular/zizo)
 		// This is probably a bad idea, but let's live a little.
 		H.mind.AddSpell(new /datum/action/cooldown/spell/summon_terrorhog)
+		// Consistancy as they're basically a ruler in the hierarchy above Necromancers
+		H.mind.AddSpell(new /datum/action/cooldown/spell/eyebite)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/lacrima)
 	H.ambushable = FALSE
 	H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/other/lich]
 
@@ -226,7 +236,6 @@
 		SLOT_BELT,
 		SLOT_BELT_R,
 		SLOT_BELT_L,
-		SLOT_HANDS,
 		SLOT_HANDS,
 		SLOT_BACK_L,
 		)
@@ -342,6 +351,9 @@
 		qdel(src)
 
 /obj/effect/proc_holder/spell/self/lich_announce
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon_state = "lich_command"
 	name = "Command Will"
 	desc = "Bellow a commandment, which will be heard by all undead creechers - irregardless of their location - underneath your command."
 	recharge_time = 20 SECONDS
@@ -350,7 +362,7 @@
 	if(user.stat)
 		return FALSE
 
-	var/calltext = input("Send Your Will To Your Undead", "UNDEAD ANNOUNCE") as text|null
+	var/calltext = sanitize(input("Send Your Will To Your Undead", "UNDEAD ANNOUNCE") as text|null)
 	if(!calltext)
 		return FALSE
 
@@ -369,6 +381,7 @@
 /datum/action/cooldown/spell/summon_terrorhog
 	name = "Summon Terrorhog"
 	desc = "First cast allows you to name your very own, loyal Terrorhog. Second cast lets you summon a Terrorhog. This is a single use spell when uses to summon. Beware, drooling feral hogs do not cease their rampage until they are dead, and cannot be leashed properly."
+	background_icon = 'icons/mob/actions/zizomiracles.dmi'
 	button_icon = 'icons/mob/actions/classuniquespells/lichspells.dmi'
 	button_icon_state = "hog"
 
@@ -451,7 +464,7 @@
 	src.icon_state = initial(path_cast.icon_state)
 	src.pixel_x = initial(path_cast.pixel_x)
 	src.pixel_y = initial(path_cast.pixel_y)
-	src.color = "#777777" 
+	src.color = "#777777"
 	animate(src, alpha = 200, time = spawn_delay, easing = EASE_IN)
 	playsound(src, 'sound/misc/jumpscare (4).ogg', 50, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(finalize_spawn_terrorhog)), spawn_delay)

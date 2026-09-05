@@ -160,7 +160,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 		if("Psydonic Flanged Mace - Heavy-Balanced")
 			H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/psy/preblessed(H))
-			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)	
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 		if("Your Faith (Expertise With Most Weapons)")
 			H.equip_to_slot_or_del(new /obj/item/quiver/bolt/standard, SLOT_BELT_R, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow, SLOT_BACK_L, TRUE)
@@ -324,7 +324,7 @@
 	for(var/obj/structure/fluff/psycross/N in oview(5, src))
 		found = N
 	if(!found)
-		to_chat(src, span_warning("I need a large psycross structure nearby to extract this divination!"))	
+		to_chat(src, span_warning("I need a large psycross structure nearby to extract this divination!"))
 		return
 	if(!H.stat)
 		var/static/list/faith_lines = list(
@@ -363,7 +363,10 @@
 					continue
 				confessions += antag.confess_lines
 	if(length(confessions))
-		say(pick(confessions), spans = list("torture"))
+		if(HAS_TRAIT(src, TRAIT_UNFORGIVABLE))
+			say(pick(confessions), spans = list("bloody"))//Vheslynites aren't people.
+		else
+			say(pick(confessions), spans = list("torture"))
 		return
 	say(pick(innocent_lines), spans = list("torture"))
 
@@ -391,7 +394,7 @@
 		found = N
 	if(!found)
 		to_chat(src, span_warning("I need a large psycross structure nearby to extract this divination!"))
-		return	
+		return
 	if(!H.stat)
 		var/static/list/torture_lines = list(
 			"CONFESS!",

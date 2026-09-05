@@ -180,23 +180,23 @@
 	new_bounty.amount = amount
 	new_bounty.target = target_realname
 	new_bounty.bandit = bandit_status
-	new_bounty.reason = reason
+	new_bounty.reason = html_encode(reason)
 	new_bounty.employer = employer_name
 	new_bounty.target_race = race
-	new_bounty.target_height = lowertext(descriptor_height)
-	new_bounty.target_body = lowertext(descriptor_body)
+	new_bounty.target_height = LOWER_TEXT(descriptor_height)
+	new_bounty.target_body = LOWER_TEXT(descriptor_body)
 	if(descriptor_body == "Average" || descriptor_body == "Athletic")
 		var/bro_unreal = "an "
-		new_bounty.target_body_prefix = lowertext(bro_unreal += descriptor_body)
+		new_bounty.target_body_prefix = LOWER_TEXT(bro_unreal += descriptor_body)
 	else
 		var/bro_real = "a "
-		new_bounty.target_body_prefix = lowertext(bro_real += descriptor_body)
+		new_bounty.target_body_prefix = LOWER_TEXT(bro_real += descriptor_body)
 	if(descriptor_voice == "Ordinary" || descriptor_voice == "Androgynous")
 		var/bro_unreal = "an "
-		new_bounty.target_voice_prefix = lowertext(bro_unreal += descriptor_voice)
+		new_bounty.target_voice_prefix = LOWER_TEXT(bro_unreal += descriptor_voice)
 	else
 		var/bro_real = "a "
-		new_bounty.target_voice_prefix = lowertext(bro_real += descriptor_voice)
+		new_bounty.target_voice_prefix = LOWER_TEXT(bro_real += descriptor_voice)
 	if(gender == MALE)
 		new_bounty.target_body_type = "masculine"
 	else
@@ -420,7 +420,7 @@
 	INVOKE_ASYNC(src, PROC_REF(giveup), M)
 	say("Assessing value of lyfe...")
 	sleep(13 SECONDS) //Caustic Edit - Adjusting the time to account for the removed below bits.
-	
+
 	//Caustic Edit - Changing this around so that struggling against it damages you, but doesn't kill, and submitting means no damage.
 	/*var/list/headcrush = list('sound/combat/fracture/headcrush (2).ogg', 'sound/combat/fracture/headcrush (3).ogg', 'sound/combat/fracture/headcrush (4).ogg')
 	playsound(src, pick_n_take(headcrush), 100, FALSE, -1)
@@ -456,6 +456,8 @@
 			message_admins("[M.real_name] was killed by the EXCIDIUM.")
 			log_admin("[M.real_name] was killed by the EXCIDIUM.")
 			playsound(src, 'sound/combat/vite.ogg', 100, FALSE, -1)
+			M.emote("superagony")
+			M.visible_message(span_warningbig("The CASTIFICO begins GRUESOMELY SHAVING OUT every bit and ounce of [M]'s FLESH on their HEAD, leaving only a grinning, bleeding skull behind. Justice has been served."))
 			victim_head.skeletonize()*/
 			var/list/headcrush = list('sound/combat/fracture/headcrush (2).ogg', 'sound/combat/fracture/headcrush (3).ogg', 'sound/combat/fracture/headcrush (4).ogg')
 			playsound(src, pick_n_take(headcrush), 100, FALSE, -1) //Caustic Edit - Moved this block from above to in here instead.

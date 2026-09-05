@@ -203,8 +203,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/list/descriptor_entries = list()
 	var/list/custom_descriptors = list()
 
-	var/char_accent = "No accent"
-
 	var/list/gear_list = list()	// Assoc list: item_name = list("color"=..., "custom_name"=..., "custom_desc"=...)
 
 	var/flavortext
@@ -227,8 +225,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/taur_type = null
 	var/taur_color = "ffffff"
 
-	/// Assoc list of culinary preferences, where the key is the type of the culinary preference, and value is food/drink typepath
-	var/list/culinary_preferences = list()
+	var/favorite_cuisine = NONE
+	var/favorite_dish = NONE
+	var/favorite_drink = NONE
 
 	var/datum/advclass/preview_subclass
 
@@ -256,7 +255,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/examine_theme
 
 	/// Whether we can see the feint HUD bar.
-	var/feint_hud = FALSE 
+	var/feint_hud = FALSE
 
 	// Vocal bark prefs
 	var/bark_id = "mutedc3"
@@ -273,7 +272,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/tat_build/tat_build //CC + TA edit
 	//CC Edit - Roleplay Guidance Pref, whether you encourage PvP and wish to fight others if invited or discourage PvP and wish to avoid fighting,
 			//but does not exempt you from combat or the consequences of your own actions.
-	var/rp_guidance = 3 //Defaults to Default by Default. 
+	var/rp_guidance = 3 //Defaults to Default by Default.
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -504,7 +503,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<b>Race Bonus:</b> <a href='?_src_=prefs;preference=race_bonus_select;task=input'>[race_bonus_display ? "[race_bonus_display]" : "None"]</a><BR>"
 			else
 				race_bonus = null
-			
+
 			var/datum/language/selected_lang
 			var/lang_output = "None"
 			if(ispath(extra_language, /datum/language))
@@ -634,7 +633,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				if(istype(cf, /datum/charflaw/averse))
 					has_averse = TRUE
 					break
-			
+
 			if(has_averse)
 				if(!averse_chosen_faction)
 					averse_chosen_faction = "Inquisition"
@@ -713,7 +712,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<b>Mutant Color #2:</b><span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
 				dat += "<b>Mutant Color #3:</b><span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 
-			//dat += "<br><b>Accent:</b> <a href='?_src_=prefs;preference=char_accent;task=input'>[char_accent]</a>"
 			dat += "<br><b>Features:</b> <a href='?_src_=prefs;preference=customizers;task=menu'>Change</a>"
 			//dat += "<br><b>Sprite Scale:</b><a href='?_src_=prefs;preference=body_size;task=input'>[(features["body_size"] * 100)]%</a>" //Caustic Edit - Lets just comment this out because we have Size Scaling?
 			dat += "<br><b>Markings:</b> <a href='?_src_=prefs;preference=markings;task=menu'>Change</a>"
@@ -1401,7 +1399,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 		dat += "<br><b>Crime:</b> "
 		dat += "<a href='?_src_=prefs;preference=preset_bounty_crime;task=input'>\
-			[preset_bounty_crime || "None"]\
+			[html_encode(preset_bounty_crime) || "None"]\
 		</a>"
 	if(preset_bounty_severity_key && !GLOB.wretch_severities[preset_bounty_severity_key])
 		preset_bounty_severity_key = null
@@ -1549,7 +1547,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		else if(task == "tooltip")
 			var/tooltip = href_list["tooltip"]
 			to_chat(user, span_notice(virtuetwo.choice_tooltips[tooltip]))
-	
+
 	//Caustic Edit - Extra Virtue Handling
 	else if(href_list["preference"] == "subextravirtue")
 		var/task = href_list["task"]
@@ -1753,7 +1751,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			return
 		if("change_culinary_preferences")
 			handle_culinary_topic(user, href_list)
-			show_culinary_ui(user)
 			return
 		if("random")
 			switch(href_list["preference"])
@@ -1931,14 +1928,14 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					var voicetype_input = tgui_input_list(user, "Choose your character's voice type", "VOICE TYPE", GLOB.voice_types_list)
 					if(voicetype_input)
 						voice_type = voicetype_input
-						to_chat(user, "<font color='red'>Your character will now vocalize with a [lowertext(voice_type)] affect.</font>")
+						to_chat(user, "<font color='red'>Your character will now vocalize with a [LOWER_TEXT(voice_type)] affect.</font>")
 
 				if ("voicepack")
 					var/voicepack_input = tgui_input_list(user, "Choose your character's emote voice pack", "VOICE PACK", GLOB.voice_packs_list)
 					if(voicepack_input)
 						voice_pack = voicepack_input
 						if(voicepack_input != "Default")
-							to_chat(user, span_red("<font color='red'>Your character will now audibly emote with a [lowertext(voicepack_input)] affect.") + span_notice("<br>This will override your Voice Identity and Class-specific voice packs.</font>"))
+							to_chat(user, span_red("<font color='red'>Your character will now audibly emote with a [LOWER_TEXT(voicepack_input)] affect.") + span_notice("<br>This will override your Voice Identity and Class-specific voice packs.</font>"))
 						else
 							to_chat(user, "<font color='red'>Your character will now audibly emote in accordance to their Voice Identity and any Racial / Class-specific voice packs.</font>")
 				if("voicepack_preview")
@@ -2493,7 +2490,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					var/datum/loadout_menu/LM = new(user.client)
 					LM.ui_interact(user)
 					return
-								
+
 				//CC + TA edit
 				if("tat_build")
 					tat_build.ui_interact(user)
@@ -2507,7 +2504,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 												It does not allow you to attack anyone without proper escalation, or to avoid combat altogether, the server rules still apply. Failure to follow them may be met with punishment. \
 												\n If a player Discourages Combat, it does not mean they are immune. Their actions can and will still have consequences IC, if you or anyone else so deems it fitting. \
 												If someone has it set to Discouraged and repeatedly escalates situations with their actions or otherwise misuses it, please feel free to adminhelp to let us know, and we can chat with them."))
-												
+
 					switch(choice)
 						if("Default")
 							to_chat(user, span_warn("I have no strong feelings, one way or the other."))
@@ -2675,7 +2672,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/datum/virtue/virtue_chosen = virtue_choices[result]
 						virtue = new virtue_chosen.type
 						to_chat(user, process_virtue_text(virtue_chosen))
-						if(!istype(virtue, /datum/virtue/combat/rotcured) && !istype(virtuetwo, /datum/virtue/combat/rotcured) && !istype(extravirtue, /datum/virtue/combat/rotcured)) //Caustic Edit - Extra Virtue Handling
+						if(!istype(virtue, /datum/virtue/combat/second_chance) && !istype(virtuetwo, /datum/virtue/combat/second_chance) && !istype(extravirtue, /datum/virtue/combat/second_chance)) //Caustic Edit - Extra Virtue Handling
 							if(skin_tone == SKIN_COLOR_ROT)
 								var/new_tone = random_skin_tone()
 								skin_tone = new_tone
@@ -2707,7 +2704,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/datum/virtue/virtue_chosen = virtue_choices[result]
 						virtuetwo = new virtue_chosen.type
 						to_chat(user, process_virtue_text(virtue_chosen))
-						if(!istype(virtue, /datum/virtue/combat/rotcured) && !istype(virtuetwo, /datum/virtue/combat/rotcured) && !istype(extravirtue, /datum/virtue/combat/rotcured)) //Caustic Edit - Extra Virtue Handling
+						if(!istype(virtue, /datum/virtue/combat/second_chance && !istype(virtuetwo, /datum/virtue/combat/second_chance) && !istype(extravirtue, /datum/virtue/combat/second_chance))) //Caustic Edit - Extra Virtue Handling
 							if(skin_tone == SKIN_COLOR_ROT)
 								var/new_tone = random_skin_tone()
 								skin_tone = new_tone
@@ -2736,6 +2733,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						if (istype(V, /datum/virtue/origin/racial))
 							if(!(pref_species.type in V.races))
 								continue
+						if (istype(V, /datum/virtue/origin/familiar))
+							continue
 						virtue_choices[V.name] = V
 					var/result = tgui_input_list(user, "From where do you come?", "ORIGINS",virtue_choices)
 
@@ -2801,18 +2800,13 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 */
 				if("s_tone")
 					var/listy = pref_species.get_skin_list()
-					if(istype(virtue, /datum/virtue/combat/rotcured) || istype(virtuetwo, /datum/virtue/combat/rotcured) || istype(extravirtue, /datum/virtue/combat/rotcured)) //Caustic Edit - Extra Virtue Handling
+					if(istype(virtue, /datum/virtue/combat/second_chance) || istype(virtuetwo, /datum/virtue/combat/second_chance) || istype(extravirtue, /datum/virtue/combat/second_chance)) //Caustic Edit - Extra Virtue Handling
 						listy["Rotten"] = SKIN_COLOR_ROT
 					var/new_s_tone = tgui_input_list(user, "Choose your character's skin tone:", "SKINTONE", listy)
 					if(new_s_tone)
 						skin_tone = listy[new_s_tone]
 						features["mcolor"] = sanitize_hexcolor(skin_tone)
 						try_update_mutant_colors()
-
-				if("char_accent")
-					var/selectedaccent = tgui_input_list(user, "Choose your character's accent:", "Character Preference", GLOB.character_accents)
-					if(selectedaccent)
-						char_accent = selectedaccent
 
 				if("ooccolor")
 					var/new_ooccolor = color_pick_sanitized(user, "Choose your OOC colour:", "Game Preference",ooccolor)
@@ -3137,7 +3131,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					user << browse(null, "window=preferences") //closes job selection
 					user << browse(null, "window=mob_occupation")
 					user << browse(null, "window=latechoices") //closes late job selection
-					user << browse(null, "window=migration") // Closes migrant menu
+					migrant.hide_ui() // Closes migrant menu
 
 					SStriumphs.remove_triumph_buy_menu(user.client)
 
@@ -3309,7 +3303,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.ooc_notes = ooc_notes
 	character.nsfwflavortext = nsfwflavortext
 	character.erpprefs = erpprefs
-	
+
 	// Copy the cached version
 	character.flavortext_cached = flavortext_cached
 	character.ooc_notes_cached = ooc_notes_cached
@@ -3362,12 +3356,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		character.update_hair()
 		character.update_body_parts(redraw = TRUE)
 
-	character.char_accent = char_accent
-
 	apply_customizers_to_character(character)
 
-	if(culinary_preferences)
-		apply_culinary_preferences(character)
+	apply_culinary_preferences(character)
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)
@@ -3461,7 +3452,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 /datum/preferences/proc/is_active_migrant()
 	if(!migrant)
 		return FALSE
-	if(!migrant.active)
+	if(!migrant.queued_wave)
 		return FALSE
 	return TRUE
 

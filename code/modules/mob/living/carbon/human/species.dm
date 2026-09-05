@@ -525,6 +525,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.grant_language(language_type)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
+	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
@@ -554,6 +555,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	C.dna.organ_dna = list()
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
+	UnregisterSignal(C, COMSIG_MOB_SAY)
 
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)
@@ -932,7 +934,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return FALSE //Unsupported slot
 
 /datum/species/proc/equip_delay_self_check(obj/item/I, mob/living/carbon/human/H, bypass_equip_delay_self)
-	if(!I.equip_delay_self || bypass_equip_delay_self)
+	if(!I.equip_delay_self || bypass_equip_delay_self || isbelly(H.loc) || istype(H.loc, /obj/item/holder/micro)) //Caustic Edit - Allow equipping in a belly or as a mobholder for micros!
 		return TRUE
 	if(HAS_TRAIT(H, TRAIT_CHUNKYFINGERS))
 		return do_after(H, 5 MINUTES, target = H)
@@ -972,7 +974,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //LIFE//
 ////////
 
-/datum/species/proc/handle_digestion(mob/living/carbon/human/H) 
+/datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 //CC Edit Begin
 	handle_diet(H)
 //CC Edit End
@@ -1008,8 +1010,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.Jitter(5)
 			hunger_rate = 10 * HUNGER_FACTOR*/
 //		hunger_rate *= H.physiology.hunger_mod
+		//Caustic Edit - Add in adjustments to Bottomless, and also the 10-minute grace timer for nutrition is added here!
+		if(H.has_flaw(/datum/charflaw/bottomless))
+			hunger_rate = (hunger_rate * 1.5) //Bottomless Flaw players just drain their nutrition faster instead of that constantly increasing max.
 		if(!H.mind || world.time < H.time_of_last_move + 10 MINUTES)
 			H.adjust_nutrition(-hunger_rate)
+		//Caustic Edit End
 
 		var/obj/item/organ/breasts/breasts = H.has_breasts()
 		if(breasts)
@@ -1809,7 +1815,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(!affecting)
 		return
-	
+
 	var/datum/status_effect/buff/clash/limbguard/LG = H.has_status_effect(/datum/status_effect/buff/clash/limbguard)
 	if(LG)
 		if(LG.protected_zone == selzone && LG.is_active)	// We "missed" into limbguard's protected zone.
@@ -1842,28 +1848,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			Iforce = 0
 	var/bladec = user.used_intent.blade_class
 
-	// Effective range check. Attacking a prone target doesn't apply a penalty at any range.
-	if(user.used_intent?.effective_range && H.mobility_flags & MOBILITY_STAND)
-		var/dist = get_dist(H, user)
-		var/range = user.used_intent?.effective_range
-		var/apply_penalty = FALSE
-		switch(user.used_intent?.effective_range_type)
-			if(EFF_RANGE_EXACT)
-				if(dist != range)
-					apply_penalty = TRUE
-			if(EFF_RANGE_BELOW)
-				if(dist <= range)
-					apply_penalty = TRUE
-			if(EFF_RANGE_ABOVE)
-				if(dist >= range)
-					apply_penalty = TRUE
-			if(EFF_RANGE_ABOVE)
-				apply_penalty = FALSE
-			else
-				CRASH("Invalid effective_range_type used by [user] with effective_range! Please set an effective_range_type on [user.used_intent?.type]")
-		if(apply_penalty)
-			pen = PEN_NONE
-			Iforce *= 0.5
+	if(user.used_intent?.out_of_effective_range(H, user))
+		pen = PEN_NONE
+		Iforce *= EFF_RANGE_MISS_DAMFACTOR
 
 	if(H == user && bladec == BCLASS_DISARM)
 		bladec = BCLASS_BLUNT
@@ -1887,7 +1874,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, show_self = FALSE)
 
 	if(H.client?.prefs.combat_toggles & HITZONE_TEXT)
-		H.balloon_alert(H, "[bodyzone2readablezone(selzone)]...") 
+		H.balloon_alert(H, "[bodyzone2readablezone(selzone)]...")
 
 	var/pen_info_check = get_pen_info(H, user, H.get_best_worn_armor(def_zone, int.item_d_type), def_zone, int.item_d_type, int.penfactor, I)
 	var/armor_block = H.run_armor_check(selzone, I.d_type, "", "",pen, damage = Iforce, blade_dulling=bladec, intdamfactor = used_intfactor, used_weapon = I, pen_info = pen_info_check)
@@ -2176,7 +2163,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			loc_temp = loc_b.bellytemperature
 		else
 			loc_temp = loc_b.owner.bodytemperature
-	
+
 	if(!loc_temp)
 		var/turf/cur_turf = get_turf(H)
 		loc_temp = cur_turf.temperature
@@ -2598,3 +2585,33 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return jointext(bonuses, " | ")
 	else
 		return null
+
+/datum/species/proc/can_flick_ears(mob/living/carbon/human/H)
+	if(!H) //Somewhere in the core code we're getting those procs with H being null
+		return FALSE
+	var/obj/item/organ/ears/E = H.getorganslot(ORGAN_SLOT_EARS)
+	if(!E || E.is_flicking) // We're already in a flicking animation
+		return FALSE
+	if(E.can_flick)
+		return TRUE
+	return FALSE
+
+/datum/species/proc/is_flicking_ears(mob/living/carbon/human/H)
+	var/obj/item/organ/ears/E = H.getorganslot(ORGAN_SLOT_EARS)
+	if(!E || E.is_flicking) // We're already in a flicking animation
+		return TRUE
+
+/datum/species/proc/perform_flick_ears(mob/living/carbon/human/H)
+	if(!H)
+		return FALSE
+	var/obj/item/organ/ears/E = H.getorganslot(ORGAN_SLOT_EARS)
+	E.is_flicking = TRUE
+	H.update_body_parts(TRUE)
+	addtimer(CALLBACK(src, PROC_REF(stop_flick_ears), H), 0.5 SECONDS)
+
+/datum/species/proc/stop_flick_ears(mob/living/carbon/human/H)
+	if(!H)
+		return FALSE
+	var/obj/item/organ/ears/E = H.getorganslot(ORGAN_SLOT_EARS)
+	E.is_flicking = FALSE
+	H.update_body_parts(TRUE)

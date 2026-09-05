@@ -119,7 +119,7 @@
 
 /datum/intent/dagger/cut/blunt
 	blade_class = BCLASS_BLUNT
-	
+
 /datum/intent/dagger/thrust/blunt
 	blade_class = BCLASS_BLUNT
 
@@ -486,7 +486,7 @@
 	no_early_release = TRUE
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	item_d_type = "slash"
-	misscost = 5 
+	misscost = 5
 	intent_intdamage_factor = 0.05
 
 /obj/item/rogueweapon/huntingknife/idagger
@@ -620,12 +620,15 @@
 	force = 25
 	max_integrity = 250
 	max_blade_int = 300
-	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0) 
+	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
 	smeltresult = /obj/item/ingot/component/zizo
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/zizo/Initialize()
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "DAGGER")
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/zizo/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_ZIZO_WEAPON)
 
 /obj/item/rogueweapon/huntingknife/combat/graggar
 	name = "vicious seax"
@@ -635,12 +638,15 @@
 	force = 25
 	max_integrity = 250
 	max_blade_int = 300
-	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0) 
+	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
 	smeltresult = /obj/item/ingot/component/graggar
 
 /obj/item/rogueweapon/huntingknife/combat/graggar/Initialize()
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "DAGGER")
+
+/obj/item/rogueweapon/huntingknife/combat/graggar/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_GRAGGAR_WEAPON)
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/matthios
 	name = "gilded knife"
@@ -650,12 +656,15 @@
 	force = 25
 	max_integrity = 250
 	max_blade_int = 300
-	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0) 
+	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
 	smeltresult = /obj/item/ingot/component/matthios
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/matthios/Initialize()
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_FREEMAN, "DAGGER")
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/matthios/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_MATTHIOS_WEAPON)
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/baotha
 	name = "saccharine misericorde"
@@ -665,12 +674,15 @@
 	force = 25
 	max_integrity = 250
 	max_blade_int = 300
-	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0) 
+	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
 	smeltresult = /obj/item/ingot/component/baotha
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/baotha/Initialize()
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "DAGGER")
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/baotha/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_BAOTHA_WEAPON)
 
 //
 
@@ -683,8 +695,11 @@
 	force = 25
 	max_integrity = 250
 	max_blade_int = 300
-	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 50, "embedded_fall_chance" = 0) 
+	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 50, "embedded_fall_chance" = 0)
 	smeltresult = /obj/item/ingot/avantyne
+
+/obj/item/rogueweapon/huntingknife/idagger/avantyne/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_ZIZO_WEAPON)
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/holysee
 	name = "eclipsum dagger"
@@ -872,6 +887,15 @@
 	unequip_delay_self = 0 //No delay when drawing.
 	inv_storage_delay = 0 //No delay when retrieving from a storage slot.
 
+/obj/item/rogueweapon/huntingknife/idagger/stake/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/deaditeslayer, time = 15 SECONDS)
+
+/obj/item/rogueweapon/huntingknife/idagger/stake/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Driving a stake through the heart of an incapacitated revenant is one of the few ways to put them down for the week. Sharper stakes, and ones made of silver, are better at this.")
+	. += span_info("Staking also works to kill many other types of undead - generally, anyone you can't kill with bloodloss can be staked.")
+
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake
 	name = "silver-tipped stake"
 	desc = "A branch that has been broken off of a boswellia tree, sharpened to a fine point and tipped with blessed silver. It can lay most unholy creechers to rest, but only by piercing their hearts."
@@ -899,6 +923,7 @@
 		added_int = 0,\
 		added_def = 0,\
 	)
+	AddComponent(/datum/component/deaditeslayer, time = 10 SECONDS) // these r anti undead weapons so they get to be slightly better at it
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/ComponentInitialize()
 	AddComponent(\
@@ -910,6 +935,12 @@
 		added_int = 0,\
 		added_def = 0,\
 	)
+	AddComponent(/datum/component/deaditeslayer, time = 10 SECONDS) // these r anti undead weapons so they get to be slightly better at it
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Driving a stake through the heart of an incapacitated revenant is one of the few ways to put them down for the week. Sharper stakes, and ones made of silver, are better at this.")
+	. += span_info("Staking also works to kill many other types of undead - generally, anyone you can't kill with bloodloss can be staked.")
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy
 	name = "silver-tipped otavan stake"
@@ -925,6 +956,7 @@
 		added_int = 0,\
 		added_def = 0,\
 	)
+	AddComponent(/datum/component/deaditeslayer, time = 10 SECONDS) // these r anti undead weapons so they get to be slightly better at it
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/preblessed/ComponentInitialize()
 	AddComponent(\
@@ -937,6 +969,7 @@
 		added_def = 0,\
 	)
 	sellprice += 200
+	AddComponent(/datum/component/deaditeslayer, time = 10 SECONDS) // these r anti undead weapons so they get to be slightly better at it
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/lesser
 	name = "silver-tipped handstake"
@@ -1042,7 +1075,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/silver/elvish/poopknife
 	name = "thine majesty's nitesoil-cleaver"
 	desc = "A heraldric accompaniment to the chamberpot, and the most closely-guarded secret in all of Azuria. It is said that this once belonged to the Duke's eldest ancestor, who - in a fit of constipatory labor - had unwittingly realized another use for their wave-bladed trophy. Clinging to its silvered edge is a thin layer of otherworldly ash, refusing to yield to neither soap-nor-rag."
-	force = 15 //On the FIRST ROUND this was added, someone managed to kill the Vampire Lord with the Poop Knife. Reducing the force 
+	force = 15 //On the FIRST ROUND this was added, someone managed to kill the Vampire Lord with the Poop Knife. Reducing the force
 	max_integrity = 50 //Should render to ~100, at most. More fragile than alloyed knives. You know why.
 	max_blade_int = 333 //Exceedingly sharp. Ditto.
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/bronze, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/thrust/combat) //Seax's intents, for self-explanatory reasons.
@@ -1050,7 +1083,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/silver/elvish/drow
 	name = "dark elvish dagger"
 	desc = "A once-elegant mithril dagger, who's sunless presence has long since been overshadowed by its vicious bite."
-	force = 18 
+	force = 18
 	last_used = 0
 	is_silver = FALSE //Intended, as it's technically not silver - or at the very least, so divorced from traditional silver that it no longer retains its properties.
 	smeltresult = /obj/item/ingot/drow

@@ -1,9 +1,9 @@
-/mob/living/carbon/human/getarmor(def_zone, type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor, used_weapon, pen_info, flat_integ = FALSE)
+/mob/living/carbon/human/getarmor(def_zone, type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor, used_weapon, pen_info, no_debuff = FALSE)
 	var/armorval = 0
 	var/organnum = 0
 
 	if(def_zone)
-		return checkarmor(def_zone, type, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info, flat_integ)
+		return checkarmor(def_zone, type, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info, no_debuff)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL my bodyparts for protection, and averages out the values
@@ -14,7 +14,7 @@
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(def_zone, d_type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor = 1, obj/item/used_weapon, pen_info, flat_integ = FALSE)
+/mob/living/carbon/human/proc/checkarmor(def_zone, d_type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor = 1, obj/item/used_weapon, pen_info, no_debuff = FALSE)
 	if(!d_type)
 		return 0
 	if(isbodypart(def_zone))
@@ -24,8 +24,8 @@
 	var/protection = 0
 	var/dr_armor_present = FALSE
 	var/intdamage = damage
-	// Exposed/Vulnerable are melee set-ups; a ranged hit (including a caster's own fire/frost) shouldn't burn the proc it just set up. Full armor penetration also clears this below.
-	var/consume_debuff = !istype(used_weapon, /obj/projectile)
+	// Only melee weapon should be able to cash in on Exposed / Vulnerable
+	var/consume_debuff = !no_debuff && !istype(used_weapon, /obj/projectile)
 	if(!(d_type in ARMOR_DR_TYPES))
 		// Penetration types: slash, stab, piercing
 		used = get_best_worn_armor(def_zone, d_type)
@@ -72,25 +72,23 @@
 				intdamage *= tempo_bonus
 
 			if(consume_debuff)
-				var/use_flat = flat_integ
 				if(has_status_effect(/datum/status_effect/debuff/exposed))
-					if(use_flat)
-						intdamage += EXPOSED_INTEG_FLAT
-					else
-						intdamage *= EXPOSED_INTEG_MOD
+					intdamage *= EXPOSED_INTEG_MOD
 					playsound(src, 'sound/combat/exposed_pop.ogg', 100, TRUE)
 					visible_message("<span class = 'combatsecondarybodypart'>[src] suffers a savage hit to their armor while exposed!</span>")
 					remove_status_effect(/datum/status_effect/debuff/exposed)
 					emote("pain", forced = TRUE)
 				else if(has_status_effect(/datum/status_effect/debuff/vulnerable))
-					if(use_flat)
-						intdamage += VULN_INTEG_FLAT
-					else
-						intdamage *= VULN_INTEG_MOD
+					intdamage *= VULN_INTEG_MOD
 					playsound(src, 'sound/combat/vulnerable_pop.ogg', 100, TRUE)
 					visible_message(span_biginfo("[src] is struck into their armor while vulnerable!"))
 					remove_status_effect(/datum/status_effect/debuff/vulnerable)
 					emote("groan", forced = TRUE)
+
+			//CC Edit - Reduce Total Integrity Damage Taken via AC ratio after all calculations were made.
+			var/armor_ratio = get_armor_class_ratio(used)
+			intdamage -= (intdamage * armor_ratio)
+			//CC Edit End
 
 			used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 	else
@@ -118,23 +116,16 @@
 			if(tempo_bonus)
 				intdamage *= tempo_bonus
 
-			var/use_flat = flat_integ
 			var/full_dmg
 			if(consume_debuff && has_status_effect(/datum/status_effect/debuff/exposed))
 				full_dmg = TRUE
-				if(use_flat)
-					intdamage += EXPOSED_INTEG_FLAT
-				else
-					intdamage *= EXPOSED_INTEG_MOD
+				intdamage *= EXPOSED_INTEG_MOD
 				playsound(src, 'sound/combat/exposed_pop.ogg', 100, TRUE)
 				visible_message("<span class = 'combatsecondarybodypart'>[src] suffers a savage hit to their armor while exposed!</span>")
 				remove_status_effect(/datum/status_effect/debuff/exposed)
 				emote("pain", forced = TRUE)
 			else if(consume_debuff && has_status_effect(/datum/status_effect/debuff/vulnerable))
-				if(use_flat)
-					intdamage += VULN_INTEG_FLAT
-				else
-					intdamage *= VULN_INTEG_MOD
+				intdamage *= VULN_INTEG_MOD
 				playsound(src, 'sound/combat/vulnerable_pop.ogg', 100, TRUE)
 				visible_message(span_biginfo("[src] is struck into their armor while vulnerable!"))
 				remove_status_effect(/datum/status_effect/debuff/vulnerable)
@@ -142,6 +133,12 @@
 
 			if(d_type in ARMOR_DR_SINGLE_LAYER_TYPES)
 				if(best_layer)
+
+					//CC Edit - Reduce Total Integrity Damage Taken via AC ratio after all calculations were made.
+					var/armor_ratio = get_armor_class_ratio(best_layer)
+					intdamage -= (intdamage * armor_ratio)
+					//CC Edit End
+
 					best_layer.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 					if(best_layer.blocksound)
 						playsound(loc, get_armor_sound(best_layer.blocksound, blade_dulling), 100)
@@ -152,6 +149,12 @@
 					var/actualdmg = intdamage
 					if(!full_dmg)
 						actualdmg /= layers_deep
+
+					//CC Edit - Reduce Total Integrity Damage Taken via AC ratio after all calculations were made.
+					var/armor_ratio = get_armor_class_ratio(C)
+					intdamage -= (intdamage * armor_ratio)
+					//CC Edit End
+
 					C.take_damage(actualdmg, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 					if(C.blocksound && !played_sound)
 						playsound(loc, get_armor_sound(C.blocksound, blade_dulling), 100)
@@ -401,12 +404,12 @@
 			return FALSE
 		var/zones = M.zone_selected
 		if(!M.ckey)
-			zones = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_PRECISE_NECK, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+			zones = M.get_attack_zone(src)
 		var/dam_zone = dismembering_strike(M, zones)
 		if(!dam_zone) //Dismemberment successful
 			return TRUE
 
-		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
+		var/obj/item/bodypart/affecting = get_bodypart(M.ckey ? ran_zone(dam_zone) : check_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
 		var/armor = run_armor_check(affecting, M.d_type, armor_penetration = M.armor_penetration, damage = damage)
@@ -417,10 +420,12 @@
 			nodmg = TRUE
 			next_attack_msg += VISMSG_ARMOR_BLOCKED
 		else
-			SEND_SIGNAL(M, COMSIG_MOB_AFTERATTACK_SUCCESS, src)
+			SEND_SIGNAL(M, COMSIG_MOB_AFTERATTACK_SUCCESS, src, affecting)
 			affecting.bodypart_attacked_by(M.a_intent.blade_class, damage - armor, M, dam_zone, crit_message = TRUE)
-		visible_message(span_danger("\The [M] [pick(M.a_intent.attack_verb)] [src]![next_attack_msg.Join()]"), \
-					span_danger("\The [M] [pick(M.a_intent.attack_verb)] me![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
+		var/attack_verb = pick(M.a_intent.attack_verb)
+		var/hit_area = parse_zone(affecting.body_zone, affecting)
+		visible_message(span_danger("\The [M] [attack_verb] [src] in the [span_combatsecondarybp(hit_area)]![next_attack_msg.Join()]"), \
+					span_danger("\The [M] [attack_verb] me in the [span_userdanger(hit_area)]![next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
 		next_attack_msg.Cut()
 		if(nodmg)
 			return FALSE
@@ -715,7 +720,7 @@
 	else if(user)
 		m1 = "[p_they(TRUE)] [p_are()]"
 		if(!deep_examination)
-			deep_examination = HAS_TRAIT(user, TRAIT_EMPATH)
+			deep_examination = user.has_empath_for(src)
 		examination += span_notice("Let's see how [src] is doing.")
 		if(!user.stat && !silent)
 			user.visible_message(span_notice("[user] examines [src]."), \
@@ -781,7 +786,7 @@
 			visible_message(span_notice("[src] examines [p_their()] [parse_zone(choice)]."))
 	else if(user)
 		if(!deep_examination)
-			deep_examination = HAS_TRAIT(user, TRAIT_EMPATH)
+			deep_examination = user.has_empath_for(src)
 		examination += span_notice("Let's see how [src]'s [parse_zone(choice)] is doing.")
 		if(!user.stat && !silent)
 			visible_message(span_notice("[user] examines [src]'s [parse_zone(choice)]."))
@@ -871,12 +876,6 @@
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
-		if(skin_armor) //Checks for the natural_armor first.
-			if(skin_armor.obj_integrity > 0)
-				var/obj/item/clothing/C = skin_armor
-				var/val = C.armor.getRating(d_type)
-				if(val > protection)
-					used = C
 		if(bp && istype(bp, /obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(zone2covered(def_zone, C.body_parts_covered_dynamic))
@@ -890,7 +889,8 @@
 						used = C
 				// Fire/acid: fall back to a worn real-armor piece even at a 0 rating, so a fire/acid-0
 				// plate still reads as "armored" (engages absorb, shows crumble messages). A rated piece wins.
-				else if((d_type in ARMOR_DR_RESIST_TYPES) && C.max_integrity && !used)
+				// has_armor_value() (any blunt/slash/stab/piercing rating) is the real-armor gate so plain cloth keeps bypassing instead of burning off.
+				else if((d_type in ARMOR_DR_RESIST_TYPES) && C.max_integrity && C.has_armor_value() && !used)
 					used = C
 	return used
 
@@ -917,9 +917,9 @@
 						continue
 				var/val = C.armor.getRating(d_type)
 				// Fire/acid: any worn real-armor piece counts even at a 0 rating (blunt keeps its own rating gate), so it soaks
-				// HP damage and takes integrity damage instead of letting it bypass. Cosmetics (no max_integrity)
-				// stay excluded. The stored rating is preserved as the value (effective/displayed tier).
-				if(val > 0 || ((d_type in ARMOR_DR_RESIST_TYPES) && C.max_integrity))
+				// HP damage and takes integrity damage instead of letting it bypass. Plain cloth (no blunt/slash/stab/piercing rating)
+				// and cosmetics (no max_integrity) stay excluded so they bypass instead of burning off. The stored rating is preserved as the value.
+				if(val > 0 || ((d_type in ARMOR_DR_RESIST_TYPES) && C.max_integrity && C.has_armor_value()))
 					used_armor[C] = val
 	return used_armor
 
@@ -990,25 +990,19 @@
 		I.fire_act(stacks * 25 * seconds_per_tick) //damage taken is reduced to 2% of this value by fire_act()
 
 
-//Used to grab the ratio for all armor pieces meant to be damaged for use with the checkarmor() proc.
-//Can handle either one, or multiple pieces of armor.
+//Grabs the armor class ratio for the used armor piece when calculating the amount of damage to absorb.
 
-/mob/living/carbon/human/proc/get_armor_class_ratio(armor_list)
-	var/cur_armor = 1 //List indexing value
-	var/list/ratio_list = list()
-	for(var/i in 1 to length(armor_list))
-		var/obj/item/clothing/used = armor_list[cur_armor]
-		var/cur_ratio = 0
-		switch(used.armor_class)
-			if(ARMOR_CLASS_NONE)
-				cur_ratio = AC_NONE_RATIO
-			if(ARMOR_CLASS_LIGHT)
-				cur_ratio = AC_LIGHT_RATIO
-			if(ARMOR_CLASS_MEDIUM)
-				cur_ratio = AC_MEDIUM_RATIO
-			if(ARMOR_CLASS_HEAVY)
-				cur_ratio = AC_HEAVY_RATIO
-		ratio_list += cur_ratio
-		cur_armor++
-	return ratio_list
+/mob/living/carbon/human/proc/get_armor_class_ratio(armor_piece)
+	var/obj/item/clothing/used = armor_piece
+	var/cur_ratio = 0
+	switch(used.armor_class)
+		if(ARMOR_CLASS_NONE)
+			cur_ratio = AC_NONE_RATIO
+		if(ARMOR_CLASS_LIGHT)
+			cur_ratio = AC_LIGHT_RATIO
+		if(ARMOR_CLASS_MEDIUM)
+			cur_ratio = AC_MEDIUM_RATIO
+		if(ARMOR_CLASS_HEAVY)
+			cur_ratio = AC_HEAVY_RATIO
+	return cur_ratio
 

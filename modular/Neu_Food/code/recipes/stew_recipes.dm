@@ -37,7 +37,7 @@
 // DONATOR
 /datum/stew_recipe/azurosa_tea
 	inputs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals_dried/azure)
-	output = /datum/reagent/water/azurosa_tea
+	output = /datum/reagent/consumable/azurosa_tea
 	cooktime = STEW_COOKING_TIME / 4
 
 // STANDARD
@@ -360,9 +360,9 @@
 	cooktime = STEW_COOKING_TIME * 2 //A little longer to break down all of the deliciousness.
 
 /datum/stew_recipe/viscera
-	inputs = list(/obj/item/organ/appendix, /obj/item/organ/lungs, /obj/item/organ/liver, /obj/item/organ/stomach, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/alch/viscera, /obj/item/alch/sinew)
+	inputs = list(/obj/item/organ/appendix, /obj/item/organ/lungs, /obj/item/organ/liver, /obj/item/organ/stomach, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/brain, /obj/item/organ/heart, /obj/item/alch/viscera, /obj/item/alch/sinew)
 	output = /datum/reagent/consumable/soup/stew/viscera_broth
-	cooktime = STEW_COOKING_TIME * 2 //Ditto. No hearts or brains, in order to avoid potentially permakilling someone. Could find a way to handle this, otherwise.
+	cooktime = STEW_COOKING_TIME * 2
 
 /datum/stew_recipe/brothbrique
 	inputs = list(/obj/item/reagent_containers/food/snacks/rogue/meat/brothbrique/slice)
@@ -507,12 +507,12 @@
 // DRINKS
 /datum/stew_recipe/rose_tea
 	inputs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals_dried)
-	output = /datum/reagent/water/rosewater
+	output = /datum/reagent/consumable/rosewater
 	cooktime = STEW_COOKING_TIME / 4 // Ultra fast
 
 /datum/stew_recipe/rose_tea_spiced
 	inputs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals_spiced)
-	output = /datum/reagent/water/rosewater_spiced
+	output = /datum/reagent/consumable/rosewater_spiced
 	cooktime = STEW_COOKING_TIME / 3
 
 /datum/stew_recipe/coffee

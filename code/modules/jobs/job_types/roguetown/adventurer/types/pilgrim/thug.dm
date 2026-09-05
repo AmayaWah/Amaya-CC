@@ -42,7 +42,7 @@
 
 /datum/outfit/job/roguetown/adventurer/thug/goon/pre_equip(mob/living/carbon/human/H)
 	..()
-	belt = /obj/item/storage/belt/rogue/leather/rope
+	belt = /obj/item/storage/belt/rogue/leather/rope/upgraded
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
 	pants = /obj/item/clothing/under/roguetown/tights/random
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
@@ -93,7 +93,7 @@
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	subclass_stats = list(
 		STATKEY_WIL = -2,
-		STATKEY_CON = -2,	
+		STATKEY_CON = -2,
 		STATKEY_STR = -1,
 		STATKEY_SPD = 2,
 		STATKEY_INT = 2,
@@ -193,7 +193,8 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
-	armor = /obj/item/clothing/suit/roguetown/armor/manual/pushups/leather
+	armor = /obj/item/clothing/suit/roguetown/armor/manual/resting/thug //light gambeson.
+	shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/thug/chest //leather armor with gambeson integ.
 	backpack_contents = list(
 				/obj/item/rogueweapon/huntingknife = 1,
 				/obj/item/recipe_book/survival = 1,
@@ -201,7 +202,7 @@
 				/obj/item/rogueweapon/scabbard/sheath = 1
 				)
 	if(should_wear_femme_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/desertbra //Let's not set our ladies naked roundstart
+		l_hand = /obj/item/clothing/suit/roguetown/shirt/desertbra //Let's not set our ladies naked roundstart.  ...unless we have to. Should be able to toss into skin-armor cosmetic overlay easy enough inround.
 
 	var/options = list("Hands-On", "Big Axe")
 	var/option_choice = input("Choose your means.", "TAKE UP ARMS") as anything in options

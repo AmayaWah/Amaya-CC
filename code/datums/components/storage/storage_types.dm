@@ -169,7 +169,8 @@
 		/obj/item/herbseed,
 		/obj/item/reagent_containers/food/snacks/grown/manabloom,
 		/obj/item/reagent_containers/food/snacks/grown/berries/rogue,
-		/obj/item/ash
+		/obj/item/ash,
+		/obj/item/herb_powder,
 		))
 
 /datum/component/storage/concrete/roguetown/saddle
@@ -187,6 +188,7 @@
 	allow_dump_out = TRUE
 	dump_time = 40
 	collection_mode = COLLECT_SAME
+	does_not_spill = TRUE
 
 /datum/component/storage/concrete/tray/spill_contents(obj/A)
 	if (A.throwing)

@@ -32,7 +32,7 @@
 	desc = "A sleeveless maille shirt, fashioned from dozens of interlinked bronze rings. It's light enough to comfortably tuck underneath a \
 	blouse, yet tough enough to thwart the razor-sharp edges of unwelcomed company. For the discerning traveler - ideally, from an antique land."
 	icon_state = "bhaubyrnie"
-	max_integrity = ARMOR_INT_CHEST_LIGHT_IRON - 30
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BRONZE
 	smeltresult = /obj/item/ingot/bronze
 	armor = ARMOR_BRONZE
 
@@ -233,6 +233,9 @@
 	max_integrity = ARMOR_INT_CHEST_PLATE_PSYDON + 50
 	smeltresult = /obj/item/ingot/silverblessed
 
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate/ComponentInitialize() //CCedit
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_PSYDONIAN_GRIT, "ornate_plate") //ccedit end
+
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate/get_mechanics_examine(mob/user)
 	. = ..()
 	. += span_info("With more blessed silver and an armorsmith's hammer, this armor can be further upgraded.")
@@ -317,6 +320,9 @@
 	/*add_filter(FORCE_FILTER, 2, list("type" = "outline", "color" = "#fff385", "alpha" = 120, "size" = 1)) //IS THIS TRVE?
 */ // Combine with #ffc960 to make an easier, do-it-yourself version of Gilded items without the need for exotic sprites.
 
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/matthios/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_MATTHIOS_ARMOR)
+
 //
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
@@ -333,6 +339,9 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
 	/*add_filter(FORCE_FILTER, 2, list("type" = "outline", "color" = "#5f1515", "alpha" = 120, "size" = 1)) //Cursed look.
 */ // Combine with #c1b18d to make an easier, do-it-yourself version of Avantyne items without the need for exotic sprites.
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo/get_examine_highlight_status()
+	return list(EXAMINEHIGHLIGHT_HERESYSEVERITY_ALARMING, HERESYDESC_ZIZO_ARMOR)
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo/heavy
 	name = "fused avantyne hauberk"

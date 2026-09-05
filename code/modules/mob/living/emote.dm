@@ -65,18 +65,19 @@
 
 /datum/emote/living/meditate/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
+	to_chat(user, span_green("You focus inwards..."))
+	for(var/cycle in 1 to 3)
+		if(!do_after(user, 10 SECONDS))
+			return
+		SEND_SIGNAL(user, COMSIG_MOB_MEDITATED)
 	if(HAS_TRAIT(user, TRAIT_IRONMAN))
-		to_chat(user, span_green("You focus inwards..."))
-		if(do_after(user, 1 MINUTES))
-			var/mob/living/U = user
-			var/percent = U.max_energy * 0.3
-			user.add_stress(/datum/stressevent/meditation_ironman)
-			user.energy_add(percent)
-			playsound(user, 'sound/misc/machineyes.ogg', 25)
+		var/mob/living/U = user
+		var/percent = U.max_energy * 0.3
+		user.add_stress(/datum/stressevent/meditation_ironman)
+		user.energy_add(percent)
+		playsound(user, 'sound/misc/machineyes.ogg', 25)
 	else
-		to_chat(user, span_green("You focus inwards..."))
-		if(do_after(user, 1 MINUTES))
-			user.add_stress(/datum/stressevent/meditation)
+		user.add_stress(/datum/stressevent/meditation)
 
 /datum/emote/living/bow
 	key = "bow"
@@ -399,6 +400,7 @@
 	message_muffled = "makes a muffled groan."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 // Attack blip played randomly.
 /datum/emote/living/attack
@@ -472,10 +474,12 @@
 				message_param = "kisses %t deeply."
 			else if(H.zone_selected == BODY_ZONE_PRECISE_EARS)
 				message_param = "kisses %t on the ear."
-				var/mob/living/carbon/human/E = target
-				if(iself(E) || ishalfelf(E) || isdarkelf(E))
-					if(!E.cmode)
-						to_chat(target, span_love("It tickles..."))
+				if(!HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && !HAS_TRAIT(target, TRAIT_NOMOOD))
+					var/mob/living/carbon/human/E = target
+					if(iself(E) || ishalfelf(E) || isdarkelf(E) || issunelf(E))
+						if(!E.cmode)
+							to_chat(target, span_love("It tickles..."))
+							E.emote("eflick", intentional = TRUE)
 			else if(H.zone_selected == BODY_ZONE_PRECISE_R_EYE || H.zone_selected == BODY_ZONE_PRECISE_L_EYE)
 				message_param = "kisses %t on the brow."
 			else if(H.zone_selected == BODY_ZONE_PRECISE_SKULL)
@@ -484,6 +488,11 @@
 				message_param = "kisses %t on \the [parse_zone(H.zone_selected)]."
 	playsound(target.loc, pick('sound/vo/kiss (1).ogg','sound/vo/kiss (2).ogg'), 100, FALSE, -1)
 	if(user.mind)
+		/// Blackblood hidden interactions
+		var/mob/living/carbon/carbs = target
+		if(HAS_TRAIT(carbs, TRAIT_BLACKBLOOD) && HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(carbs, TRAIT_PSYDONIAN_GRIT))
+			user.add_stress(/datum/stressevent/inq_trauma)
+			carbs.emote("whimper")
 		record_round_statistic(STATS_KISSES_MADE)
 
 /datum/emote/living/lick
@@ -517,10 +526,12 @@
 				message_param = "licks %t lips."
 			else if(J.zone_selected == BODY_ZONE_PRECISE_EARS)
 				message_param = "licks the ear of %t."
-				var/mob/living/carbon/human/O = target
-				if(iself(O) || ishalfelf(O) || isdarkelf(O))
-					if(!O.cmode)
-						to_chat(target, span_love("It tickles..."))
+				if(!HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && !HAS_TRAIT(target, TRAIT_NOMOOD))
+					var/mob/living/carbon/human/O = target
+					if(iself(O) || ishalfelf(O) || isdarkelf(O) || issunelf(O))
+						if(!O.cmode)
+							to_chat(target, span_love("It tickles..."))
+							O.emote("eflick", intentional = TRUE)
 			else if(J.zone_selected == BODY_ZONE_PRECISE_GROIN)
 				message_param = "licks %t between the legs."
 				to_chat(target, span_love("That feels nice..."))
@@ -586,6 +597,11 @@
 	if(ishuman(target))
 		playsound(target.loc, pick('sound/vo/hug.ogg'), 100, FALSE, -1)
 		if(user.mind)
+			/// Blackblood hidden interactions
+			var/mob/living/carbon/carbs = target
+			if(HAS_TRAIT(carbs, TRAIT_BLACKBLOOD) && HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(carbs, TRAIT_PSYDONIAN_GRIT))
+				carbs.add_stress(/datum/stressevent/inq_trauma)
+				carbs.stress_freakout()
 			record_round_statistic(STATS_HUGS_MADE)
 			SEND_SIGNAL(user, COMSIG_MOB_HUGGED, target)
 
@@ -667,6 +683,11 @@
 		//Caustic Edit End
 		H.AdjustSleeping(-50)
 		playsound(target.loc, 'sound/foley/slap.ogg', 100, TRUE, -1)
+		/// Blackblood hidden interactions
+		var/mob/living/carbon/carbs = target
+		if(HAS_TRAIT(target, TRAIT_BLACKBLOOD) && HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(target, TRAIT_PSYDONIAN_GRIT))
+			user.add_stress(/datum/stressevent/inq_trauma)
+			carbs.emote("whimper")
 
 /datum/emote/living/pinch
 	key = "pinch"
@@ -706,6 +727,7 @@
 	message_muffled = "makes a muffled laugh."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
@@ -784,6 +806,7 @@
 	message_muffled = "makes a muffled noise in attempt to scream!"
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /mob/living/carbon/human/verb/emote_scream()
 	set name = "Scream"
@@ -811,6 +834,7 @@
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/scream/painscream/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -836,8 +860,27 @@
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/scream/agony/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(.)
+		for(var/mob/living/carbon/human/L in viewers(7,user))
+			if(L == user)
+				L.sate_addiction(/datum/charflaw/addiction/masochist)
+				continue
+			if(get_dist(L, user) <= 2 && L != user)
+				L.sate_addiction(/datum/charflaw/addiction/sadist)
+
+/datum/emote/living/scream/superagony
+	key = "superagony"
+	message = "screams in ungodly agony!"
+	emote_type = EMOTE_AUDIBLE
+	only_forced_audio = TRUE
+	show_runechat = FALSE
+	needs_emotion = TRUE
+
+/datum/emote/living/scream/superagony/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(.)
 		for(var/mob/living/carbon/human/L in viewers(7,user))
@@ -853,6 +896,7 @@
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/scream/firescream/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -893,6 +937,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/drown
 	key = "drown"
@@ -908,6 +953,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/embed
 	key = "embed"
@@ -915,6 +961,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/painmoan
 	key = "painmoan"
@@ -922,6 +969,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/groin
 	key = "groin"
@@ -929,6 +977,7 @@
 	nomsg = TRUE
 	only_forced_audio = TRUE
 	show_runechat = FALSE
+	needs_emotion = TRUE
 
 /datum/emote/living/fatigue
 	key = "fatigue"
@@ -1564,7 +1613,7 @@
 
 		switch(key)
 			if("strength")
-				success = living.stat_roll(STAT_STRENGTH, chance_per_point, modifier_sum) 
+				success = living.stat_roll(STAT_STRENGTH, chance_per_point, modifier_sum)
 				chance = living.get_stat(STAT_STRENGTH)
 			if("perception")
 				success = living.stat_roll(STAT_PERCEPTION, chance_per_point, modifier_sum)
@@ -1899,12 +1948,12 @@
 /mob/living/carbon/human/verb/dive()
 	set name = "Dive Underwater"
 	set category = "IC.Actions" //Caustic Edit - Originally was it's own tab, "Swimming"
-	
+
 	var/turf/T = get_turf(src)
 	if(!istype(T, /turf/open/water/transparent))
 		to_chat(src, span_warning("You must be in deep water to dive!"))
 		return
-	
+
 	var/turf/below = GET_TURF_BELOW(T)
 	if(!below || !istype(below, /turf/open/water/transparent))
 		to_chat(src, span_warning("It's not deep enough here to dive."))
@@ -1915,9 +1964,9 @@
 /mob/living/carbon/human/verb/surface()
 	set name = "Swim to Surface"
 	set category = "IC.Actions" //Caustic Edit - Originally was it's own tab, "Swimming"
-	
+
 	var/turf/T = get_turf(src)
-	
+
 	if(!istype(T, /turf/open/water/transparent/inner))
 		to_chat(src, span_warning("You are already at the surface!"))
 		return
@@ -1930,22 +1979,22 @@
 	src.swim_z(UP)
 
 /mob/living/carbon/human/proc/swim_z(direction)
-	if(stat || IsKnockdown() || IsParalyzed()) 
+	if(stat || IsKnockdown() || IsParalyzed())
 		to_chat(src, span_warning("You are too incapacitated to move!"))
 		return FALSE
-	
+
 	var/turf/current_T = get_turf(src)
 	var/target_z = (direction == UP) ? (z + 1) : (z - 1)
 	var/turf/target_T = locate(current_T.x, current_T.y, target_z)
 
 	if(istype(target_T, /turf/open/water))
-		if(!stamina_add(direction == DOWN ? 20 : 10)) 
+		if(!stamina_add(direction == DOWN ? 20 : 10))
 			to_chat(src, span_warning("You are too exhausted to [direction == UP ? "surface" : "dive"]!"))
 			return FALSE
 
 		visible_message(span_notice("[src] [direction == UP ? "emerges to the surface" : "dives into the depths"]."))
 		forceMove(target_T)
 		return TRUE
-		
+
 	to_chat(src, span_warning("You can't [direction == UP ? "emerge" : "dive"] here."))
 	return FALSE

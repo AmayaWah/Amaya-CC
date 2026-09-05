@@ -33,7 +33,7 @@
 				loc.visible_message(span_warning("The meister snaps onto [H]'s arm!"))
 				H.Stun(80)
 				H.apply_damage(50, BRUTE, def_zone)
-				H.emote("agony")
+				H.emote("superagony")
 				spawn(5)
 				say("Blueblood for the Freefolk!")
 				playsound(src, 'sound/vo/mobs/ghost/laugh (5).ogg', 100, TRUE)
@@ -68,11 +68,11 @@
 
 /obj/structure/roguemachine/atm/attackby(obj/item/P, mob/user, params)
 	if(ishuman(user))
-		if(istype(P, /obj/item/roguecoin/aalloy))	
-			return	
-		
+		if(istype(P, /obj/item/roguecoin/aalloy))
+			return
+
 		if(istype(P, /obj/item/roguecoin/inqcoin))
-			return		
+			return
 
 		if(istype(P, /obj/item/roguecoin))
 			var/mob/living/carbon/human/H = user
@@ -153,7 +153,7 @@
 		drilling = FALSE
 		has_reported = FALSE
 		return
-	if(mammonsiphoned >199) // The cap variable for siphoning. 
+	if(mammonsiphoned >199) // The cap variable for siphoning.
 		new /obj/item/coveter(loc)
 		loc.visible_message(span_warning("Maximum withdrawal reached! The meister weeps."))
 		playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
@@ -310,7 +310,7 @@
 			head.add_wound(/datum/wound/fracture)
 			head.update_disabled()
 			H.apply_damage(50, BRUTE, head)
-			H.emote("agony")
+			H.emote("superagony")
 		if("agony")
 			H.apply_damage(10, BRUTE, head)
 			H.emote("agony")

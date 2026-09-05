@@ -57,7 +57,11 @@
 
 /datum/customizer_choice/organ/belly/animal
 	sprite_accessories = list(
-		/datum/sprite_accessory/belly
+		/datum/sprite_accessory/belly,
+		/datum/sprite_accessory/belly/normal_gs,
+		/datum/sprite_accessory/belly/round,
+		/datum/sprite_accessory/belly/smooth,
+		/datum/sprite_accessory/belly/smooth_noarms
 		)
 
 /mob/living/carbon/verb/changebellysize()
@@ -147,12 +151,18 @@
 	customizer_choices = list(/datum/customizer_choice/organ/butt/human)
 
 /datum/customizer_choice/organ/butt/human
-	sprite_accessories = list(/datum/sprite_accessory/butt/pair)
+	sprite_accessories = list(
+		/datum/sprite_accessory/butt/pair,
+		/datum/sprite_accessory/butt/pair/pair_gs
+		)
 	allows_accessory_color_customization = FALSE
 
 /datum/customizer/organ/butt/animal
 	customizer_choices = list(/datum/customizer_choice/organ/butt/animal)
 
 /datum/customizer_choice/organ/butt/animal
-	sprite_accessories = list(/datum/sprite_accessory/butt/pair)
+	sprite_accessories = list(
+		/datum/sprite_accessory/butt/pair,
+		/datum/sprite_accessory/butt/pair/pair_gs
+		)
 

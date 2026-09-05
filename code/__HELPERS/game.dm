@@ -391,6 +391,8 @@
 	var/list/candidates = list()
 
 	for(var/mob/dead/observer/G in GLOB.player_list)
+		if(isscryeye(G))
+			continue
 		candidates += G
 
 	for(var/mob/living/carbon/spirit/bigchungus in GLOB.player_list)
@@ -420,6 +422,7 @@
 				continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
+		SEND_SOUND(M, 'sound/misc/updatebook.ogg') // CC Edit - Give Poll Candidates a sound for when they get notified. Thanks.
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.

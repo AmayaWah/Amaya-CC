@@ -75,10 +75,12 @@
 	skel_outfit = /datum/outfit/job/roguetown/skeleton/npc/vile_doctor
 	dodgetime = 15 //Moves a lot
 	d_intent = INTENT_DODGE //Expert in this
+	threat_point = THREAT_ELITE //CC Edit - Makes them elite tiered for the PvP contracts and in general.
 
 /mob/living/carbon/human/species/skeleton/npc/special/disgraced_noble
 	skel_outfit = /datum/outfit/job/roguetown/skeleton/npc/disgraced_noble
 	dodgetime = 15 //Moves a lot
+	threat_point = THREAT_ELITE //CC Edit - Makes them elite tiered for the PvP contracts and in general.
 
 /datum/outfit/job/roguetown/skeleton/npc/supereasy/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -536,7 +538,7 @@
 		mask = /obj/item/clothing/mask/rogue/facemask // nose crits not as easy
 		gloves = /obj/item/clothing/gloves/roguetown/chain/aalloy
 		cloak = /obj/item/clothing/cloak/cape/purple
-	
+
 	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)

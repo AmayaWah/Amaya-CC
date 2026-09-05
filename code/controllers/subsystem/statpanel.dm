@@ -78,7 +78,8 @@ SUBSYSTEM_DEF(statpanels)
 			target.stat_panel.send_message("remove_stats_tab")
 			target.statbrowser_stats_shown = FALSE
 
-		if(target.mob?.listed_turf || target.listedturf_sig)
+		if((target.mob?.listed_turf || target.listedturf_sig) && (target.listedturf_dirty || (num_fires % default_wait == 0)))
+			target.listedturf_dirty = FALSE
 			target.update_listed_turf()
 
 		if(!target.holder)
@@ -183,7 +184,9 @@ SUBSYSTEM_DEF(statpanels)
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	mc_data = list(
-		list("", "CPU:", world.cpu),
+		list("", "CPU:", "[world.cpu] ([world.map_cpu] map + [world.cpu - world.map_cpu] process)"),
+		list("", "Maptick Percent:", "[world.cpu ? round((world.map_cpu / world.cpu) * 100) : 0]%"),
+		list("", "Controller Overview:", "Click to view", "", "Controller-Overview"),
 		list("", "Instances:", "[num2text(world.contents.len, 10)]"),
 		list("", "World Time:", "[world.time]"),
 		list("", "Globals:", GLOB.stat_entry(), text_ref(GLOB)),
@@ -242,7 +245,7 @@ SUBSYSTEM_DEF(statpanels)
 /// Stat panel window declaration
 /client/var/datum/tgui_window/stat/stat_panel
 
-/datum/tgui_window/stat/initialize(strict_mode, fancy, assets, inline_html, inline_js, inline_css)
+/datum/tgui_window/stat/initialize(strict_mode, assets, inline_html, inline_js, inline_css)
 	. = ..()
 	send_message("build_topbar") // This is the best way of doing it... don't @ me
 

@@ -2,7 +2,7 @@
 	name = "Monk"
 	tutorial = "You are a wandering acolyte, versed in both miracles and martial arts. You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."
 	allowed_sexes = list(MALE, FEMALE)
-	
+
 	vampcompat = FALSE
 	outfit = /datum/outfit/job/roguetown/adventurer/cleric
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
@@ -51,10 +51,10 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 	pants = /obj/item/clothing/under/roguetown/tights/black
-	shoes = /obj/item/clothing/shoes/roguetown/sandals
+	shoes = /obj/item/clothing/shoes/roguetown/footwraps/padded
 	backl = /obj/item/storage/backpack/rogue/satchel
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
-	belt = /obj/item/storage/belt/rogue/leather/rope
+	belt = /obj/item/storage/belt/rogue/leather/rope/upgraded
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
@@ -66,17 +66,33 @@
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)	//Capped to T1 miracles. Better passive regeneration.
 	if(H.mind)
-		var/weapons = list("Discipline - Unarmed","Katar","Knuckledusters","Quarterstaff")
+		var/weapons = list("Penance - Unarmored","Discipline - Unarmed","Katar","Knuckledusters","Quarterstaff")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
+			if("Penance - Unarmored") // Loses Dodge Expert, gains Enduring and a weaker Skin Armor.
+				ADD_TRAIT(H, TRAIT_NOPAINSTUN, JOB_TRAIT)
+				H.change_stat(STATKEY_LCK, 1) // better pity bonus
+				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+					armor = /obj/item/clothing/suit/roguetown/armor/manual/sewable/padded/monke //gambeson. ape out, brothers. Bonus durability over other monks, but you have to stitch it up.
+					shirt = /obj/item/clothing/suit/roguetown/armor/manual/sewable/padded/monke/chest //leather armor.
+				else
+					armor = /obj/item/clothing/suit/roguetown/armor/manual/emote/prayer/monk //light gambeson, repaired by praying.
+					shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/monk/chest //leather armor with light gambeson integ, this one needs resting.
+
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 			if("Discipline - Unarmed")
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, JOB_TRAIT)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 			if("Katar")
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, JOB_TRAIT)
 				beltl = /obj/item/rogueweapon/katar/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Knuckledusters")
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, JOB_TRAIT)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
 					r_hand = /obj/item/clothing/gloves/roguetown/knuckles/psydon/old
 				else
@@ -85,7 +101,6 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 3, TRUE) //On par with the new Quarterstaff-centric virtue. A monk can take said-virtue if they want the best of both worlds.
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 2, TRUE) //Balance idea's pretty simple. A dedicated staff user can use polearms too - as both weapon types are fundamentally similar, but it'd always be a skill level lower than the staff.
 				H.change_stat(STATKEY_PER, 1) //Compliments the quarterstaff's precision-based mechanics.
-				REMOVE_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
@@ -102,8 +117,8 @@
 			mask =  /obj/item/clothing/head/roguetown/roguehood/nochood
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/noc
 		if(/datum/patron/divine/abyssor)
-			mask = /obj/item/clothing/head/roguetown/roguehood/abyssor
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
+			mask = /obj/item/clothing/head/roguetown/roguehood/abyssor_painter
+			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor_painter
 		if(/datum/patron/divine/dendor)
 			mask = /obj/item/clothing/head/roguetown/dendormask
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
@@ -232,7 +247,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	backpack_contents = list(
-		/obj/item/flashlight/flare/torch/metal = 1, 
+		/obj/item/flashlight/flare/torch/metal = 1,
 		/obj/item/recipe_book/survival = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		)
@@ -627,7 +642,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/vestments_padded
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/rope/upgraded
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
@@ -653,8 +668,8 @@
 			H.adjust_skillrank(/datum/skill/misc/reading, SKILL_LEVEL_NOVICE, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/alchemy, SKILL_LEVEL_APPRENTICE, TRUE)
 		if(/datum/patron/divine/abyssor)
-			head = /obj/item/clothing/head/roguetown/roguehood/abyssor
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
+			head = /obj/item/clothing/head/roguetown/roguehood/abyssor_painter
+			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor_painter
 			H.adjust_skillrank(/datum/skill/misc/swimming, SKILL_LEVEL_NOVICE, TRUE)
 			H.adjust_skillrank(/datum/skill/labor/fishing, SKILL_LEVEL_NOVICE, TRUE)
 		if(/datum/patron/divine/dendor)
@@ -702,7 +717,7 @@
 			H.adjust_skillrank(/datum/skill/misc/athletics, SKILL_LEVEL_NOVICE, TRUE)
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 		if(/datum/patron/inhumen/zizo)
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe 
+			cloak = /obj/item/clothing/suit/roguetown/shirt/robe
 			head = /obj/item/clothing/head/roguetown/roguehood
 			H.mind?.AddSpell(new /datum/action/cooldown/spell/minion_order)
 			H.mind?.AddSpell(new /datum/action/cooldown/spell/gravemark)

@@ -9,7 +9,7 @@
 		return
 
 	var/area/A = get_area(H)
-	if(!istype(A, /area/rogue/outdoors/bog) && !istype(A, /area/rogue/indoors/shelter/bog) && !istype(A, /area/rogue/indoors/shelter/bog_hag) && !istype(A, /area/underwater) && !istype(A, /area/rogue/outdoors/desertdeep) && !istype(A, /area/rogue/indoors/shelter/desertdeep) && !istype(A, /area/rogue/under/underdarker/undermire)) //Caustic Edit - Add Underwater and Desert Town Specifics to the permitted areas.
+	if(!istype(A, /area/rogue/outdoors/bog) && !istype(A, /area/rogue/indoors/shelter/bog) && !istype(A, /area/rogue/indoors/shelter/bog_hag) && !istype(A, /area/underwater) && !istype(A, /area/rogue/outdoors/desertdeep) && !istype(A, /area/rogue/indoors/shelter/desertdeep) && !istype(A, /area/rogue/under/desertbog)) //Caustic Edit - Add Underwater and Desert Town Specifics to the permitted areas.
 		to_chat(H, span_userdanger("The purity of the air shatters my form!"))
 
 		// Grab the human inside before we untransform
@@ -68,7 +68,7 @@
 		adjust_skillrank(/datum/skill/misc/sneaking, SKILL_LEVEL_EXPERT, TRUE)
 		adjust_skillrank(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
 
-		AddSpell(new /obj/effect/proc_holder/spell/self/hagclaws) 
+		AddSpell(new /obj/effect/proc_holder/spell/self/hagclaws)
 		apply_status_effect(/datum/status_effect/debuff/hag_bog_tether/wildshape)
 	//faction |= list("hag", "spiders")
 	//Caustic Edit - Copied over a fix from OV that sets their name and everything proper here.
@@ -131,7 +131,7 @@
 		return FALSE
 
 	var/area/A = get_area(user)
-	if(!istype(A, /area/rogue/outdoors/bog) && !istype(A, /area/rogue/indoors/shelter/bog) && !istype(A, /area/rogue/indoors/shelter/bog_hag) && !istype(A, /area/underwater) && !istype(A, /area/rogue/outdoors/desertdeep) && !istype(A, /area/rogue/indoors/shelter/desertdeep) && !istype(A, /area/rogue/under/underdarker/undermire)) //Caustic Edit - Add Underwater and Desert Town Specifics to the permitted areas.
+	if(!istype(A, /area/rogue/outdoors/bog) && !istype(A, /area/rogue/indoors/shelter/bog) && !istype(A, /area/rogue/indoors/shelter/bog_hag) && !istype(A, /area/underwater) && !istype(A, /area/rogue/outdoors/desertdeep) && !istype(A, /area/rogue/indoors/shelter/desertdeep) && !istype(A, /area/rogue/under/desertbog)) //Caustic Edit - Add Underwater and Desert Town Specifics to the permitted areas.
 		to_chat(user, span_warning("The air here is too pure. I can only reveal my true self within the Terrorbog or my Hut!"))
 		revert_cast(user)
 		return FALSE
@@ -151,7 +151,7 @@
 	candodge = TRUE
 	canparry = TRUE
 	miss_text = "slashes the air!"
-	miss_sound = "bluntswoosh"
+	miss_sound = "bladewooshmed"
 	item_d_type = "slash"
 
 /obj/item/rogueweapon/hag_claw

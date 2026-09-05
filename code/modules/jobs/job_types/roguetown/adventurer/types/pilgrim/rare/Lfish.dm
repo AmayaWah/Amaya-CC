@@ -4,13 +4,13 @@
 	name = "Master Fisher"
 	tutorial = "You are a Master Fisher, you cast your rod with might, and are able to pull fish larger than Eoras Bosom."
 	allowed_sexes = list(MALE, FEMALE)
-	
+
 	outfit = /datum/outfit/job/roguetown/adventurer/fishermaster
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
 
 	maximum_possible_slots = 1
 	pickprob = 5
-	
+
 	category_tags = list(CTAG_TOWNER)
 	subclass_stats = list(
 		STATKEY_CON = 2,
@@ -57,7 +57,7 @@
 		head = /obj/item/clothing/head/roguetown/fisherhat
 		backr = /obj/item/storage/backpack/rogue/satchel
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
-		belt = /obj/item/storage/belt/rogue/leather/rope
+		belt = /obj/item/storage/belt/rogue/leather/rope/upgraded
 		beltr = /obj/item/fishingrod
 		beltl = /obj/item/rogueweapon/huntingknife
 		backpack_contents = list(
