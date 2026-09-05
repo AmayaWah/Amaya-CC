@@ -16,12 +16,12 @@
 	vision_range = 5
 	aggro_vision_range = 9
 	base_intents = list(/datum/intent/simple/bite/honeyspider)
-	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1)
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1,
+	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1,
 							/obj/item/natural/silk = 2,
 							/obj/item/reagent_containers/food/snacks/rogue/honey/spider = 1,
 							/obj/item/alch/viscera = 1)
-	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2,
+	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 2,
 							/obj/item/natural/silk = 3,
 							/obj/item/reagent_containers/food/snacks/rogue/honey/spider = 2,
 							/obj/item/alch/viscera = 1)
@@ -143,3 +143,11 @@
 
 /datum/intent/simple/bite/honeyspider
 	clickcd = HONEYSPIDER_ATTACK_SPEED
+
+/mob/living/simple_animal/hostile/retaliate/rogue/spider/rock // CC Edit - Removed the ratwood honeyspider file and placed rockspider code here
+	icon = 'modular_ratwood/icons/roguetown/mob/monster/spider.dmi'
+	icon_state = "spiderrock"
+	icon_living = "spiderrock"
+	icon_dead = "spiderrock-dead"
+	name = "rockspider"
+	desc = "These beasts, native to rockhill, are similar in behaviour and tenacity to the beespider, differing in their recessed heads and hairy brown bodies."

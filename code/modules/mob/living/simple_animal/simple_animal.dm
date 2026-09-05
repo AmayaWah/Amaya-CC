@@ -588,6 +588,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			saddle_storage.show_to(user)
 	..()
 
+// Caustic Edit - Keeping most of it the same, just changing how it handles failed butchers and spawn a gib on a neighboring tile instead of just exploding at the end.
+
 /mob/living/simple_animal/proc/butcher(mob/living/user, on_meathook = FALSE)
 	if(ssaddle)
 		ssaddle.forceMove(get_turf(src))
@@ -624,7 +626,19 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	var/perfect_count = 0
 	var/normal_count = 0
 
-	for(var/path in butcher_results)
+	var/list/dna_to_add // Copied over from the gibspawner.dm and trimmed down, so that gibs have a bloodtype? If it matters?
+	dna_to_add = list("Non-human DNA" = random_blood_type())
+
+	// Caustic Edit
+	// If the perfect butcher results have more paths, they will no longer be ignored, allowing for things like rous fur, or cabbit feet to be acquired
+	var/list/list_to_use = butcher_results
+	if(initial(length(perfect_butcher_results)) > initial(length(butcher_results))) // If it's stupid and it works, is it stupid? (Please tell me if there's a better way to do this, I couldn't find anything)
+	// Prevents stopping a butchery mid-way and restarting it to get doubled loot as it re-checks the lists.
+		list_to_use = perfect_butcher_results
+
+	// Caustic Edit End
+
+	for(var/path in list_to_use) // Caustic Edit
 		var/amount = butcher_results[path]
 		if(!do_after(user, time_per_cut, target = src))
 			if(botch_count || normal_count || perfect_count)
@@ -635,6 +649,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 		// Check for botch first
 		if(prob(botch_chance))
+			botched_gib(dna_to_add)
 			botch_count++
 			if(length(botched_butcher_results) && (path in botched_butcher_results))
 				amount = botched_butcher_results[path]
@@ -649,7 +664,9 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		else
 			normal_count++
 
-		butcher_results -= path
+		if(!length(list_to_use) || !amount) // Caustic Edit. If the list is empty, or there isn't an item set, set the amount to 0 to prevent a runtime and corpses not finishing butchering.
+			amount = 0
+		list_to_use -= path
 
 		// Spawn the item(s)
 		for(var/j in 1 to amount)
@@ -664,7 +681,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		if(user.mind && !isemptylist(butcher_results))
 			user.mind.add_sleep_experience(/datum/skill/labor/butchering, user.STAINT * BUTCHERING_EXP_PER_STEP)
 		playsound(src, 'sound/foley/gross.ogg', 100, FALSE)
-	if(isemptylist(butcher_results))
+	if(isemptylist(list_to_use))
 		if(head_butcher)
 			var/head_path = head_butcher
 			head_butcher = null
@@ -690,6 +707,45 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		if(user.mind)
 			user.mind.add_sleep_experience(/datum/skill/labor/butchering, user.STAINT * BUTCHERING_EXP_FINISH)
 		gib()
+
+// This will choose a random adjacent tile to spawn a gib on, and then edit it's offset accordingly so it's closer to the body
+/mob/living/simple_animal/proc/botched_gib(list/dna_to_add)
+	var/dir = pick(list(WEST, EAST, SOUTH, NORTH))
+
+	var/gibType = /obj/effect/decal/cleanable/blood/gibs
+	var/obj/effect/decal/cleanable/blood/gibs/gib = new gibType(src.loc)
+	gib.add_blood_DNA(dna_to_add)
+
+	if (step_to(gib, get_step(gib, dir), 0))
+		if (dir == NORTH)
+			gib.pixel_y = -11
+		if (dir == SOUTH)
+			gib.pixel_y = 11
+		if (dir == EAST)
+			gib.pixel_x = -11
+		if (dir == WEST)
+			gib.pixel_x = 11
+		gib.pixel_x += rand(-2,2)
+		gib.pixel_y += rand(-2,2)
+	else
+		if (dir == NORTH)
+			gib.pixel_y = 8
+		if (dir == SOUTH)
+			gib.pixel_y = -8
+		if (dir == EAST)
+			gib.pixel_x = 8
+		if (dir == WEST)
+			gib.pixel_x = -8
+		gib.pixel_x += rand(-2,2)
+		gib.pixel_y += rand(-2,2)
+
+// This proc is entirely new for the changes to butchery
+/mob/living/simple_animal/proc/clean_gib(list/dna_to_add)
+	if(stat != DEAD)
+		death(TRUE)
+	if(client)
+		SSdroning.kill_droning(client)
+	playsound(src.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 40, FALSE, 2)
 
 /mob/living/simple_animal/proc/gib_with_novice_butchery()
 	var/atom/Tsec = drop_location()
